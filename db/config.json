@@ -1,0 +1,15 @@
+{
+  "development": {
+    "dialect": "postgres",
+    "url": "postgres://postgres:root@localhost:5433/llanta_sur"
+  },
+  "production": {
+    "dialect": "postgres",
+    "url": "DBURL",
+    "dialectOptions": {
+      "ssl": {
+        "rejectUnauthorized": false
+      }
+    }
+  }
+}

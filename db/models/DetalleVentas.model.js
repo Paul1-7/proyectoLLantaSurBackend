@@ -1,0 +1,91 @@
+const { Model, DataTypes } = require('sequelize')
+const msg = require('../../utils/validationsMsg.js')
+const { PRODUCTS_TABLE } = require('./Productos.model.js')
+const { SELLS_TABLE } = require('./Ventas.model.js')
+const SELLS_DETAIL_TABLE = 'Detalle_Ventas'
+
+const SellsDetailSchema = {
+  idVenta: {
+    primaryKey: true,
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    field: 'id_venta',
+    references: {
+      model: SELLS_TABLE,
+      key: 'id_venta'
+    },
+    validate: {
+      isInt: true
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  },
+  idProd: {
+    primaryKey: true,
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    field: 'id_prod',
+    references: {
+      model: PRODUCTS_TABLE,
+      key: 'id_prod'
+    },
+    validate: {
+      isInt: true
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  },
+  cantidadDetVenta: {
+    type: DataTypes.INTEGER,
+    field: 'cantidad_det_venta',
+    allowNull: false,
+    validate: {
+      isNumeric: msg.isNumeric,
+      notNull: msg.notNull
+    }
+  },
+  precioUniVenta: {
+    type: DataTypes.FLOAT,
+    field: 'precio_uni_venta',
+    allowNull: false,
+    validate: {
+      isFloat: msg.isFloat,
+      notNull: msg.notNull
+    }
+  },
+  subtotalDetVenta: {
+    type: DataTypes.FLOAT,
+    field: 'subtotal_det_venta',
+    allowNull: false,
+    validate: {
+      isFloat: msg.isFloat,
+      notNull: msg.notNull
+    }
+  }
+}
+
+class SellsDetail extends Model {
+  static associate(models) {
+    this.belongsTo(models.Ventas, {
+      foreignKey: 'id_venta'
+    })
+    this.belongsTo(models.Productos, {
+      foreignKey: 'id_prod'
+    })
+  }
+
+  static config(sequelize) {
+    return {
+      sequelize,
+      tableName: SELLS_DETAIL_TABLE,
+      modelName: SELLS_DETAIL_TABLE,
+      timestamps: false
+    }
+  }
+}
+
+module.exports = {
+  SellsDetail,
+  SellsDetailSchema,
+  SELLS_DETAIL_TABLE
+}
