@@ -9,46 +9,61 @@ module.exports = {
           nombre: 'Mateo Juans',
           foto: '',
           apellido: 'Martinez Gonzales',
-          ci: '5423452334',
+          ci_nit: '5423452334',
           password: 'Mateo12.s',
           email: 'juans@gmail.com',
-          celular: 71832648
+          celular: 71832648,
+          estado: 0,
+          direccion: 'Calle falsa 123',
+          usuario: 'juans'
         },
         {
           nombre: 'Maria Tamara',
           foto: '',
           apellido: 'Gonzales Escobar',
-          ci: '743452334',
+          ci_nit: '7432334',
           password: 'Maria12.s',
           email: 'maria@gmail.com',
-          celular: 65832648
+          estado: 1,
+          celular: 65832648,
+          direccion: 'Calle falsa 1235',
+          usuario: 'maria'
         },
         {
           nombre: 'Ricardo Ponce',
           foto: '',
           apellido: 'Nuñez Sanchez',
-          ci: '73455334',
+          ci_nit: '73455334',
           password: 'Ricardo12.s',
-          estado: '0',
+          estado: 0,
           email: 'ricardo@gmail.com',
-          celular: 65436648
+          celular: 64846131,
+          direccion: 'B. La Loma Calle falsa 123',
+          usuario: 'ricardo'
         },
         {
           nombre: 'Melissa Paola',
           foto: '',
           apellido: 'Valdez Rodriguez',
-          ci: '71684934',
+          ci_nit: '71684934',
           password: 'Melissa12.s',
-          email: 'melissa@gmail.com'
+          estado: 1,
+          email: 'melissa@gmail.com',
+          celular: 718684834,
+          direccion: '9260 Kaden Lakes',
+          usuario: 'melissa'
         },
         {
           nombre: 'Maria Jose',
           foto: '',
           apellido: 'Rivas Rodriguez',
-          ci: '7992134',
+          ci_nit: '7992134',
           password: 'Maria122.s',
-          estado: '0',
-          email: 'mariaJose@gmail.com'
+          estado: 0,
+          email: 'mariaJose@gmail.com',
+          celular: 73794681,
+          direccion: 'Calle 624 Deion Throughway',
+          usuario: 'mariaJose'
         }
       ],
       {}

@@ -34,11 +34,20 @@ const CustomerSchema = {
     type: DataTypes.STRING,
     allowNull: false
   },
-  ci: {
+  direccion: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
-      isAlphanumeric: msg.isAlphanumeric,
+      is: msg.isAlphanumeric,
+      notNull: msg.notNull
+    }
+  },
+  ciNit: {
+    type: DataTypes.STRING,
+    field: 'ci_nit',
+    allowNull: false,
+    validate: {
+      is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },
@@ -58,6 +67,16 @@ const CustomerSchema = {
       isEmail: msg.isEmail
     }
   },
+
+  usuario: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+    validate: {
+      is: msg.isAlphanumeric,
+      notNull: msg.notNull
+    }
+  },
   estado: {
     type: DataTypes.INTEGER,
     defaultValue: 1
@@ -65,12 +84,18 @@ const CustomerSchema = {
   celular: {
     type: DataTypes.INTEGER,
     allowNull: true,
+    unique: true,
     validate: {
       is: msg.isPhone
     }
   },
   tokenRecovery: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  smsValidacion: {
+    type: DataTypes.STRING,
+    field: 'sms_validacion',
     allowNull: true
   }
 }

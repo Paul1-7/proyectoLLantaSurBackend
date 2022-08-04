@@ -40,14 +40,14 @@ const ReviewsSchema = {
     type: DataTypes.STRING,
     field: 'titulo_review',
     validate: {
-      isAlphanumeric: msg.isAlphanumeric
+      is: msg.isAlphanumeric
     }
   },
   descReview: {
     type: DataTypes.STRING,
     field: 'desc_review',
     validate: {
-      isAlphanumeric: msg.isAlphanumeric
+      is: msg.isAlphanumeric
     }
   },
   fechaReview: {

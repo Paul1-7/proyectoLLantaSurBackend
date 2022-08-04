@@ -20,7 +20,7 @@ const DefectiveProductsSchema = {
     field: 'desc_prod_def',
     allowNull: false,
     validate: {
-      isAlphanumeric: msg.isAlphanumeric,
+      is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },

@@ -1,4 +1,5 @@
 const { Model, DataTypes } = require('sequelize')
+const { notNull } = require('../../utils/validationsMsg.js')
 const msg = require('../../utils/validationsMsg.js')
 
 const EMPLOYEES_TABLE = 'Empleados'
@@ -42,7 +43,7 @@ const EmployeesSchema = {
     field: 'ci_emp',
     allowNull: false,
     validate: {
-      isAlphanumeric: msg.isAlphanumeric,
+      is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },
@@ -66,9 +67,30 @@ const EmployeesSchema = {
   },
   celularEmp: {
     type: DataTypes.INTEGER,
+    field: 'celular_emp',
     allowNull: true,
     validate: {
       is: msg.isPhone
+    }
+  },
+  usuarioEmp: {
+    type: DataTypes.STRING,
+    field: 'usuario_emp',
+    allowNull: false,
+    unique: true,
+    validate: {
+      is: msg.isAlphanumeric,
+      notNull: msg.notNull
+    }
+  },
+  emailEmp: {
+    type: DataTypes.STRING,
+    field: 'email_emp',
+    allowNull: false,
+    unique: true,
+    validate: {
+      isEmail: msg.isEmail,
+      notNull: msg.notNull
     }
   }
 }
