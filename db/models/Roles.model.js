@@ -36,7 +36,11 @@ const RolSchema = {
 
 class Rol extends Model {
   static associate(models) {
-    this.hasMany(models.Roles_Empleados, { foreignKey: 'id_rol' })
+    // this.hasMany(models.Roles_Empleados, { foreignKey: 'id_rol' })
+    // this.belongsTo(models.Empleados, {
+    //   as: 'empleados', // this is the name of the attribute in the json response
+    //   foreignKey: 'id_emp'
+    // })
   }
 
   static config(sequelize) {

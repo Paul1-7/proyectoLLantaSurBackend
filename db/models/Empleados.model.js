@@ -105,7 +105,14 @@ class Employees extends Model {
       foreignKey: 'id_emp'
     })
 
-    this.hasMany(models.Roles_Empleados, { foreignKey: 'id_emp' })
+    //this.hasMany(models.Roles_Empleados, { foreignKey: 'id_emp' })
+
+    this.belongsToMany(models.Roles, {
+      through: models.Roles_Empleados,
+      as: 'roles',
+      foreignKey: 'idEmp',
+      otherKey: 'idRol'
+    })
   }
 
   static config(sequelize) {

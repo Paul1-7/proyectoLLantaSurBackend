@@ -1,5 +1,3 @@
-'use strict'
-
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert(
@@ -64,6 +62,66 @@ module.exports = {
           celular: 73794681,
           direccion: 'Calle 624 Deion Throughway',
           usuario: 'mariaJose'
+        },
+        {
+          nombre: 'Laura',
+          foto: '',
+          apellido: 'Gálvez',
+          ci_nit: 44860363,
+          password: 'Admin.123',
+          estado: '1',
+          email: 'Laura75@gmail.com',
+          celular: 78118428,
+          direccion: '47010 Haag Street',
+          usuario: 'Jordi'
+        },
+        {
+          nombre: 'Anni',
+          foto: '',
+          apellido: 'Montañez',
+          ci_nit: 23832214,
+          password: 'Admin.123',
+          estado: '1',
+          email: 'Anni40@yahoo.com',
+          celular: 71249237,
+          direccion: '08401 Weber Motorway',
+          usuario: 'Anni'
+        },
+        {
+          nombre: 'Daniel',
+          foto: '',
+          apellido: 'Zepeda',
+          ci_nit: 84981323,
+          password: 'Admin.123',
+          estado: '1',
+          email: 'Daniel89@hotmail.com',
+          celular: 66280245,
+          direccion: '51509 Klein Springs',
+          usuario: 'Carles'
+        },
+        {
+          nombre: 'Jorge',
+          foto: '',
+          apellido: 'Cardona',
+          ci_nit: 71555625,
+          password: 'Admin.123',
+          estado: '1',
+          email: 'Jorge43@hotmail.com',
+          celular: 72613222,
+          direccion: '802 Denis Trafficway',
+          usuario: 'Andrea'
+        },
+        {
+          nombre: 'Matilde',
+          foto: '',
+          apellido: 'Munguía',
+          ci_nit: 80988745,
+          password: 'Admin.123',
+          estado: '1',
+          email: 'Matilde_Koelpin65@hotmail.com',
+          celular: 72356691,
+          direccion: '5773 Ole Parkways',
+          usuario: 'Marta'
         }
       ],
       {}

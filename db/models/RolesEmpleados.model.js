@@ -5,8 +5,17 @@ const { ROL_TABLE } = require('./Roles.model.js')
 const ROL_EMPLOYEES_TABLE = 'Roles_Empleados'
 
 const RolEmployeesSchema = {
-  idEmp: {
+  idRolEmp: {
+    allowNull: false,
+    autoIncrement: true,
     primaryKey: true,
+    type: DataTypes.INTEGER,
+    field: 'id_rol_emp',
+    validate: {
+      isInt: true
+    }
+  },
+  idEmp: {
     allowNull: false,
     type: DataTypes.INTEGER,
     field: 'id_emp',
@@ -21,7 +30,6 @@ const RolEmployeesSchema = {
     onDelete: 'SET NULL'
   },
   idRol: {
-    primaryKey: true,
     allowNull: false,
     type: DataTypes.INTEGER,
     field: 'id_rol',
@@ -39,8 +47,8 @@ const RolEmployeesSchema = {
 
 class RolEmployees extends Model {
   static associate(models) {
-    this.belongsTo(models.Empleados, { foreignKey: 'id_emp' })
-    this.belongsTo(models.Roles, { foreignKey: 'id_rol' })
+    // this.belongsTo(models.Empleados, { foreignKey: 'id_emp' })
+    // this.belongsTo(models.Roles, { foreignKey: 'id_rol' })
   }
 
   static config(sequelize) {

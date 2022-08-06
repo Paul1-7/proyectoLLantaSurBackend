@@ -15,6 +15,9 @@ const ERROR_RESPONSE = {
   },
   badRequest: (msg, res) => {
     return res.status(400).json({ message: msg })
+  },
+  notAcceptable: (msg, res) => {
+    return res.status(406).json({ message: msg })
   }
 }
 

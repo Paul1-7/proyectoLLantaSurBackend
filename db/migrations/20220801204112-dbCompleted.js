@@ -23,7 +23,7 @@ const {
 } = require('../models/DescuentosProductos.model.js')
 const { FavoritesSchema } = require('../models/Favoritos.model.js')
 module.exports = {
-  async up(queryInterface) {
+  async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Empleados', EmployeesSchema)
     await queryInterface.createTable('Roles', RolSchema)
     await queryInterface.createTable('Roles_Empleados', RolEmployeesSchema)
