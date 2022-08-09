@@ -18,6 +18,7 @@ const BrandsSchema = {
     type: DataTypes.STRING,
     field: 'nombre_marca',
     allowNull: false,
+    unique: true,
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull

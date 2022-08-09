@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize')
-const { notNull } = require('../../utils/validationsMsg.js')
 const msg = require('../../utils/validationsMsg.js')
+const { SUBSIDIARIES_TABLE } = require('./Sucursales.model.js')
 
 const EMPLOYEES_TABLE = 'Empleados'
 
@@ -92,6 +92,20 @@ const EmployeesSchema = {
       isEmail: msg.isEmail,
       notNull: msg.notNull
     }
+  },
+  idSuc: {
+    type: DataTypes.INTEGER,
+    field: 'id_suc',
+    allowNull: false,
+    validate: {
+      isNumeric: msg.isNumeric
+    },
+    references: {
+      model: SUBSIDIARIES_TABLE,
+      key: 'id_suc'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   }
 }
 
@@ -105,7 +119,9 @@ class Employees extends Model {
       foreignKey: 'id_emp'
     })
 
-    //this.hasMany(models.Roles_Empleados, { foreignKey: 'id_emp' })
+    this.belongsTo(models.Sucursales, {
+      foreignKey: 'id_suc'
+    })
 
     this.belongsToMany(models.Roles, {
       through: models.Roles_Empleados,

@@ -1,58 +1,50 @@
 const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
 
-const PROVIDER_TABLE = 'Proveedores'
+const SUBSIDIARIES_TABLE = 'Sucursales'
 
-const ProviderSchema = {
-  idProv: {
+const SubsidiariesSchema = {
+  idSuc: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
-    unique: true,
     type: DataTypes.INTEGER,
-    field: 'id_prov',
+    field: 'id_suc',
     validate: {
       isInt: true
     }
   },
-  nombreProv: {
+  nombreSuc: {
     type: DataTypes.STRING,
-    field: 'nombre_prov',
+    field: 'nombre_suc',
+    unique: true,
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },
-  telProv: {
+  direccionSuc: {
     type: DataTypes.STRING,
-    field: 'tel_prov',
+    field: 'direccion_suc',
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },
-  nombreEncProv: {
+  telSuc: {
     type: DataTypes.STRING,
-    field: 'nombre_enc_prov',
+    field: 'tel_suc',
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },
-  apEncProv: {
-    type: DataTypes.STRING,
-    field: 'ap_enc_prov',
-    allowNull: false,
-    validate: {
-      is: msg.isAlphanumeric,
-      notNull: msg.notNull
-    }
-  },
-  estado: {
+  estadoSuc: {
     type: DataTypes.INTEGER,
+    field: 'estado_suc',
     allowNull: false,
     defaultValue: 1,
     validate: {
@@ -61,22 +53,25 @@ const ProviderSchema = {
   }
 }
 
-class Provider extends Model {
+class Subsidiaries extends Model {
   static associate(models) {
-    this.hasMany(models.Compras, {
-      foreignKey: 'id_prov'
+    this.hasMany(models.Empleados, { foreignKey: 'id_suc' })
+    this.belongsToMany(models.Productos, {
+      through: models.Sucursales_Productos,
+      as: 'productos',
+      foreignKey: 'id_suc',
+      otherKey: 'id_prod'
     })
-    this.hasMany(models.Productos, { foreignKey: 'id_prov' })
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: PROVIDER_TABLE,
-      modelName: PROVIDER_TABLE,
+      tableName: SUBSIDIARIES_TABLE,
+      modelName: SUBSIDIARIES_TABLE,
       timestamps: false
     }
   }
 }
 
-module.exports = { Provider, ProviderSchema, PROVIDER_TABLE }
+module.exports = { Subsidiaries, SubsidiariesSchema, SUBSIDIARIES_TABLE }

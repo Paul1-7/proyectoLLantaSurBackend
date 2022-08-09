@@ -14,7 +14,8 @@ module.exports = {
           estado_emp: '1',
           celular_emp: 68643570,
           usuario_emp: 'Carles',
-          email_emp: 'Josep_Gottlieb@gmail.com'
+          email_emp: 'Josep_Gottlieb@gmail.com',
+          id_suc: 1
         },
         {
           nombre_emp: 'Josep',
@@ -25,7 +26,8 @@ module.exports = {
           estado_emp: '1',
           celular_emp: 74850522,
           usuario_emp: 'Lorena',
-          email_emp: 'Josep.Pichardo@yahoo.com'
+          email_emp: 'Josep.Pichardo@yahoo.com',
+          id_suc: 1
         },
         {
           nombre_emp: 'Maica',
@@ -36,7 +38,8 @@ module.exports = {
           estado_emp: '1',
           celular_emp: 71709936,
           usuario_emp: 'Ricardo',
-          email_emp: 'Maica_Cepeda36@gmail.com'
+          email_emp: 'Maica_Cepeda36@gmail.com',
+          id_suc: 1
         },
         {
           nombre_emp: 'Anni',
@@ -47,7 +50,8 @@ module.exports = {
           estado_emp: '1',
           celular_emp: 78605041,
           usuario_emp: 'Maica',
-          email_emp: 'Anni92@yahoo.com'
+          email_emp: 'Anni92@yahoo.com',
+          id_suc: 2
         },
         {
           nombre_emp: 'Manuel',
@@ -58,7 +62,8 @@ module.exports = {
           estado_emp: '1',
           celular_emp: 70794568,
           usuario_emp: 'Josep',
-          email_emp: 'Manuel.Turcotte53@yahoo.com'
+          email_emp: 'Manuel.Turcotte53@yahoo.com',
+          id_suc: 2
         }
       ],
       {}

@@ -33,8 +33,14 @@ const {
   DiscountsProductsSchema
 } = require('./DescuentosProductos.model.js')
 const { Favorites, FavoritesSchema } = require('./Favoritos.model.js')
+const { Subsidiaries, SubsidiariesSchema } = require('./Sucursales.model.js')
+const {
+  SubsidiariesProducts,
+  SubsidiariesProductsSchema
+} = require('./SucursalesProductos.model.js')
 
 function setUpModels(sequelize) {
+  Subsidiaries.init(SubsidiariesSchema, Subsidiaries.config(sequelize))
   Customer.init(CustomerSchema, Customer.config(sequelize))
   Rol.init(RolSchema, Rol.config(sequelize))
   Employees.init(EmployeesSchema, Employees.config(sequelize))
@@ -61,7 +67,12 @@ function setUpModels(sequelize) {
     DiscountsProducts.config(sequelize)
   )
   Favorites.init(FavoritesSchema, Favorites.config(sequelize))
+  SubsidiariesProducts.init(
+    SubsidiariesProductsSchema,
+    SubsidiariesProducts.config(sequelize)
+  )
 
+  Subsidiaries.associate(sequelize.models)
   Customer.associate(sequelize.models)
   Employees.associate(sequelize.models)
   Rol.associate(sequelize.models)
@@ -81,6 +92,7 @@ function setUpModels(sequelize) {
   OrdersDetail.associate(sequelize.models)
   PurchaseDetail.associate(sequelize.models)
   SellsDetail.associate(sequelize.models)
+  SubsidiariesProducts.associate(sequelize.models)
 }
 
 module.exports = setUpModels

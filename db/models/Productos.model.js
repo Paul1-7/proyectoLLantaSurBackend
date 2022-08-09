@@ -20,11 +20,12 @@ const ProductsSchema = {
   imagenProd: {
     type: DataTypes.STRING,
     field: 'imagen_prod',
-    allowNull: false,
-    validate: {
-      is: msg.isAlphanumeric,
-      notNull: msg.notNull
-    }
+    allowNull: false
+  },
+  idImgProd: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    field: 'id_img_prod'
   },
   nombreProd: {
     type: DataTypes.STRING,

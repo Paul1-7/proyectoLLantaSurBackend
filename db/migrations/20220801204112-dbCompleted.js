@@ -22,8 +22,13 @@ const {
   DiscountsProductsSchema
 } = require('../models/DescuentosProductos.model.js')
 const { FavoritesSchema } = require('../models/Favoritos.model.js')
+const { SubsidiariesSchema } = require('../models/Sucursales.model.js')
+const {
+  SubsidiariesProductsSchema
+} = require('../models/SucursalesProductos.model.js')
 module.exports = {
   async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('Sucursales', SubsidiariesSchema)
     await queryInterface.createTable('Empleados', EmployeesSchema)
     await queryInterface.createTable('Roles', RolSchema)
     await queryInterface.createTable('Roles_Empleados', RolEmployeesSchema)
@@ -50,9 +55,14 @@ module.exports = {
       DiscountsProductsSchema
     )
     await queryInterface.createTable('Favoritos', FavoritesSchema)
+    await queryInterface.createTable(
+      'Sucursales_Productos',
+      SubsidiariesProductsSchema
+    )
   },
 
   async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('Sucursales_Productos')
     await queryInterface.dropTable('Detalle_Compras')
     await queryInterface.dropTable('Detalle_Pedidos')
     await queryInterface.dropTable('Detalle_Ventas')
@@ -73,5 +83,6 @@ module.exports = {
     await queryInterface.dropTable('Descuentos')
     await queryInterface.dropTable('Categorias')
     await queryInterface.dropTable('Marcas')
+    await queryInterface.dropTable('Sucursales')
   }
 }

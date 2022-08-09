@@ -17,6 +17,7 @@ const CategoriesSchema = {
   nombreCat: {
     type: DataTypes.STRING,
     field: 'nombre_cat',
+    unique: true,
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,

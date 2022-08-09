@@ -32,15 +32,6 @@ const BusinessDataSchema = {
       notNull: msg.notNull
     }
   },
-  direccionNeg: {
-    type: DataTypes.STRING,
-    field: 'direccion_neg',
-    allowNull: false,
-    validate: {
-      is: msg.isAlphanumeric,
-      notNull: msg.notNull
-    }
-  },
   actividadEcoNeg: {
     type: DataTypes.STRING,
     field: 'actividad_eco_neg',
@@ -72,15 +63,6 @@ const BusinessDataSchema = {
     type: DataTypes.STRING,
     field: 'logotipo_neg',
     allowNull: false
-  },
-  telNeg: {
-    type: DataTypes.STRING,
-    field: 'tel_neg',
-    allowNull: false,
-    validate: {
-      is: msg.isAlphanumeric,
-      notNull: msg.notNull
-    }
   },
   emailNeg: {
     type: DataTypes.STRING,
