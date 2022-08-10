@@ -3,7 +3,6 @@ const cors = require('cors')
 const sequelize = require('./libs/sequelize.js')
 const routerApi = require('./routes/index.js')
 const { errorHandler } = require('./middlewares/error.handle.js')
-const fileUpload = require('express-fileupload')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -21,12 +20,6 @@ const options = {
   }
 }
 app.use(cors(options))
-app.use(
-  fileUpload({
-    useTempFiles: true,
-    tempFileDir: './tmp/img'
-  })
-)
 
 app.get('/', async (req, res) => {
   try {

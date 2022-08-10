@@ -31,6 +31,7 @@ const ProductsSchema = {
     type: DataTypes.STRING,
     field: 'nombre_prod',
     allowNull: false,
+    unique: true,
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
@@ -127,9 +128,12 @@ const ProductsSchema = {
 
 class Products extends Model {
   static associate(models) {
-    this.belongsTo(models.Categorias, { foreignKey: 'id_cat' })
-    this.belongsTo(models.Proveedores, { foreignKey: 'id_prov' })
-    this.belongsTo(models.Marcas, { foreignKey: 'id_marca' })
+    this.belongsTo(models.Categorias, { foreignKey: 'id_cat', as: 'categoria' })
+    this.belongsTo(models.Proveedores, {
+      foreignKey: 'id_prov',
+      as: 'proveedor'
+    })
+    this.belongsTo(models.Marcas, { foreignKey: 'id_marca', as: 'marca' })
     this.hasMany(models.Detalle_Compras, {
       foreignKey: 'id_prod'
     })

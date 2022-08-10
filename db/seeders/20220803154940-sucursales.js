@@ -12,7 +12,7 @@ module.exports = {
         {
           nombre_suc: 'Llanta sur - mercado Abasto',
           direccion_suc: 'Av. froilan tejerina',
-          tel_suc: '66-30187',
+          tel_suc: '66-40168',
           estado_suc: 1
         }
       ],

@@ -1,10 +1,12 @@
-const { ERROR_RESPONSE } = require('./error.handle')
+const { ERROR_RESPONSE } = require('./error.handle.js')
 
 const msg = {
   isIdNumberValid: 'el id no es valido',
   notFoundId: 'el id no existe',
   notFoundRoles: 'no se encontraron roles',
-  isRolesValid: 'los roles no son validos'
+  isRolesValid: 'los roles no son validos',
+  isImageTypeValid: 'la imagen no es valida',
+  isImageSizeValid: 'la imagen no debe superar los 1.5mb'
 }
 
 function checkId(req, res, next) {
@@ -29,4 +31,23 @@ function checkRolesBody(req, res, next) {
   next()
 }
 
-module.exports = { checkId, checkRolesBody }
+function fileTypeCheck(req, res, next) {
+  if (!req.file) return next()
+
+  const { mimetype } = req.file
+  const regex = /^image\/(jpeg|png)$/
+  if (!regex.test(mimetype))
+    return ERROR_RESPONSE.notAcceptable(msg.isImageTypeValid, res)
+  next()
+}
+
+function fileSizeCheck(req, res, next) {
+  if (!req.file) return next()
+
+  const { size } = req.file
+  if (size > 1500000)
+    return ERROR_RESPONSE.notAcceptable(msg.isImageSizeValid, res)
+  next()
+}
+
+module.exports = { checkId, checkRolesBody, fileTypeCheck, fileSizeCheck }

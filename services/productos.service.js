@@ -1,11 +1,23 @@
 const { models } = require('../libs/sequelize.js')
 
 async function getAllProducts() {
-  return await models.Productos.findAll()
+  return await models.Productos.findAll({
+    include: ['categoria', 'marca', 'proveedor']
+  })
 }
 
 async function findProduct(id) {
-  return await models.Productos.findByPk(id)
+  return await models.Productos.findByPk(id, {
+    include: ['categoria', 'marca', 'proveedor']
+  })
+}
+
+async function findProductByName(name) {
+  return await models.Productos.findOne({
+    where: {
+      nombreProd: name
+    }
+  })
 }
 
 async function createProduct(product) {
@@ -19,7 +31,14 @@ async function updateProduct(id, changes) {
 
 async function deleteProduct(id) {
   const product = await models.Productos.findByPk(id)
-  return await product?.destroy()
+
+  await models.Productos.destroy({
+    where: {
+      idProd: id
+    }
+  })
+
+  return product
 }
 
 module.exports = {
@@ -27,5 +46,6 @@ module.exports = {
   findProduct,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  findProductByName
 }
