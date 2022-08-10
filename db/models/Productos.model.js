@@ -20,7 +20,7 @@ const ProductsSchema = {
   imagenProd: {
     type: DataTypes.STRING,
     field: 'imagen_prod',
-    allowNull: false
+    allowNull: true
   },
   idImgProd: {
     type: DataTypes.STRING,

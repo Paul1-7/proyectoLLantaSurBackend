@@ -32,19 +32,23 @@ function checkRolesBody(req, res, next) {
 }
 
 function fileTypeCheck(req, res, next) {
-  if (!req.file) return next()
+  if (!req.files?.imagenProd) return next()
+  const { mimetype } = req.files.imagenProd
+  if (!mimetype) return next()
 
-  const { mimetype } = req.file
   const regex = /^image\/(jpeg|png)$/
+  console.log(mimetype)
   if (!regex.test(mimetype))
     return ERROR_RESPONSE.notAcceptable(msg.isImageTypeValid, res)
   next()
 }
 
 function fileSizeCheck(req, res, next) {
-  if (!req.file) return next()
+  if (!req.files?.imagenProd) return next()
 
-  const { size } = req.file
+  const { size } = req.files.imagenProd
+  if (!size) return next()
+
   if (size > 1500000)
     return ERROR_RESPONSE.notAcceptable(msg.isImageSizeValid, res)
   next()

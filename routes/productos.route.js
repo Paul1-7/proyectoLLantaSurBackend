@@ -12,12 +12,14 @@ const {
   createProduct,
   findProductByName,
   getAllProducts,
-  deleteProduct
+  deleteProduct,
+  findProduct,
+  updateProduct
 } = require('../services/productos.service.js')
 const { uploadImage } = require('../utils/imgHandle.js')
 
 const productsRoute = express.Router()
-const { DEFAULT_PRODUCT_IMG_URL } = config
+const { DEFAULT_PRODUCT_IMG_URl } = config
 
 const msg = {
   productNameExist: 'El nombre del producto ya existe',
@@ -67,7 +69,6 @@ productsRoute.post(
   async (req, res, next) => {
     try {
       const { body } = req
-      const { imagenProd } = req.files
 
       let imgCloudinary = null
       const productNameExist = await findProductByName(body.nombreProd)
@@ -75,13 +76,15 @@ productsRoute.post(
       if (productNameExist)
         return ERROR_RESPONSE.badRequest(msg.productNameExist, res)
 
-      if (imagenProd) {
+      if (req.files?.imagenProd) {
+        const { imagenProd } = req.files
         imgCloudinary = await uploadImage(imagenProd.tempFilePath)
       }
 
-      body.imagenProd = imgCloudinary?.secure_url || DEFAULT_PRODUCT_IMG_URL
-      body.idImgProd = imgCloudinary?.public_id || null
-
+      body.imagenProd = imgCloudinary
+        ? imgCloudinary.secure_url
+        : DEFAULT_PRODUCT_IMG_URl
+      body.idImgProd = imgCloudinary ? imgCloudinary.public_id : null
       const productParsed = parseProduct(body)
       const product = await createProduct(productParsed)
 
@@ -95,10 +98,8 @@ productsRoute.post(
 productsRoute.delete('/:id', checkId, async (req, res, next) => {
   try {
     const { id } = req.params
-
     const product = await deleteProduct(id)
 
-    console.log(product)
     if (!product) return ERROR_RESPONSE.notFound(msg.notFound, res)
 
     await removeImgCloudinary(product.idImgProd)
@@ -108,5 +109,47 @@ productsRoute.delete('/:id', checkId, async (req, res, next) => {
     next(error)
   }
 })
+
+productsRoute.put(
+  '/:id',
+  checkId,
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: './tmp/img'
+  }),
+  fileTypeCheck,
+  fileSizeCheck,
+  async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const { body } = req
+      let imgCloudinary = null
+
+      const existProduct = await findProduct(id)
+      if (!existProduct) return ERROR_RESPONSE.notFound(msg.notFound, res)
+
+      if (req.files?.imagenProd) {
+        const { imagenProd } = req.files
+        await removeImgCloudinary(existProduct.idImgProd)
+        imgCloudinary = await uploadImage(imagenProd.tempFilePath)
+      }
+
+      body.imagenProd = imgCloudinary
+        ? imgCloudinary.secure_url
+        : existProduct.imagenProd
+      body.idImgProd = imgCloudinary
+        ? imgCloudinary.public_id
+        : existProduct.idImgProd
+
+      const productParsed = parseProduct(body)
+      const product = await updateProduct(id, productParsed)
+
+      delete product.dataValues.password
+      res.json(product)
+    } catch (error) {
+      next(error)
+    }
+  }
+)
 
 module.exports = productsRoute
