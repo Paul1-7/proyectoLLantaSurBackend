@@ -43,7 +43,8 @@ const ProductsSchema = {
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
-      notNull: msg.notNull
+      notNull: msg.notNull,
+      min: msg.positiveNumber
     }
   },
   precioCompra: {
@@ -61,7 +62,12 @@ const ProductsSchema = {
     allowNull: false,
     validate: {
       isFloat: msg.isFloat,
-      notNull: msg.notNull
+      notNull: msg.notNull,
+      isGreaterThan(value) {
+        if (value < this.precioCompra) {
+          throw new Error(msg.msgIsGreaterThan)
+        }
+      }
     }
   },
   fechaProd: {

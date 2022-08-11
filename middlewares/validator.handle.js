@@ -3,7 +3,7 @@ const { ERROR_RESPONSE } = require('./error.handle.js')
 const msg = {
   isIdNumberValid: 'el id no es valido',
   notFoundId: 'el id no existe',
-  notFoundRoles: 'no se encontraron roles',
+  notFoundRoles: 'no se encontraron roles en la peticion',
   isRolesValid: 'los roles no son validos',
   isImageTypeValid: 'la imagen no es valida',
   isImageSizeValid: 'la imagen no debe superar los 1.5mb'
@@ -37,7 +37,6 @@ function fileTypeCheck(req, res, next) {
   if (!mimetype) return next()
 
   const regex = /^image\/(jpeg|png)$/
-  console.log(mimetype)
   if (!regex.test(mimetype))
     return ERROR_RESPONSE.notAcceptable(msg.isImageTypeValid, res)
   next()

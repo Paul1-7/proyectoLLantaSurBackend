@@ -21,20 +21,8 @@ const options = {
 }
 app.use(cors(options))
 
-app.get('/', async (req, res) => {
-  try {
-    const rta = await sequelize.query('SELECT * FROM task')
-    res.send(rta)
-  } catch (error) {
-    console.log(error)
-  }
-  res.send('Hola mi server en express')
-})
-
 routerApi(app)
 
-// app.use(ormErrorHandler)
-// app.use(boomErrorHandler)
 app.use(errorHandler)
 
 app.listen(port, () => {

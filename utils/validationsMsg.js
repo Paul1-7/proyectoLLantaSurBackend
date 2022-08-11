@@ -29,7 +29,13 @@ const msg = {
   },
   isDate: {
     msg: 'la fecha no es valida'
-  }
+  },
+  positiveNumber: {
+    args: 1,
+    msg: 'el valor minimo es 1'
+  },
+  msgIsGreaterThan:
+    'el precio de venta no puede ser menor que el precio de compra'
 }
 
 module.exports = msg
