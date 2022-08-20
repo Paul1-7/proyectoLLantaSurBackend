@@ -7,12 +7,12 @@ const DEFECTIVE_PRODUCTS_TABLE = 'Productos_Defectuosos'
 const DefectiveProductsSchema = {
   idProdDef: {
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
     field: 'id_prod_def',
     validate: {
-      isInt: true
+      isUUID: 4
     }
   },
   descProdDef: {
@@ -44,11 +44,11 @@ const DefectiveProductsSchema = {
   },
 
   idProd: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'id_prod',
     allowNull: false,
     validate: {
-      isNumeric: msg.isNumeric
+      isUUID: 4
     },
     references: {
       model: PRODUCTS_TABLE,

@@ -6,12 +6,12 @@ const ROL_TABLE = 'Roles'
 const RolSchema = {
   idRol: {
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
     field: 'id_rol',
     validate: {
-      isInt: true
+      isUUID: 4
     }
   },
   nombreRol: {

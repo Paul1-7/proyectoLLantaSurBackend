@@ -6,19 +6,19 @@ const PROVIDER_TABLE = 'Proveedores'
 const ProviderSchema = {
   idProv: {
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
-    unique: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
     field: 'id_prov',
     validate: {
-      isInt: true
+      isUUID: 4
     }
   },
   nombreProv: {
     type: DataTypes.STRING,
     field: 'nombre_prov',
     allowNull: false,
+    unique: true,
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
@@ -51,8 +51,9 @@ const ProviderSchema = {
       notNull: msg.notNull
     }
   },
-  estado: {
+  estadoProv: {
     type: DataTypes.INTEGER,
+    field: 'estado_prov',
     allowNull: false,
     defaultValue: 1,
     validate: {

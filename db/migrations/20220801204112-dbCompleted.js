@@ -17,7 +17,7 @@ const {
 } = require('../models/ProductosDefectuosos.model.js')
 const { DiscountsSchema } = require('../models/Descuentos.model.js')
 const { ReviewsSchema } = require('../models/Reviews.model.js')
-const { RolEmployeesSchema } = require('../models/RolesEmpleados.model.js')
+
 const {
   DiscountsProductsSchema
 } = require('../models/DescuentosProductos.model.js')
@@ -26,12 +26,22 @@ const { SubsidiariesSchema } = require('../models/Sucursales.model.js')
 const {
   SubsidiariesProductsSchema
 } = require('../models/SucursalesProductos.model.js')
+const {
+  InvoiceBatchingSchema
+} = require('../models/DosificacionFacturas.model.js')
+const { RolUsersSchema } = require('../models/RolesUsuarios.model.js')
+const { UserSchema } = require('../models/Usuarios.model.js')
 module.exports = {
   async up(queryInterface, Sequelize) {
+    await queryInterface.createTable(
+      'Dosificacion_Facturas',
+      InvoiceBatchingSchema
+    )
     await queryInterface.createTable('Sucursales', SubsidiariesSchema)
+    await queryInterface.createTable('Usuarios', UserSchema)
     await queryInterface.createTable('Empleados', EmployeesSchema)
     await queryInterface.createTable('Roles', RolSchema)
-    await queryInterface.createTable('Roles_Empleados', RolEmployeesSchema)
+    await queryInterface.createTable('Roles_Usuarios', RolUsersSchema)
     await queryInterface.createTable('Categorias', CategoriesSchema)
     await queryInterface.createTable('Marcas', BrandsSchema)
     await queryInterface.createTable('Datos_Negocio', BusinessDataSchema)
@@ -67,12 +77,11 @@ module.exports = {
     await queryInterface.dropTable('Detalle_Pedidos')
     await queryInterface.dropTable('Detalle_Ventas')
     await queryInterface.dropTable('Favoritos')
-    await queryInterface.dropTable('Roles_Empleados')
+    await queryInterface.dropTable('Roles_Usuarios')
     await queryInterface.dropTable('Ventas')
     await queryInterface.dropTable('Reviews')
     await queryInterface.dropTable('Descuentos_Productos')
     await queryInterface.dropTable('Compras')
-    await queryInterface.dropTable('Datos_Negocio')
     await queryInterface.dropTable('Roles')
     await queryInterface.dropTable('Empleados')
     await queryInterface.dropTable('Pedidos')
@@ -83,6 +92,9 @@ module.exports = {
     await queryInterface.dropTable('Descuentos')
     await queryInterface.dropTable('Categorias')
     await queryInterface.dropTable('Marcas')
+    await queryInterface.dropTable('Usuarios')
     await queryInterface.dropTable('Sucursales')
+    await queryInterface.dropTable('Datos_Negocio')
+    await queryInterface.dropTable('Dosificacion_Facturas')
   }
 }

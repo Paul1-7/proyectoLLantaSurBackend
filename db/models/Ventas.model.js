@@ -9,12 +9,12 @@ const SELLS_TABLE = 'Ventas'
 const SellsSchema = {
   idVenta: {
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
     field: 'id_venta',
     validate: {
-      isInt: true
+      isUUID: 4
     }
   },
   totalVenta: {
@@ -45,11 +45,11 @@ const SellsSchema = {
     }
   },
   idEmp: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'id_emp',
     allowNull: false,
     validate: {
-      isNumeric: msg.isNumeric
+      isUUID: 4
     },
     references: {
       model: EMPLOYEES_TABLE,
@@ -60,11 +60,11 @@ const SellsSchema = {
   },
 
   idCliente: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'id_cliente',
     allowNull: false,
     validate: {
-      isNumeric: msg.isNumeric
+      isUUID: 4
     },
     references: {
       model: CUSTOMER_TABLE,
@@ -74,11 +74,11 @@ const SellsSchema = {
     onDelete: 'SET NULL'
   },
   idPedido: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'id_pedido',
     allowNull: false,
     validate: {
-      isNumeric: msg.isNumeric
+      isUUID: 4
     },
     references: {
       model: ORDERS_TABLE,

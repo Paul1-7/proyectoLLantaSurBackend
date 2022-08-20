@@ -6,12 +6,12 @@ const DISCOUNTS_TABLE = 'Descuentos'
 const DiscountsSchema = {
   idDesc: {
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
     field: 'id_desc',
     validate: {
-      isInt: true
+      isUUID: 4
     }
   },
   cantMaxDesc: {

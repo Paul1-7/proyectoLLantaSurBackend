@@ -6,64 +6,49 @@ module.exports = {
       'Empleados',
       [
         {
+          id_emp: '70d336bb-1e6f-4c3d-b048-01e329b5c3fd',
           nombre_emp: 'Josep',
           apellido_emp: 'Guillén',
           foto_emp: '',
-          ci_emp: 72952955,
-          password_emp: 'Admin.123',
           estado_emp: '1',
-          celular_emp: 68643570,
-          usuario_emp: 'Carles',
-          email_emp: 'Josep_Gottlieb@gmail.com',
-          id_suc: 1
+          id_suc: '678197a0-69a8-4c24-89a5-bf13873cc08b',
+          id_usuario: 'd2b5da00-fea5-44fd-ba59-fb3aff74f7ef'
         },
         {
+          id_emp: '712c8f32-67e1-46ad-84ea-3538ff2ffbf8',
           nombre_emp: 'Josep',
           apellido_emp: 'Pichardo',
           foto_emp: '',
-          ci_emp: 82384653,
-          password_emp: 'Admin.123',
           estado_emp: '1',
-          celular_emp: 74850522,
-          usuario_emp: 'Lorena',
-          email_emp: 'Josep.Pichardo@yahoo.com',
-          id_suc: 1
+          id_suc: '678197a0-69a8-4c24-89a5-bf13873cc08b',
+          id_usuario: 'ace0fc3f-b172-4905-b2db-2865cf98678b'
         },
         {
+          id_emp: '2ceff9c5-f4f2-4e34-88ac-100156de8f71',
           nombre_emp: 'Maica',
           apellido_emp: 'Cepeda',
           foto_emp: '',
-          ci_emp: 46502789,
-          password_emp: 'Admin.123',
           estado_emp: '1',
-          celular_emp: 71709936,
-          usuario_emp: 'Ricardo',
-          email_emp: 'Maica_Cepeda36@gmail.com',
-          id_suc: 1
+          id_suc: '678197a0-69a8-4c24-89a5-bf13873cc08b',
+          id_usuario: 'd9a4f84b-e659-44b5-b6ce-16eae57e31f3'
         },
         {
+          id_emp: '1664a070-98a5-4162-84e6-92591a3849b4',
           nombre_emp: 'Anni',
           apellido_emp: 'Reynoso',
           foto_emp: '',
-          ci_emp: 16451788,
-          password_emp: 'Admin.123',
           estado_emp: '1',
-          celular_emp: 78605041,
-          usuario_emp: 'Maica',
-          email_emp: 'Anni92@yahoo.com',
-          id_suc: 2
+          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
+          id_usuario: '324c2f1d-3aa8-4bdb-b646-1f9f6847f3b0'
         },
         {
+          id_emp: '22255365-d720-4ac1-b026-5fa9f65ae87e',
           nombre_emp: 'Manuel',
           apellido_emp: 'de Jesús',
           foto_emp: '',
-          ci_emp: 22899757,
-          password_emp: 'Admin.123',
           estado_emp: '1',
-          celular_emp: 70794568,
-          usuario_emp: 'Josep',
-          email_emp: 'Manuel.Turcotte53@yahoo.com',
-          id_suc: 2
+          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
+          id_usuario: 'b60047b1-a9f2-4309-9fcd-1868785dfb5a'
         }
       ],
       {}

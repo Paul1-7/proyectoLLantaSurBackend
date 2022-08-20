@@ -24,10 +24,7 @@ const {
 } = require('./ProductosDefectuosos.model.js')
 const { Discounts, DiscountsSchema } = require('./Descuentos.model.js')
 const { Reviews, ReviewsSchema } = require('./Reviews.model.js')
-const {
-  RolEmployees,
-  RolEmployeesSchema
-} = require('./RolesEmpleados.model.js')
+const { RolUsers, RolUsersSchema } = require('./RolesUsuarios.model.js')
 const {
   DiscountsProducts,
   DiscountsProductsSchema
@@ -38,13 +35,15 @@ const {
   SubsidiariesProducts,
   SubsidiariesProductsSchema
 } = require('./SucursalesProductos.model.js')
+const { User, UserSchema } = require('./Usuarios.model.js')
 
 function setUpModels(sequelize) {
   Subsidiaries.init(SubsidiariesSchema, Subsidiaries.config(sequelize))
+  User.init(UserSchema, User.config(sequelize))
   Customer.init(CustomerSchema, Customer.config(sequelize))
   Rol.init(RolSchema, Rol.config(sequelize))
   Employees.init(EmployeesSchema, Employees.config(sequelize))
-  RolEmployees.init(RolEmployeesSchema, RolEmployees.config(sequelize))
+  RolUsers.init(RolUsersSchema, RolUsers.config(sequelize))
   BusinessData.init(BusinessDataSchema, BusinessData.config(sequelize))
   Provider.init(ProviderSchema, Provider.config(sequelize))
   Purchase.init(PurchaseSchema, Purchase.config(sequelize))
@@ -73,10 +72,11 @@ function setUpModels(sequelize) {
   )
 
   Subsidiaries.associate(sequelize.models)
+  User.associate(sequelize.models)
   Customer.associate(sequelize.models)
   Employees.associate(sequelize.models)
   Rol.associate(sequelize.models)
-  RolEmployees.associate(sequelize.models)
+  RolUsers.associate(sequelize.models)
   Provider.associate(sequelize.models)
   Purchase.associate(sequelize.models)
   Sells.associate(sequelize.models)

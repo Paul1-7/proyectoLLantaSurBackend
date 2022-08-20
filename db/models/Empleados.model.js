@@ -1,18 +1,19 @@
 const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
 const { SUBSIDIARIES_TABLE } = require('./Sucursales.model.js')
+const { USER_TABLE } = require('./Usuarios.model.js')
 
 const EMPLOYEES_TABLE = 'Empleados'
 
 const EmployeesSchema = {
   idEmp: {
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
     field: 'id_emp',
     validate: {
-      isInt: true
+      isUUID: 4
     }
   },
   nombreEmp: {
@@ -38,24 +39,7 @@ const EmployeesSchema = {
     field: 'foto_emp',
     allowNull: false
   },
-  ciEmp: {
-    type: DataTypes.STRING,
-    field: 'ci_emp',
-    allowNull: false,
-    validate: {
-      is: msg.isAlphanumeric,
-      notNull: msg.notNull
-    }
-  },
-  passwordEmp: {
-    type: DataTypes.STRING,
-    field: 'password_emp',
-    allowNull: false,
-    validate: {
-      notNull: msg.notNull,
-      is: msg.password
-    }
-  },
+
   estadoEmp: {
     type: DataTypes.INTEGER,
     field: 'estado_emp',
@@ -65,44 +49,31 @@ const EmployeesSchema = {
       is: msg.isState
     }
   },
-  celularEmp: {
-    type: DataTypes.INTEGER,
-    field: 'celular_emp',
-    allowNull: true,
-    validate: {
-      is: msg.isPhone
-    }
-  },
-  usuarioEmp: {
-    type: DataTypes.STRING,
-    field: 'usuario_emp',
-    allowNull: false,
-    unique: true,
-    validate: {
-      is: msg.isAlphanumeric,
-      notNull: msg.notNull
-    }
-  },
-  emailEmp: {
-    type: DataTypes.STRING,
-    field: 'email_emp',
-    allowNull: false,
-    unique: true,
-    validate: {
-      isEmail: msg.isEmail,
-      notNull: msg.notNull
-    }
-  },
+
   idSuc: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'id_suc',
     allowNull: false,
     validate: {
-      isNumeric: msg.isNumeric
+      isUUID: 4
     },
     references: {
       model: SUBSIDIARIES_TABLE,
       key: 'id_suc'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  },
+  idUsuario: {
+    type: DataTypes.STRING,
+    field: 'id_usuario',
+    allowNull: false,
+    validate: {
+      isUUID: 4
+    },
+    references: {
+      model: USER_TABLE,
+      key: 'id_usuario'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
@@ -122,12 +93,8 @@ class Employees extends Model {
     this.belongsTo(models.Sucursales, {
       foreignKey: 'id_suc'
     })
-
-    this.belongsToMany(models.Roles, {
-      through: models.Roles_Empleados,
-      as: 'roles',
-      foreignKey: 'idEmp',
-      otherKey: 'idRol'
+    this.belongsTo(models.Usuarios, {
+      foreignKey: 'id_usuario'
     })
   }
 

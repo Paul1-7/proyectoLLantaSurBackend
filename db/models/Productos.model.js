@@ -8,13 +8,13 @@ const PRODUCTS_TABLE = 'Productos'
 
 const ProductsSchema = {
   idProd: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
     allowNull: false,
-    autoIncrement: true,
     field: 'id_prod',
     validate: {
-      isInt: true
+      isUUID: 4
     }
   },
   imagenProd: {
@@ -35,16 +35,6 @@ const ProductsSchema = {
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
-    }
-  },
-  stockProd: {
-    type: DataTypes.INTEGER,
-    field: 'stock_prod',
-    allowNull: false,
-    validate: {
-      isNumeric: msg.isNumeric,
-      notNull: msg.notNull,
-      min: msg.positiveNumber
     }
   },
   precioCompra: {
@@ -89,11 +79,11 @@ const ProductsSchema = {
     }
   },
   idProv: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'id_prov',
     allowNull: false,
     validate: {
-      isNumeric: msg.isNumeric
+      isUUID: 4
     },
     references: {
       model: PROVIDER_TABLE,
@@ -103,11 +93,11 @@ const ProductsSchema = {
     onDelete: 'SET NULL'
   },
   idMarca: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'id_marca',
     allowNull: false,
     validate: {
-      isNumeric: msg.isNumeric
+      isUUID: 4
     },
     references: {
       model: BRANDS_TABLE,
@@ -117,11 +107,11 @@ const ProductsSchema = {
     onDelete: 'SET NULL'
   },
   idCat: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'id_cat',
     allowNull: false,
     validate: {
-      isNumeric: msg.isNumeric
+      isUUID: 4
     },
     references: {
       model: CATEGORIES_TABLE,

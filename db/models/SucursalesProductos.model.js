@@ -1,4 +1,5 @@
 const { Model, DataTypes } = require('sequelize')
+const msg = require('../../utils/validationsMsg.js')
 const { PRODUCTS_TABLE } = require('./Productos.model.js')
 const { SUBSIDIARIES_TABLE } = require('./Sucursales.model.js')
 
@@ -7,38 +8,48 @@ const SUBSIDIARIES_PRODUCTS_TABLE = 'Sucursales_Productos'
 const SubsidiariesProductsSchema = {
   idSucProd: {
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
     field: 'id_suc_prod',
     validate: {
-      isInt: true
+      isUUID: 4
+    }
+  },
+  stockProd: {
+    type: DataTypes.INTEGER,
+    field: 'stock_prod',
+    allowNull: false,
+    validate: {
+      isNumeric: msg.isNumeric,
+      notNull: msg.notNull,
+      min: msg.positiveNumber
     }
   },
   idSuc: {
     allowNull: false,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'id_suc',
     references: {
       model: SUBSIDIARIES_TABLE,
       key: 'id_suc'
     },
     validate: {
-      isInt: true
+      isUUID: 4
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   },
   idProd: {
     allowNull: false,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'id_prod',
     references: {
       model: PRODUCTS_TABLE,
       key: 'id_prod'
     },
     validate: {
-      isInt: true
+      isUUID: 4
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'

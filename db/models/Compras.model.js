@@ -8,12 +8,12 @@ const PURCHASE_TABLE = 'Compras'
 const PurchaseSchema = {
   idCompra: {
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
     field: 'id_compra',
     validate: {
-      isInt: true
+      isUUID: 4
     }
   },
   totalCompra: {
@@ -35,11 +35,11 @@ const PurchaseSchema = {
     }
   },
   idProv: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'id_prov',
     allowNull: false,
     validate: {
-      isNumeric: msg.isNumeric
+      isUUID: 4
     },
     references: {
       model: PROVIDER_TABLE,
@@ -49,11 +49,11 @@ const PurchaseSchema = {
     onDelete: 'SET NULL'
   },
   idEmp: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'id_emp',
     allowNull: false,
     validate: {
-      isNumeric: msg.isNumeric
+      isUUID: 4
     },
     references: {
       model: EMPLOYEES_TABLE,

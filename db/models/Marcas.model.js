@@ -6,12 +6,12 @@ const BRANDS_TABLE = 'Marcas'
 const BrandsSchema = {
   idMarca: {
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
     field: 'id_marca',
     validate: {
-      isInt: true
+      isUUID: 4
     }
   },
   nombreMarca: {

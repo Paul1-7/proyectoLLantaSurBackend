@@ -7,12 +7,12 @@ const ORDERS_TABLE = 'Pedidos'
 const OrdersSchema = {
   idPedido: {
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
     field: 'id_pedido',
     validate: {
-      isInt: true
+      isUUID: 4
     }
   },
   totalPedido: {
@@ -44,11 +44,11 @@ const OrdersSchema = {
   },
 
   idCliente: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'id_cliente',
     allowNull: false,
     validate: {
-      isNumeric: msg.isNumeric
+      isUUID: 4
     },
     references: {
       model: CUSTOMER_TABLE,

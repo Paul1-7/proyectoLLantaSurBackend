@@ -6,12 +6,12 @@ const SUBSIDIARIES_TABLE = 'Sucursales'
 const SubsidiariesSchema = {
   idSuc: {
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
     field: 'id_suc',
     validate: {
-      isInt: true
+      isUUID: 4
     }
   },
   nombreSuc: {

@@ -8,14 +8,15 @@ const SellsDetailSchema = {
   idVenta: {
     primaryKey: true,
     allowNull: false,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
     field: 'id_venta',
     references: {
       model: SELLS_TABLE,
       key: 'id_venta'
     },
     validate: {
-      isInt: true
+      isUUID: 4
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
@@ -23,14 +24,14 @@ const SellsDetailSchema = {
   idProd: {
     primaryKey: true,
     allowNull: false,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'id_prod',
     references: {
       model: PRODUCTS_TABLE,
       key: 'id_prod'
     },
     validate: {
-      isInt: true
+      isUUID: 4
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'

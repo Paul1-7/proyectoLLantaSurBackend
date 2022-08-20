@@ -8,15 +8,15 @@ const REVIEWS_TABLE = 'Reviews'
 const ReviewsSchema = {
   idCliente: {
     primaryKey: true,
-    allowNull: false,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
     field: 'id_cliente',
     references: {
       model: CUSTOMER_TABLE,
       key: 'id_cliente'
     },
     validate: {
-      isInt: true
+      isUUID: 4
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
@@ -24,14 +24,14 @@ const ReviewsSchema = {
   idProd: {
     primaryKey: true,
     allowNull: false,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'id_prod',
     references: {
       model: PRODUCTS_TABLE,
       key: 'id_prod'
     },
     validate: {
-      isInt: true
+      isUUID: 4
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'

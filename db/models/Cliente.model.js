@@ -1,17 +1,18 @@
 const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
+const { USER_TABLE } = require('./Usuarios.model.js')
 
 const CUSTOMER_TABLE = 'Clientes'
 
 const CustomerSchema = {
   idCliente: {
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
     field: 'id_cliente',
     validate: {
-      isInt: true
+      isUUID: 4
     }
   },
   nombre: {
@@ -42,61 +43,23 @@ const CustomerSchema = {
       notNull: msg.notNull
     }
   },
-  ciNit: {
-    type: DataTypes.STRING,
-    field: 'ci_nit',
-    allowNull: false,
-    validate: {
-      is: msg.isAlphanumeric,
-      notNull: msg.notNull
-    }
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      notNull: msg.notNull,
-      is: msg.password
-    }
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    unique: true,
-    validate: {
-      isEmail: msg.isEmail
-    }
-  },
-
-  usuario: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-    validate: {
-      is: msg.isAlphanumeric,
-      notNull: msg.notNull
-    }
-  },
   estado: {
     type: DataTypes.INTEGER,
     defaultValue: 1
   },
-  celular: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    unique: true,
+  idUsuario: {
+    type: DataTypes.STRING,
+    field: 'id_usuario',
+    allowNull: false,
     validate: {
-      is: msg.isPhone
-    }
-  },
-  tokenRecovery: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  smsValidacion: {
-    type: DataTypes.STRING,
-    field: 'sms_validacion',
-    allowNull: true
+      isUUID: 4
+    },
+    references: {
+      model: USER_TABLE,
+      key: 'id_usuario'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   }
 }
 
@@ -111,6 +74,9 @@ class Customer extends Model {
     })
     this.hasMany(models.Reviews, {
       foreignKey: 'id_cliente'
+    })
+    this.belongsTo(models.Usuarios, {
+      foreignKey: 'id_usuario'
     })
   }
 
