@@ -1,77 +1,23 @@
 const express = require('express')
-const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
-const { checkId } = require('../middlewares/validator.handle.js')
 const {
   getAllSubsidiaries,
   findSubsidiary,
   createSubsidiary,
   updateSubsidiary,
   deleteSubsidiary
-} = require('../services/sucursales.service.js')
+} = require('../controllers/sucursales.controller.js')
+const { checkId } = require('../middlewares/validator.handle.js')
 
 const subsidiaryRoute = express.Router()
 
-const msg = {
-  notFound: 'Sucursal no encontrada',
-  delete: 'Sucursal eliminada'
-}
+subsidiaryRoute.get('/', getAllSubsidiaries)
 
-subsidiaryRoute.get('/', async (req, res, next) => {
-  try {
-    const subsidiary = await getAllSubsidiaries()
-    res.json(subsidiary)
-  } catch (error) {
-    next(error)
-  }
-})
+subsidiaryRoute.get('/:id', checkId, findSubsidiary)
 
-subsidiaryRoute.get('/:id', checkId, async (req, res, next) => {
-  try {
-    const { id } = req.params
-    const subsidiary = await findSubsidiary(id)
+subsidiaryRoute.post('/', createSubsidiary)
 
-    if (!subsidiary) return ERROR_RESPONSE.notFound(msg.notFound, res)
-    res.json(subsidiary)
-  } catch (error) {
-    next(error)
-  }
-})
+subsidiaryRoute.put('/:id', checkId, updateSubsidiary)
 
-subsidiaryRoute.post('/', async (req, res, next) => {
-  try {
-    const { body } = req
-    const subsidiary = await createSubsidiary(body)
-    res.json(subsidiary)
-  } catch (error) {
-    next(error)
-  }
-})
-
-subsidiaryRoute.put('/:id', checkId, async (req, res, next) => {
-  try {
-    const { id } = req.params
-    const { body } = req
-    const subsidiary = await updateSubsidiary(id, body)
-
-    if (!subsidiary) return ERROR_RESPONSE.notFound(msg.notFound, res)
-
-    res.json(subsidiary)
-  } catch (error) {
-    next(error)
-  }
-})
-
-subsidiaryRoute.delete('/:id', checkId, async (req, res, next) => {
-  try {
-    const { id } = req.params
-    const subsidiary = await deleteSubsidiary(id)
-
-    if (!subsidiary) return ERROR_RESPONSE.notFound(msg.notFound, res)
-
-    res.json({ message: msg.delete })
-  } catch (error) {
-    next(error)
-  }
-})
+subsidiaryRoute.delete('/:id', checkId, deleteSubsidiary)
 
 module.exports = subsidiaryRoute
