@@ -39,7 +39,24 @@ const EmployeesSchema = {
     field: 'foto_emp',
     allowNull: false
   },
-
+  ciNitEmp: {
+    type: DataTypes.STRING,
+    field: 'ci_nit_emp',
+    allowNull: false,
+    validate: {
+      is: msg.isAlphanumeric,
+      notNull: msg.notNull
+    }
+  },
+  celularEmp: {
+    type: DataTypes.INTEGER,
+    field: 'celular_emp',
+    allowNull: true,
+    unique: true,
+    validate: {
+      is: msg.isPhone
+    }
+  },
   estadoEmp: {
     type: DataTypes.INTEGER,
     field: 'estado_emp',

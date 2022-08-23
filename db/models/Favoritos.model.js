@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require('sequelize')
 const { CUSTOMER_TABLE } = require('./Cliente.model')
 const { PRODUCTS_TABLE } = require('./Productos.model')
+const { USER_TABLE } = require('./Usuarios.model')
 
 const FAVORITES_TABLE = 'Favoritos'
 
@@ -12,8 +13,8 @@ const FavoritesSchema = {
     defaultValue: DataTypes.UUIDV4,
     field: 'id_cliente',
     references: {
-      model: CUSTOMER_TABLE,
-      key: 'id_cliente'
+      model: USER_TABLE,
+      key: 'id_usuario'
     },
     validate: {
       isUUID: 4
@@ -40,7 +41,7 @@ const FavoritesSchema = {
 
 class Favorites extends Model {
   static associate(models) {
-    this.belongsTo(models.Clientes, { foreignKey: 'id_cliente' })
+    this.belongsTo(models.Usuarios, { foreignKey: 'idCliente' })
     this.belongsTo(models.Productos, { foreignKey: 'id_prod' })
   }
 

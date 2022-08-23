@@ -5,21 +5,23 @@ async function getAllCustomers() {
 }
 
 async function findCustomer(id) {
-  return await models.Clientes.findByPk(id)
+  return await models.Clientes.findByPk(id, {
+    include: ['roles']
+  })
 }
 
-async function createCustomer(user) {
-  return await models.Clientes.create(user)
+async function createCustomer(customer) {
+  return await models.Clientes.create(customer)
 }
 
 async function updateCustomer(id, changes) {
-  const user = await models.Clientes.findByPk(id)
-  return await user?.update(changes)
+  const customer = await models.Clientes.findByPk(id)
+  return await customer?.update(changes)
 }
 
 async function deleteCustomer(id) {
-  const user = await models.Clientes.findByPk(id)
-  return await user?.destroy()
+  const customer = await models.Clientes.findByPk(id)
+  return await customer?.destroy()
 }
 
 module.exports = {

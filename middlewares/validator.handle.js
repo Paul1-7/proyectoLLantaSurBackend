@@ -3,7 +3,7 @@ const { ERROR_RESPONSE } = require('./error.handle.js')
 const msg = {
   isIdNumberValid: 'el id no es valido',
   notFoundId: 'el id no existe',
-  notFoundRoles: 'no se encontraron roles en la peticion',
+  notFoundParam: (param) => `no se encontró el valor ${param} en la peticion`,
   isRolesValid: 'los roles no son validos',
   isImageTypeValid: 'la imagen no es valida',
   isImageSizeValid: 'la imagen no debe superar los 1.5mb'
@@ -11,24 +11,23 @@ const msg = {
 
 function checkId(req, res, next) {
   const { id } = req.params
+  const regex =
+    /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/
+
   if (!id) return ERROR_RESPONSE.notFound(msg.notFoundId, res)
-  if (isNaN(Number(id)))
+  if (!regex.test(id))
     return ERROR_RESPONSE.notAcceptable(msg.isIdNumberValid, res)
   next()
 }
 
-function checkRolesBody(req, res, next) {
-  const { body } = req
-  const { roles } = body
-
-  const regexRol = /\[\{[\{\w+\:\"\}\,]*\}\]/
-
-  if (!roles) return ERROR_RESPONSE.notFound(msg.notFoundRoles, res)
-
-  if (regexRol.test(roles))
-    return ERROR_RESPONSE.notAcceptable(msg.isRolesValid, res)
-
-  next()
+function checkBodyParams(...params) {
+  return (req, res, next) => {
+    params.forEach((param) => {
+      if (!req.body[param])
+        return ERROR_RESPONSE.notFound(msg.notFoundParam(param), res)
+    })
+    next()
+  }
 }
 
 function fileTypeCheck(req, res, next) {
@@ -53,4 +52,4 @@ function fileSizeCheck(req, res, next) {
   next()
 }
 
-module.exports = { checkId, checkRolesBody, fileTypeCheck, fileSizeCheck }
+module.exports = { checkId, checkBodyParams, fileTypeCheck, fileSizeCheck }

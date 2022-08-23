@@ -2,6 +2,7 @@ const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
 const { CUSTOMER_TABLE } = require('./Cliente.model.js')
 const { PRODUCTS_TABLE } = require('./Productos.model.js')
+const { USER_TABLE } = require('./Usuarios.model.js')
 
 const REVIEWS_TABLE = 'Reviews'
 
@@ -12,8 +13,8 @@ const ReviewsSchema = {
     defaultValue: DataTypes.UUIDV4,
     field: 'id_cliente',
     references: {
-      model: CUSTOMER_TABLE,
-      key: 'id_cliente'
+      model: USER_TABLE,
+      key: 'id_usuario'
     },
     validate: {
       isUUID: 4
@@ -81,8 +82,9 @@ const ReviewsSchema = {
 
 class Reviews extends Model {
   static associate(models) {
-    this.belongsTo(models.Clientes, {
-      foreignKey: 'id_cliente'
+    this.belongsTo(models.Usuarios, {
+      foreignKey: 'idCliente',
+      as: 'usuarios'
     })
     this.belongsTo(models.Productos, {
       foreignKey: 'id_prod'

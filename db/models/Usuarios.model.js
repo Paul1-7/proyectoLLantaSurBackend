@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
+const { SUBSIDIARIES_TABLE } = require('./Sucursales.model.js')
 
 const USER_TABLE = 'Usuarios'
 
@@ -8,10 +9,38 @@ const UserSchema = {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
-    defaultValue: DataTypes.STRING,
+    defaultValue: DataTypes.UUIDV4,
     field: 'id_usuario',
     validate: {
-      isInt: true
+      isUUID: 4
+    }
+  },
+  nombre: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      is: msg.isAlphanumeric,
+      notNull: msg.notNull
+    }
+  },
+  apellido: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      is: msg.isAlphanumeric,
+      notNull: msg.notNull
+    }
+  },
+  foto: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  direccion: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      is: msg.isAlphanumeric,
+      notNull: msg.notNull
     }
   },
   ciNit: {
@@ -22,6 +51,19 @@ const UserSchema = {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
+  },
+  celular: {
+    type: DataTypes.INTEGER,
+    field: 'celular',
+    allowNull: true,
+    unique: true,
+    validate: {
+      is: msg.isPhone
+    }
+  },
+  estado: {
+    type: DataTypes.INTEGER,
+    defaultValue: 1
   },
   password: {
     type: DataTypes.STRING,
@@ -49,14 +91,7 @@ const UserSchema = {
       notNull: msg.notNull
     }
   },
-  celular: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    unique: true,
-    validate: {
-      is: msg.isPhone
-    }
-  },
+
   tokenRecovery: {
     type: DataTypes.STRING,
     allowNull: true
@@ -65,22 +100,59 @@ const UserSchema = {
     type: DataTypes.STRING,
     field: 'sms_validacion',
     allowNull: true
+  },
+  idSuc: {
+    type: DataTypes.STRING,
+    field: 'id_suc',
+    allowNull: false,
+    validate: {
+      isUUID: 4
+    },
+    references: {
+      model: SUBSIDIARIES_TABLE,
+      key: 'id_suc'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   }
 }
 
 class User extends Model {
   static associate(models) {
-    // this.hasMany(models.Roles, {
-    //   foreignKey: 'id_usuario'
-    // })
     this.belongsToMany(models.Roles, {
       through: models.Roles_Usuarios,
       as: 'roles',
       foreignKey: 'idUsuario',
       otherKey: 'idRol'
     })
-    this.hasOne(models.Empleados, { foreignKey: 'id_usuario' })
-    this.hasOne(models.Clientes, { foreignKey: 'id_usuario' })
+    this.hasMany(models.Ventas, {
+      foreignKey: 'idVendedor',
+      sourceKey: 'idUsuario'
+    })
+    this.hasMany(models.Ventas, {
+      foreignKey: 'idCliente',
+      sourceKey: 'idUsuario'
+    })
+    this.hasMany(models.Compras, {
+      foreignKey: 'idEmp',
+      as: 'compras'
+    })
+    this.hasMany(models.Pedidos, {
+      foreignKey: 'idCliente',
+      as: 'pedidos'
+    })
+    this.hasMany(models.Reviews, {
+      foreignKey: 'idCliente',
+      as: 'reviews'
+    })
+    this.hasMany(models.Favoritos, {
+      foreignKey: 'idCliente',
+      as: 'favorito'
+    })
+    this.belongsTo(models.Sucursales, {
+      foreignKey: 'idSuc',
+      as: 'sucursal'
+    })
   }
 
   static config(sequelize) {

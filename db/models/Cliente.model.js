@@ -43,6 +43,24 @@ const CustomerSchema = {
       notNull: msg.notNull
     }
   },
+  ciNit: {
+    type: DataTypes.STRING,
+    field: 'ci_nit',
+    allowNull: false,
+    validate: {
+      is: msg.isAlphanumeric,
+      notNull: msg.notNull
+    }
+  },
+  celular: {
+    type: DataTypes.INTEGER,
+    field: 'celular',
+    allowNull: true,
+    unique: true,
+    validate: {
+      is: msg.isPhone
+    }
+  },
   estado: {
     type: DataTypes.INTEGER,
     defaultValue: 1
@@ -66,17 +84,24 @@ const CustomerSchema = {
 class Customer extends Model {
   static associate(models) {
     this.hasMany(models.Ventas, {
-      foreignKey: 'id_cliente'
+      foreignKey: 'idCliente',
+      as: 'ventas'
     })
-    this.hasMany(models.Pedidos, { foreignKey: 'id_cliente' })
+    this.hasMany(models.Pedidos, {
+      foreignKey: 'idCliente',
+      as: 'pedidos'
+    })
     this.hasMany(models.Favoritos, {
-      foreignKey: 'id_cliente'
+      foreignKey: 'idCliente',
+      as: 'favoritos'
     })
     this.hasMany(models.Reviews, {
-      foreignKey: 'id_cliente'
+      foreignKey: 'idCliente',
+      as: 'reviews'
     })
     this.belongsTo(models.Usuarios, {
-      foreignKey: 'id_usuario'
+      foreignKey: 'idUsuario',
+      as: 'usuario'
     })
   }
 

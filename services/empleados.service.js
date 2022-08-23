@@ -1,35 +1,35 @@
 const { models } = require('../libs/sequelize.js')
 
-async function getAllEmployes() {
+async function getAllEmployees() {
   return await models.Empleados.findAll({
-    include: ['roles']
+    include: ['usuarios']
   })
 }
 
-async function findEmploye(id) {
+async function findEmployee(id) {
   return await models.Empleados.findByPk(id, {
     include: ['roles']
   })
 }
 
-async function createEmploye(employee) {
+async function createEmployee(employee) {
   return await models.Empleados.create(employee)
 }
 
-async function updateEmploye(id, changes) {
+async function updateEmployee(id, changes) {
   const employee = await models.Empleados.findByPk(id)
   return await employee?.update(changes)
 }
 
-async function deleteEmploye(id) {
+async function deleteEmployee(id) {
   const employee = await models.Empleados.findByPk(id)
   return await employee?.destroy()
 }
 
 module.exports = {
-  getAllEmployes,
-  findEmploye,
-  createEmploye,
-  updateEmploye,
-  deleteEmploye
+  getAllEmployees,
+  findEmployee,
+  createEmployee,
+  updateEmployee,
+  deleteEmployee
 }

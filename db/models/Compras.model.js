@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
 const { PROVIDER_TABLE } = require('./Proveedores.model.js')
-const { EMPLOYEES_TABLE } = require('./Empleados.model.js')
+const { USER_TABLE } = require('./Usuarios.model.js')
 
 const PURCHASE_TABLE = 'Compras'
 
@@ -56,8 +56,8 @@ const PurchaseSchema = {
       isUUID: 4
     },
     references: {
-      model: EMPLOYEES_TABLE,
-      key: 'id_emp'
+      model: USER_TABLE,
+      key: 'id_usuario'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
@@ -67,7 +67,7 @@ const PurchaseSchema = {
 class Purchase extends Model {
   static associate(models) {
     this.belongsTo(models.Proveedores, { foreignKey: 'id_prov' })
-    this.belongsTo(models.Empleados, { foreignKey: 'id_emp' })
+    this.belongsTo(models.Usuarios, { foreignKey: 'idEmp' })
     this.hasMany(models.Detalle_Compras, {
       foreignKey: 'id_compra'
     })

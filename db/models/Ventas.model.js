@@ -1,8 +1,7 @@
 const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
-const { EMPLOYEES_TABLE } = require('./Empleados.model.js')
-const { CUSTOMER_TABLE } = require('./Cliente.model.js')
 const { ORDERS_TABLE } = require('./Pedidos.model.js')
+const { USER_TABLE } = require('./Usuarios.model.js')
 
 const SELLS_TABLE = 'Ventas'
 
@@ -44,21 +43,6 @@ const SellsSchema = {
       is: msg.isState
     }
   },
-  idEmp: {
-    type: DataTypes.STRING,
-    field: 'id_emp',
-    allowNull: false,
-    validate: {
-      isUUID: 4
-    },
-    references: {
-      model: EMPLOYEES_TABLE,
-      key: 'id_emp'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
-  },
-
   idCliente: {
     type: DataTypes.STRING,
     field: 'id_cliente',
@@ -67,8 +51,22 @@ const SellsSchema = {
       isUUID: 4
     },
     references: {
-      model: CUSTOMER_TABLE,
-      key: 'id_cliente'
+      model: USER_TABLE,
+      key: 'id_usuario'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  },
+  idVendedor: {
+    type: DataTypes.STRING,
+    field: 'id_vendedor',
+    allowNull: false,
+    validate: {
+      isUUID: 4
+    },
+    references: {
+      model: USER_TABLE,
+      key: 'id_usuario'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
@@ -91,12 +89,20 @@ const SellsSchema = {
 
 class Sells extends Model {
   static associate(models) {
-    this.belongsTo(models.Clientes, { foreignKey: 'id_cliente' })
-    this.belongsTo(models.Empleados, { foreignKey: 'id_emp' })
-
-    this.belongsTo(models.Pedidos, { foreignKey: 'id_pedido' })
+    this.belongsTo(models.Pedidos, { foreignKey: 'idPedido' })
     this.hasMany(models.Detalle_Ventas, {
       foreignKey: 'id_venta'
+    })
+
+    this.belongsTo(models.Usuarios, {
+      foreignKey: 'idVendedor',
+      as: 'vendedor',
+      targetKey: 'idUsuario'
+    })
+    this.belongsTo(models.Usuarios, {
+      foreignKey: 'idCliente',
+      as: 'cliente',
+      targetKey: 'idUsuario'
     })
   }
 

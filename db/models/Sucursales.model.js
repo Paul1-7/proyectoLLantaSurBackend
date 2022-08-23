@@ -55,7 +55,7 @@ const SubsidiariesSchema = {
 
 class Subsidiaries extends Model {
   static associate(models) {
-    this.hasMany(models.Empleados, { foreignKey: 'id_suc' })
+    this.hasMany(models.Usuarios, { foreignKey: 'idSuc' })
     this.belongsToMany(models.Productos, {
       through: models.Sucursales_Productos,
       as: 'productos',

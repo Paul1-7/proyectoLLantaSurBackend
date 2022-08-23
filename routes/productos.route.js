@@ -16,7 +16,7 @@ const {
   findProduct,
   updateProduct
 } = require('../services/productos.service.js')
-const { uploadImage } = require('../utils/imgHandle.js')
+const { uploadImage } = require('../utils/imgHandler.js')
 
 const productsRoute = express.Router()
 const { DEFAULT_PRODUCT_IMG_URl } = config

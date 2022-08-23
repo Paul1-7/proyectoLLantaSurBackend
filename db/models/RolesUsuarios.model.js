@@ -1,27 +1,28 @@
 const { Model, DataTypes } = require('sequelize')
 const { EMPLOYEES_TABLE } = require('./Empleados.model.js')
 const { ROL_TABLE } = require('./Roles.model.js')
+const { USER_TABLE } = require('./Usuarios.model.js')
 
 const ROL_USERS_TABLE = 'Roles_Usuarios'
 
 const RolUsersSchema = {
-  idRolEmp: {
+  idRolUsuario: {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
-    field: 'id_rol_emp',
+    field: 'id_rol_usuario',
     validate: {
       isUUID: 4
     }
   },
-  idEmp: {
+  idUsuario: {
     allowNull: false,
     type: DataTypes.STRING,
-    field: 'id_emp',
+    field: 'id_usuario',
     references: {
-      model: EMPLOYEES_TABLE,
-      key: 'id_emp'
+      model: USER_TABLE,
+      key: 'id_usuario'
     },
     validate: {
       isUUID: 4

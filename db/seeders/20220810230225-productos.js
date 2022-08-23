@@ -11,7 +11,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    await queryInterface.bulkInsert('Productos', [{}], {})
+    //await queryInterface.bulkInsert('Productos', [{}], {})
   },
 
   async down(queryInterface, Sequelize) {

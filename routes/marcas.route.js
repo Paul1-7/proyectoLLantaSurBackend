@@ -1,13 +1,13 @@
 const express = require('express')
-const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
-const { checkId } = require('../middlewares/validator.handle.js')
 const {
   getAllBrands,
   findBrand,
   createBrand,
   updateBrand,
   deleteBrand
-} = require('../services/marcas.service.js')
+} = require('../controllers/marcas.controller.js')
+const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
+const { checkId } = require('../middlewares/validator.handle.js')
 
 const brandRoute = express.Router()
 
@@ -16,62 +16,14 @@ const msg = {
   delete: 'Marca eliminada'
 }
 
-brandRoute.get('/', async (req, res, next) => {
-  try {
-    const brand = await getAllBrands()
-    res.json(brand)
-  } catch (error) {
-    next(error)
-  }
-})
+brandRoute.get('/', getAllBrands)
 
-brandRoute.get('/:id', checkId, async (req, res, next) => {
-  try {
-    const { id } = req.params
-    const brand = await findBrand(id)
+brandRoute.get('/:id', checkId, findBrand)
 
-    if (!brand) return ERROR_RESPONSE.notFound(msg.notFound, res)
-    res.json(brand)
-  } catch (error) {
-    next(error)
-  }
-})
+brandRoute.post('/', createBrand)
 
-brandRoute.post('/', async (req, res, next) => {
-  try {
-    const { body } = req
-    const brand = await createBrand(body)
-    res.json(brand)
-  } catch (error) {
-    next(error)
-  }
-})
+brandRoute.put('/:id', checkId, updateBrand)
 
-brandRoute.put('/:id', checkId, async (req, res, next) => {
-  try {
-    const { id } = req.params
-    const { body } = req
-    const brand = await updateBrand(id, body)
-
-    if (!brand) return ERROR_RESPONSE.notFound(msg.notFound, res)
-
-    res.json(brand)
-  } catch (error) {
-    next(error)
-  }
-})
-
-brandRoute.delete('/:id', checkId, async (req, res, next) => {
-  try {
-    const { id } = req.params
-    const brand = await deleteBrand(id)
-
-    if (!brand) return ERROR_RESPONSE.notFound(msg.notFound, res)
-
-    res.json({ message: msg.delete })
-  } catch (error) {
-    next(error)
-  }
-})
+brandRoute.delete('/:id', checkId, deleteBrand)
 
 module.exports = brandRoute
