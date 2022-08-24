@@ -54,7 +54,7 @@ const ProductsSchema = {
       isFloat: msg.isFloat,
       notNull: msg.notNull,
       isGreaterThan(value) {
-        if (value < this.precioCompra) {
+        if (parseInt(value) < parseInt(this.precioCompra)) {
           throw new Error(msg.msgIsGreaterThan)
         }
       }
@@ -146,6 +146,12 @@ class Products extends Model {
     })
     this.hasMany(models.Reviews, {
       foreignKey: 'id_prod'
+    })
+    this.belongsToMany(models.Sucursales, {
+      through: models.Sucursales_Productos,
+      as: 'sucursal',
+      foreignKey: 'id_prod',
+      otherKey: 'id_suc'
     })
   }
 

@@ -5,7 +5,6 @@ const {
   updateRolUser,
   removeRolUser
 } = require('../services/rolesUsuarios.service.js')
-const { findSubsidiary } = require('../services/sucursales.service.js')
 const userServices = require('../services/usuarios.service.js')
 const {
   rolesName,
@@ -49,9 +48,6 @@ const createEmployee = async (req, res, next) => {
     const { body } = req
     let { roles, ...dataUser } = body
 
-    const subsidiary = await findSubsidiary(dataUser.idSuc)
-    if (!subsidiary) return ERROR_RESPONSE.notFound(msg.subsidiaryNotFound, res)
-
     const allRoles = await getAllRols()
     if (!verifyRoles(allRoles, roles))
       return ERROR_RESPONSE.notFound(msg.rolNotFound, res)
@@ -80,9 +76,6 @@ const updateEmployee = async (req, res, next) => {
     const { id } = req.params
     const { body } = req
     let { roles, ...dataEmployee } = body
-
-    const subsidiary = await findSubsidiary(dataEmployee.idSuc)
-    if (!subsidiary) return ERROR_RESPONSE.notFound(msg.subsidiaryNotFound, res)
 
     const allRoles = await getAllRols()
     if (!verifyRoles(allRoles, roles))

@@ -4,7 +4,6 @@ const {
   addRolUser,
   removeRolUser
 } = require('../services/rolesUsuarios.service.js')
-const { findSubsidiary } = require('../services/sucursales.service.js')
 const services = require('../services/usuarios.service.js')
 const { rolesName } = require('../utils/dataHandler.js')
 
@@ -43,9 +42,6 @@ const createCustomer = async (req, res, next) => {
   try {
     const { body } = req
 
-    const subsidiary = await findSubsidiary(body.idSuc)
-    if (!subsidiary) return ERROR_RESPONSE.notFound(msg.subsidiaryNotFound, res)
-
     const user = await services.createUser(body)
     const rolClient = await findRolByName(rolesName.CLIENTE)
     const { idRol } = rolClient
@@ -63,9 +59,6 @@ const updateCustomer = async (req, res, next) => {
   try {
     const { id } = req.params
     const { body } = req
-
-    const subsidiary = await findSubsidiary(body.idSuc)
-    if (!subsidiary) return ERROR_RESPONSE.notFound(msg.subsidiaryNotFound, res)
 
     const customer = await services.updateUser(id, body)
 

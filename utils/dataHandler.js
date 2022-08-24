@@ -13,10 +13,20 @@ const existClientRol = (allRoles, rolesUser) => {
   return idRolesUser.includes(clientRol.idRol)
 }
 
+function parseProduct(product) {
+  const { stockProd, precioCompra, precioVenta, fechaProd } = product
+
+  product.stockProd = parseInt(stockProd)
+  product.precioCompra = parseFloat(precioCompra)
+  product.precioVenta = parseFloat(precioVenta)
+  product.fechaProd = new Date(fechaProd)
+  return product
+}
+
 const rolesName = {
   ADMINiSTRADOR: 'Administrador',
   EMPLEADO_VENTAS: 'Empleado de Ventas',
   CLIENTE: 'Cliente'
 }
 
-module.exports = { verifyRoles, rolesName, existClientRol }
+module.exports = { verifyRoles, rolesName, existClientRol, parseProduct }

@@ -1,62 +1,107 @@
-const { ERROR_RESPONSE } = require('../middlewares/error.handle')
-const services = require('../services/ventas.service')
+const config = require('../config/config.js')
+const { removeImgCloudinary } = require('../libs/cloudinary.js')
+const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
+const services = require('../services/productos.service.js')
+const { parseProduct } = require('../utils/dataHandler.js')
+const { uploadImage } = require('../utils/imgHandler.js')
 
 const msg = {
-  notFound: 'Venta no encontrada',
-  delete: 'Venta eliminada'
+  productNameExist: 'El nombre del producto ya existe',
+  notFound: 'Producto no encontrado',
+  delete: 'Producto eliminado'
 }
+const { DEFAULT_PRODUCT_IMG_URl } = config
 
-const getAllSells = async (req, res, next) => {
+const getAllProducts = async (req, res, next) => {
   try {
-    const sell = await services.getAllSells()
-    res.json(sell)
+    const products = await services.getAllProducts()
+    res.json(products)
   } catch (error) {
     next(error)
   }
 }
 
-const findCategory = async (req, res, next) => {
+const findProduct = async (req, res, next) => {
   try {
     const { id } = req.params
-    const sell = await services.findCategory(id)
+    const product = await services.findProduct(id)
 
-    if (!sell) return ERROR_RESPONSE.notFound(msg.notFound, res)
-    res.json(sell)
+    if (!product) return ERROR_RESPONSE.notFound(msg.notFound, res)
+    res.json(product)
   } catch (error) {
     next(error)
   }
 }
 
-const createCategory = async (req, res, next) => {
+const createProduct = async (req, res, next) => {
   try {
     const { body } = req
-    const sell = await services.createCategory(body)
-    res.json(sell)
+
+    let imgCloudinary = null
+    const productNameExist = await services.findProductByName(body.nombreProd)
+
+    if (productNameExist)
+      return ERROR_RESPONSE.badRequest(msg.productNameExist, res)
+
+    if (req.files?.imagenProd) {
+      const { imagenProd } = req.files
+      imgCloudinary = await uploadImage(imagenProd.tempFilePath)
+    }
+
+    body.imagenProd = imgCloudinary
+      ? imgCloudinary.secure_url
+      : DEFAULT_PRODUCT_IMG_URl
+
+    body.idImgProd = imgCloudinary ? imgCloudinary.public_id : null
+    const productParsed = parseProduct(body)
+    const product = await services.createProduct(productParsed)
+
+    res.json(product)
   } catch (error) {
     next(error)
   }
 }
 
-const updateCategory = async (req, res, next) => {
+const updateProduct = async (req, res, next) => {
   try {
     const { id } = req.params
     const { body } = req
-    const sell = await services.updateCategory(id, body)
+    let imgCloudinary = null
 
-    if (!sell) return ERROR_RESPONSE.notFound(msg.notFound, res)
+    const existProduct = await services.findProduct(id)
+    if (!existProduct) return ERROR_RESPONSE.notFound(msg.notFound, res)
 
-    res.json(sell)
+    if (req.files?.imagenProd) {
+      const { imagenProd } = req.files
+      await removeImgCloudinary(existProduct.idImgProd)
+      imgCloudinary = await uploadImage(imagenProd.tempFilePath)
+    }
+
+    body.imagenProd = imgCloudinary
+      ? imgCloudinary.secure_url
+      : existProduct.imagenProd
+    body.idImgProd = imgCloudinary
+      ? imgCloudinary.public_id
+      : existProduct.idImgProd
+
+    const productParsed = parseProduct(body)
+    const product = await services.updateProduct(id, productParsed)
+
+    delete product.dataValues.password
+    res.json(product)
   } catch (error) {
     next(error)
   }
 }
 
-const deleteCategory = async (req, res, next) => {
+const deleteProduct = async (req, res, next) => {
   try {
     const { id } = req.params
-    const sell = await services.deleteCategory(id)
+    const product = await services.deleteProduct(id)
 
-    if (!sell) return ERROR_RESPONSE.notFound(msg.notFound, res)
+    if (!product) return ERROR_RESPONSE.notFound(msg.notFound, res)
+
+    await removeImgCloudinary(product.idImgProd)
 
     res.json({ message: msg.delete })
   } catch (error) {
@@ -65,9 +110,9 @@ const deleteCategory = async (req, res, next) => {
 }
 
 module.exports = {
-  getAllSells,
-  findCategory,
-  createCategory,
-  updateCategory,
-  deleteCategory
+  getAllProducts,
+  findProduct,
+  createProduct,
+  updateProduct,
+  deleteProduct
 }
