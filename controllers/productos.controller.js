@@ -2,11 +2,17 @@ const config = require('../config/config.js')
 const { removeImgCloudinary } = require('../libs/cloudinary.js')
 const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
 const services = require('../services/productos.service.js')
-const { parseProduct } = require('../utils/dataHandler.js')
+const { getAllSubsidiaries } = require('../services/sucursales.service.js')
+const {
+  addSubsidiaryProduct,
+  updateSubsidiaryProduct,
+  removeSubsidiaryProduct
+} = require('../services/sucursalesProductos.service.js')
+const { parseProduct, verifySubsidiaries } = require('../utils/dataHandler.js')
 const { uploadImage } = require('../utils/imgHandler.js')
 
 const msg = {
-  productNameExist: 'El nombre del producto ya existe',
+  notValid: 'Np se enviaron todas las sucursales',
   notFound: 'Producto no encontrado',
   delete: 'Producto eliminado'
 }
@@ -38,23 +44,27 @@ const createProduct = async (req, res, next) => {
     const { body } = req
 
     let imgCloudinary = null
-    const productNameExist = await services.findProductByName(body.nombreProd)
+    const productParsed = parseProduct(body)
+    const { stockProd, sucursales } = productParsed
+    const subsidiaries = await getAllSubsidiaries()
 
-    if (productNameExist)
-      return ERROR_RESPONSE.badRequest(msg.productNameExist, res)
+    if (!verifySubsidiaries(subsidiaries, productParsed.sucursales))
+      return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
 
     if (req.files?.imagenProd) {
       const { imagenProd } = req.files
       imgCloudinary = await uploadImage(imagenProd.tempFilePath)
     }
 
-    body.imagenProd = imgCloudinary
+    productParsed.imagenProd = imgCloudinary
       ? imgCloudinary.secure_url
       : DEFAULT_PRODUCT_IMG_URl
 
-    body.idImgProd = imgCloudinary ? imgCloudinary.public_id : null
-    const productParsed = parseProduct(body)
+    productParsed.idImgProd = imgCloudinary ? imgCloudinary.public_id : ''
+
     const product = await services.createProduct(productParsed)
+
+    await addSubsidiaryProduct(product.dataValues.idProd, sucursales, stockProd)
 
     res.json(product)
   } catch (error) {
@@ -66,28 +76,41 @@ const updateProduct = async (req, res, next) => {
   try {
     const { id } = req.params
     const { body } = req
+    const productParsed = parseProduct(body)
+    const { stockProd, sucursales } = productParsed
+    const subsidiaries = await getAllSubsidiaries()
     let imgCloudinary = null
 
     const existProduct = await services.findProduct(id)
     if (!existProduct) return ERROR_RESPONSE.notFound(msg.notFound, res)
 
+    if (!verifySubsidiaries(subsidiaries, productParsed.sucursales))
+      return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
+
     if (req.files?.imagenProd) {
       const { imagenProd } = req.files
-      await removeImgCloudinary(existProduct.idImgProd)
+
+      if (existProduct.idImgProd) {
+        await removeImgCloudinary(existProduct.idImgProd)
+      }
+
       imgCloudinary = await uploadImage(imagenProd.tempFilePath)
     }
 
-    body.imagenProd = imgCloudinary
+    productParsed.imagenProd = imgCloudinary
       ? imgCloudinary.secure_url
       : existProduct.imagenProd
-    body.idImgProd = imgCloudinary
+    productParsed.idImgProd = imgCloudinary
       ? imgCloudinary.public_id
       : existProduct.idImgProd
 
-    const productParsed = parseProduct(body)
     const product = await services.updateProduct(id, productParsed)
+    await updateSubsidiaryProduct(
+      product.dataValues.idProd,
+      sucursales,
+      stockProd
+    )
 
-    delete product.dataValues.password
     res.json(product)
   } catch (error) {
     next(error)
@@ -97,6 +120,7 @@ const updateProduct = async (req, res, next) => {
 const deleteProduct = async (req, res, next) => {
   try {
     const { id } = req.params
+    await removeSubsidiaryProduct(id)
     const product = await services.deleteProduct(id)
 
     if (!product) return ERROR_RESPONSE.notFound(msg.notFound, res)

@@ -24,7 +24,7 @@ productsRoute.post(
     useTempFiles: true,
     tempFileDir: './tmp/img'
   }),
-  //checkBodyParams(),
+  checkBodyParams('sucursales'),
   fileTypeCheck,
   fileSizeCheck,
   createProduct
