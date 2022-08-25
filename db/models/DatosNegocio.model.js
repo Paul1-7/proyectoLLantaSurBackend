@@ -64,6 +64,11 @@ const BusinessDataSchema = {
     field: 'logotipo_neg',
     allowNull: false
   },
+  idLogoNeg: {
+    type: DataTypes.STRING,
+    field: 'id_logo_neg',
+    allowNull: false
+  },
   emailNeg: {
     type: DataTypes.STRING,
     field: 'email_neg',

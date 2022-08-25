@@ -16,6 +16,14 @@ const PurchaseSchema = {
       isUUID: 4
     }
   },
+  codCompra: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    field: 'cod_compra',
+    validate: {
+      isNumeric: msg.isNumeric
+    }
+  },
   totalCompra: {
     type: DataTypes.FLOAT,
     field: 'total_compra',

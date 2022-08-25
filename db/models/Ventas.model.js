@@ -16,6 +16,14 @@ const SellsSchema = {
       isUUID: 4
     }
   },
+  codVenta: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    field: 'cod_venta',
+    validate: {
+      isNumeric: msg.isNumeric
+    }
+  },
   totalVenta: {
     type: DataTypes.FLOAT,
     field: 'total_venta',
