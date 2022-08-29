@@ -17,8 +17,8 @@ const msg = {
     msg: 'solo se permite valores numericos'
   },
   isState: {
-    args: /^[0-1]$/,
-    msg: 'solo se permite valores entre 0 y 1'
+    args: /^[0-5]$/,
+    msg: 'el valor ingresado no es correcto'
   },
   isPhone: {
     args: /^[0-9]{8}$/,

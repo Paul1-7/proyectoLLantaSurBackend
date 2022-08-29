@@ -1,5 +1,5 @@
-const { ERROR_RESPONSE } = require('../middlewares/error.handle')
-const services = require('../services/ventas.service')
+const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
+const services = require('../services/ventas.service.js')
 
 const msg = {
   notFound: 'Venta no encontrada',
@@ -15,10 +15,10 @@ const getAllSells = async (req, res, next) => {
   }
 }
 
-const findCategory = async (req, res, next) => {
+const findSell = async (req, res, next) => {
   try {
     const { id } = req.params
-    const sell = await services.findCategory(id)
+    const sell = await services.findSell(id)
 
     if (!sell) return ERROR_RESPONSE.notFound(msg.notFound, res)
     res.json(sell)
@@ -27,21 +27,21 @@ const findCategory = async (req, res, next) => {
   }
 }
 
-const createCategory = async (req, res, next) => {
+const createSell = async (req, res, next) => {
   try {
     const { body } = req
-    const sell = await services.createCategory(body)
+    const sell = await services.createSell(body)
     res.json(sell)
   } catch (error) {
     next(error)
   }
 }
 
-const updateCategory = async (req, res, next) => {
+const updateSell = async (req, res, next) => {
   try {
     const { id } = req.params
     const { body } = req
-    const sell = await services.updateCategory(id, body)
+    const sell = await services.updateSell(id, body)
 
     if (!sell) return ERROR_RESPONSE.notFound(msg.notFound, res)
 
@@ -51,10 +51,10 @@ const updateCategory = async (req, res, next) => {
   }
 }
 
-const deleteCategory = async (req, res, next) => {
+const deleteSell = async (req, res, next) => {
   try {
     const { id } = req.params
-    const sell = await services.deleteCategory(id)
+    const sell = await services.deleteSell(id)
 
     if (!sell) return ERROR_RESPONSE.notFound(msg.notFound, res)
 
@@ -66,8 +66,8 @@ const deleteCategory = async (req, res, next) => {
 
 module.exports = {
   getAllSells,
-  findCategory,
-  createCategory,
-  updateCategory,
-  deleteCategory
+  findSell,
+  createSell,
+  updateSell,
+  deleteSell
 }

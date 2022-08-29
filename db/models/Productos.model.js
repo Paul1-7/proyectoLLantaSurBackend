@@ -137,7 +137,7 @@ class Products extends Model {
       foreignKey: 'id_prod'
     })
     this.hasMany(models.Detalle_Ventas, {
-      foreignKey: 'id_prod'
+      foreignKey: 'idProd'
     })
     this.hasMany(models.Productos_Defectuosos, { foreignKey: 'id_prod' })
     this.hasMany(models.Descuentos_Productos, { foreignKey: 'id_prod' })

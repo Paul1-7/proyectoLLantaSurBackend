@@ -68,10 +68,10 @@ const SellsDetailSchema = {
 class SellsDetail extends Model {
   static associate(models) {
     this.belongsTo(models.Ventas, {
-      foreignKey: 'id_venta'
+      foreignKey: 'idVenta'
     })
     this.belongsTo(models.Productos, {
-      foreignKey: 'id_prod'
+      foreignKey: 'idProd'
     })
   }
 

@@ -2,7 +2,7 @@ const { models } = require('../libs/sequelize.js')
 
 async function getAllSells() {
   return await models.Ventas.findAll({
-    include: ['cliente', 'vendedor']
+    include: ['cliente', 'vendedor', 'detalle', 'pedido']
   })
 }
 

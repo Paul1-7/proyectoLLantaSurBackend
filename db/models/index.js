@@ -1,9 +1,7 @@
-const { Employees, EmployeesSchema } = require('./Empleados.model.js')
 const { Purchase, PurchaseSchema } = require('./Compras.model.js')
 const { BusinessData, BusinessDataSchema } = require('./DatosNegocio.model.js')
 const { Provider, ProviderSchema } = require('./Proveedores.model.js')
 const { Rol, RolSchema } = require('./Roles.model.js')
-const { Customer, CustomerSchema } = require('./Cliente.model.js')
 const { Sells, SellsSchema } = require('./Ventas.model.js')
 const { Orders, OrdersSchema } = require('./Pedidos.model.js')
 const { Categories, CategoriesSchema } = require('./Categorias.model.js')
@@ -73,8 +71,6 @@ function setUpModels(sequelize) {
 
   Subsidiaries.associate(sequelize.models)
   User.associate(sequelize.models)
-  // Customer.associate(sequelize.models)
-  // Employees.associate(sequelize.models)
   Rol.associate(sequelize.models)
   RolUsers.associate(sequelize.models)
   Provider.associate(sequelize.models)

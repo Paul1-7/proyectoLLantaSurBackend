@@ -1,6 +1,5 @@
 const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
-const { CUSTOMER_TABLE } = require('./Cliente.model.js')
 const { PRODUCTS_TABLE } = require('./Productos.model.js')
 const { USER_TABLE } = require('./Usuarios.model.js')
 

@@ -1,6 +1,5 @@
 const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
-const { ORDERS_TABLE } = require('./Pedidos.model.js')
 const { USER_TABLE } = require('./Usuarios.model.js')
 
 const SELLS_TABLE = 'Ventas'
@@ -51,6 +50,14 @@ const SellsSchema = {
       is: msg.isState
     }
   },
+  metodoPago: {
+    type: DataTypes.INTEGER,
+    field: 'metodo_pago',
+    allowNull: false,
+    validate: {
+      is: msg.isState
+    }
+  },
   idCliente: {
     type: DataTypes.STRING,
     field: 'id_cliente',
@@ -68,7 +75,7 @@ const SellsSchema = {
   idVendedor: {
     type: DataTypes.STRING,
     field: 'id_vendedor',
-    allowNull: false,
+    allowNull: true,
     validate: {
       isUUID: 4
     },
@@ -78,28 +85,29 @@ const SellsSchema = {
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
-  },
-  idPedido: {
-    type: DataTypes.STRING,
-    field: 'id_pedido',
-    allowNull: false,
-    validate: {
-      isUUID: 4
-    },
-    references: {
-      model: ORDERS_TABLE,
-      key: 'id_pedido'
-    },
-    onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
   }
+  // idPedido: {
+  //   type: DataTypes.STRING,
+  //   field: 'id_pedido',
+  //   allowNull: true,
+  //   validate: {
+  //     isUUID: 4
+  //   },
+  //   references: {
+  //     model: ORDERS_TABLE,
+  //     key: 'id_pedido'
+  //   },
+  //   onUpdate: 'CASCADE',
+  //   onDelete: 'SET NULL'
+  // }
 }
 
 class Sells extends Model {
   static associate(models) {
-    this.belongsTo(models.Pedidos, { foreignKey: 'idPedido' })
+    // this.belongsTo(models.Pedidos, { foreignKey: 'idPedido', as: 'pedido' })
     this.hasMany(models.Detalle_Ventas, {
-      foreignKey: 'id_venta'
+      foreignKey: 'idVenta',
+      as: 'detalle'
     })
 
     this.belongsTo(models.Usuarios, {
@@ -112,6 +120,7 @@ class Sells extends Model {
       as: 'cliente',
       targetKey: 'idUsuario'
     })
+    this.hasOne(models.Pedidos, { foreignKey: 'idPedido', as: 'pedido' })
   }
 
   static config(sequelize) {

@@ -1,11 +1,10 @@
 const express = require('express')
 const cors = require('cors')
-const sequelize = require('./libs/sequelize.js')
 const routerApi = require('./routes/index.js')
 const { errorHandler } = require('./middlewares/error.handle.js')
+const { PORT } = require('./config/config.js')
 
 const app = express()
-const port = process.env.PORT || 3000
 
 app.use(express.json())
 
@@ -25,6 +24,6 @@ routerApi(app)
 
 app.use(errorHandler)
 
-app.listen(port, () => {
-  console.log(`http://localhost:${port}`)
+app.listen(PORT, () => {
+  console.log(`http://localhost:${PORT}`)
 })
