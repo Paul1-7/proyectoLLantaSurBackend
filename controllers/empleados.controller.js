@@ -8,7 +8,7 @@ const {
 const userServices = require('../services/usuarios.service.js')
 const {
   rolesName,
-  verifyRoles,
+  areValidData,
   existClientRol
 } = require('../utils/dataHandler.js')
 
@@ -49,7 +49,10 @@ const createEmployee = async (req, res, next) => {
     let { roles, ...dataUser } = body
 
     const allRoles = await getAllRols()
-    if (!verifyRoles(allRoles, roles))
+    const target = roles.map((rol) => rol.idRol)
+    const allIdRoles = allRoles.map((rol) => rol.idRol)
+
+    if (!areValidData(allIdRoles, target))
       return ERROR_RESPONSE.notFound(msg.rolNotFound, res)
 
     if (!existClientRol(allRoles, roles)) {
@@ -65,7 +68,7 @@ const createEmployee = async (req, res, next) => {
 
     delete user.dataValues.password
 
-    res.json('user')
+    res.json(user)
   } catch (error) {
     next(error)
   }
@@ -78,7 +81,10 @@ const updateEmployee = async (req, res, next) => {
     let { roles, ...dataEmployee } = body
 
     const allRoles = await getAllRols()
-    if (!verifyRoles(allRoles, roles))
+    const target = roles.map((rol) => rol.idRol)
+    const allIdRoles = allRoles.map((rol) => rol.idRol)
+
+    if (!areValidData(allIdRoles, target))
       return ERROR_RESPONSE.notFound(msg.rolNotFound, res)
 
     if (!existClientRol(allRoles, roles)) {

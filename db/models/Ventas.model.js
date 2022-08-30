@@ -86,25 +86,10 @@ const SellsSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   }
-  // idPedido: {
-  //   type: DataTypes.STRING,
-  //   field: 'id_pedido',
-  //   allowNull: true,
-  //   validate: {
-  //     isUUID: 4
-  //   },
-  //   references: {
-  //     model: ORDERS_TABLE,
-  //     key: 'id_pedido'
-  //   },
-  //   onUpdate: 'CASCADE',
-  //   onDelete: 'SET NULL'
-  // }
 }
 
 class Sells extends Model {
   static associate(models) {
-    // this.belongsTo(models.Pedidos, { foreignKey: 'idPedido', as: 'pedido' })
     this.hasMany(models.Detalle_Ventas, {
       foreignKey: 'idVenta',
       as: 'detalle'

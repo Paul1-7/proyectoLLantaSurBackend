@@ -1,14 +1,11 @@
 /**
- * It returns true if all the elements of the second array are included in the first array
- * @param allRoles - An array of objects that contains the idRol property.
- * @param idRoles - [{idRol: 1}, {idRol: 2}]
+ * It returns true if all the elements in the targets array are included in the allData array
+ * @param allData - an array of all the data in the database
+ * @param targets - an array of strings that we want to check if they exist in the allData array
  * @returns A boolean value
  */
-const verifyRoles = (allRoles, idRoles) => {
-  const target = idRoles.map((rol) => rol.idRol)
-  const allIdRoles = allRoles.map((rol) => rol.idRol)
-
-  return target.every((rol) => allIdRoles.includes(rol))
+const areValidData = (allData, targets) => {
+  return targets.every((item) => allData.includes(item))
 }
 
 const existClientRol = (allRoles, rolesUser) => {
@@ -26,7 +23,6 @@ const existClientRol = (allRoles, rolesUser) => {
  * @returns The product object is being returned.
  */
 const parseProduct = (product) => {
-  console.log(product)
   const { sucursales, stockProd, precioCompra, precioVenta, fechaProd } =
     product
 
@@ -46,13 +42,32 @@ const parseProduct = (product) => {
  * @returns A boolean value.
  */
 const verifySubsidiaries = (allSubsidiaries, bodySubsidiaries) => {
-  const areValidSubsidiaries = allSubsidiaries.every((subsidiary) => {
+  const areValid = allSubsidiaries.every((subsidiary) => {
     return bodySubsidiaries.includes(subsidiary.idSuc)
   })
 
   const isCorrectLength = allSubsidiaries.length === bodySubsidiaries.length
 
-  return isCorrectLength && areValidSubsidiaries
+  return isCorrectLength && areValid
+}
+
+/**
+ * It takes two arrays of objects, and returns a new array of objects with the same keys as the first
+ * array, but with the values of the second array
+ * @param allProduct - [{
+ * @param bodyProducts - [{idProd: 1, cantidadDetVenta: 2}, {idProd: 2, cantidadDetVenta: 3}]
+ * @returns An array of objects with the idSucProd and stockProd of the product.
+ */
+const getNewStock = (allProduct, bodyProducts) => {
+  return bodyProducts.map((product) => {
+    const productFound = allProduct.find(
+      ({ dataValues }) => dataValues.idProd === product.idProd
+    )
+    return {
+      idSucProd: productFound.dataValues.idSucProd,
+      stockProd: productFound.dataValues.stockProd - product.cantidadDetVenta
+    }
+  })
 }
 
 const rolesName = {
@@ -62,9 +77,10 @@ const rolesName = {
 }
 
 module.exports = {
-  verifyRoles,
+  areValidData,
   rolesName,
   existClientRol,
   parseProduct,
-  verifySubsidiaries
+  verifySubsidiaries,
+  getNewStock
 }

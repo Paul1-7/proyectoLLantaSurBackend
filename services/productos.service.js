@@ -2,13 +2,13 @@ const { models } = require('../libs/sequelize.js')
 
 async function getAllProducts() {
   return await models.Productos.findAll({
-    include: ['categoria', 'marca', 'proveedor', 'sucursal']
+    include: ['categoria', 'marca', 'proveedor', 'sucursales']
   })
 }
 
 async function findProduct(id) {
   return await models.Productos.findByPk(id, {
-    include: ['categoria', 'marca', 'proveedor']
+    include: ['categoria', 'marca', 'proveedor', 'sucursales']
   })
 }
 

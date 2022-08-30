@@ -149,7 +149,7 @@ class Products extends Model {
     })
     this.belongsToMany(models.Sucursales, {
       through: models.Sucursales_Productos,
-      as: 'sucursal',
+      as: 'sucursales',
       foreignKey: 'id_prod',
       otherKey: 'id_suc'
     })

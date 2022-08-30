@@ -6,8 +6,8 @@ const { PORT } = require('./config/config.js')
 
 const app = express()
 
+app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-
 const whitelist = ['http://localhost:3000']
 const options = {
   origin: (origin, callback) => {

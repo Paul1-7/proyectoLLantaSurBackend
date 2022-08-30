@@ -42,7 +42,6 @@ const findProduct = async (req, res, next) => {
 const createProduct = async (req, res, next) => {
   try {
     const { body } = req
-
     let imgCloudinary = null
     const productParsed = parseProduct(body)
     const { stockProd, sucursales } = productParsed

@@ -38,6 +38,7 @@ async function removeSubsidiaryProduct(idProd) {
   return await models.Sucursales_Productos.destroy({
     where: { idProd }
   })
+  models.Sucursales_Productos.afterBulkUpdate
 }
 
 async function updateSubsidiaryProduct(idProd, subsidiary, stockProd) {
@@ -45,8 +46,17 @@ async function updateSubsidiaryProduct(idProd, subsidiary, stockProd) {
   return await addSubsidiaryProduct(idProd, subsidiary, stockProd)
 }
 
+async function getProductsBySubsidiariesId(id) {
+  return await models.Sucursales_Productos.findAll({
+    where: {
+      idSuc: id
+    }
+  })
+}
+
 module.exports = {
   addSubsidiaryProduct,
   removeSubsidiaryProduct,
-  updateSubsidiaryProduct
+  updateSubsidiaryProduct,
+  getProductsBySubsidiariesId
 }
