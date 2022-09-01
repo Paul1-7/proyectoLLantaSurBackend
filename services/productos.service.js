@@ -6,6 +6,15 @@ async function getAllProducts() {
   })
 }
 
+async function getAllProductsBySubsidiaryId(id) {
+  return await models.Productos.findAll({
+    include: ['categoria', 'marca', 'proveedor', 'sucursales'],
+    where: {
+      '$sucursales.id_suc$': id
+    }
+  })
+}
+
 async function findProduct(id) {
   return await models.Productos.findByPk(id, {
     include: ['categoria', 'marca', 'proveedor', 'sucursales']
@@ -47,5 +56,6 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
-  findProductByName
+  findProductByName,
+  getAllProductsBySubsidiaryId
 }

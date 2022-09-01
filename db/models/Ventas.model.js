@@ -23,15 +23,6 @@ const SellsSchema = {
       isNumeric: msg.isNumeric
     }
   },
-  totalVenta: {
-    type: DataTypes.FLOAT,
-    field: 'total_venta',
-    allowNull: false,
-    validate: {
-      isFloat: msg.isFloat,
-      notNull: msg.notNull
-    }
-  },
   fechaVenta: {
     type: DataTypes.DATE,
     field: 'fecha_venta',

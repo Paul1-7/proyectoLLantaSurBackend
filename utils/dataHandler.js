@@ -4,8 +4,11 @@
  * @param targets - an array of strings that we want to check if they exist in the allData array
  * @returns A boolean value
  */
-const areValidData = (allData, targets) => {
-  return targets.every((item) => allData.includes(item))
+const areValidData = (allData, targets, idData, idTarget) => {
+  const targetProducts = targets.map((value) => value[idTarget])
+  const allIdProducts = allData.map((value) => value[idData])
+
+  return targetProducts.every((item) => allIdProducts.includes(item))
 }
 
 const existClientRol = (allRoles, rolesUser) => {
@@ -58,14 +61,21 @@ const verifySubsidiaries = (allSubsidiaries, bodySubsidiaries) => {
  * @param bodyProducts - [{idProd: 1, cantidadDetVenta: 2}, {idProd: 2, cantidadDetVenta: 3}]
  * @returns An array of objects with the idSucProd and stockProd of the product.
  */
-const getNewStock = (allProduct, bodyProducts) => {
+const getNewSubdiaryProduct = (allProduct, bodyProducts) => {
   return bodyProducts.map((product) => {
     const productFound = allProduct.find(
-      ({ dataValues }) => dataValues.idProd === product.idProd
+      (dataValues) => dataValues.idProd === product.idProd
     )
+
+    const { idSucProd, stockProd, idSuc, idProd } = productFound
+
+    const newStockProd = stockProd - product.cantidadDetVenta
+
     return {
-      idSucProd: productFound.dataValues.idSucProd,
-      stockProd: productFound.dataValues.stockProd - product.cantidadDetVenta
+      idSucProd,
+      stockProd: newStockProd,
+      idSuc,
+      idProd
     }
   })
 }
@@ -82,5 +92,5 @@ module.exports = {
   existClientRol,
   parseProduct,
   verifySubsidiaries,
-  getNewStock
+  getNewSubdiaryProduct
 }

@@ -49,10 +49,8 @@ const createEmployee = async (req, res, next) => {
     let { roles, ...dataUser } = body
 
     const allRoles = await getAllRols()
-    const target = roles.map((rol) => rol.idRol)
-    const allIdRoles = allRoles.map((rol) => rol.idRol)
 
-    if (!areValidData(allIdRoles, target))
+    if (!areValidData(allRoles, roles, 'idRol', 'idRol'))
       return ERROR_RESPONSE.notFound(msg.rolNotFound, res)
 
     if (!existClientRol(allRoles, roles)) {
@@ -81,10 +79,8 @@ const updateEmployee = async (req, res, next) => {
     let { roles, ...dataEmployee } = body
 
     const allRoles = await getAllRols()
-    const target = roles.map((rol) => rol.idRol)
-    const allIdRoles = allRoles.map((rol) => rol.idRol)
 
-    if (!areValidData(allIdRoles, target))
+    if (!areValidData(allRoles, roles, 'idRol', 'idRol'))
       return ERROR_RESPONSE.notFound(msg.rolNotFound, res)
 
     if (!existClientRol(allRoles, roles)) {

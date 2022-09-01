@@ -23,7 +23,7 @@ const SubsidiariesProductsSchema = {
     validate: {
       isNumeric: msg.isNumeric,
       notNull: msg.notNull,
-      min: msg.positiveNumber
+      min: msg.minValue
     }
   },
   idSuc: {

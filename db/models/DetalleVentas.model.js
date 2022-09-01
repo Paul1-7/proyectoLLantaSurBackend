@@ -53,15 +53,6 @@ const SellsDetailSchema = {
       isFloat: msg.isFloat,
       notNull: msg.notNull
     }
-  },
-  subtotalDetVenta: {
-    type: DataTypes.FLOAT,
-    field: 'subtotal_det_venta',
-    allowNull: false,
-    validate: {
-      isFloat: msg.isFloat,
-      notNull: msg.notNull
-    }
   }
 }
 

@@ -1,3 +1,4 @@
+const { Op } = require('sequelize')
 const { models } = require('../libs/sequelize.js')
 
 /**
@@ -34,16 +35,19 @@ async function addSubsidiaryProduct(idProd, subsidiary, stockProd) {
   return await models.Sucursales_Productos.bulkCreate(data)
 }
 
-async function removeSubsidiaryProduct(idProd) {
+async function removeSubsidiaryProduct(idSucProd) {
   return await models.Sucursales_Productos.destroy({
-    where: { idProd }
+    where: {
+      idSucProd: { [Op.in]: idSucProd }
+    }
   })
-  models.Sucursales_Productos.afterBulkUpdate
 }
 
-async function updateSubsidiaryProduct(idProd, subsidiary, stockProd) {
-  await removeSubsidiaryProduct(idProd)
-  return await addSubsidiaryProduct(idProd, subsidiary, stockProd)
+async function updateSubsidiaryProduct(idSucProd, data) {
+  const removed = await removeSubsidiaryProduct(idSucProd)
+  const result =
+    removed > 0 ? await models.Sucursales_Productos.bulkCreate(data) : null
+  return result
 }
 
 async function getProductsBySubsidiariesId(id) {
@@ -56,7 +60,6 @@ async function getProductsBySubsidiariesId(id) {
 
 module.exports = {
   addSubsidiaryProduct,
-  removeSubsidiaryProduct,
   updateSubsidiaryProduct,
   getProductsBySubsidiariesId
 }

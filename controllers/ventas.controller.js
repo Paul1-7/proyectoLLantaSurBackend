@@ -1,10 +1,21 @@
+const { query } = require('express')
 const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
-const {} = require('../services/productos.service.js')
+const { addSellDetail } = require('../services/detalleVentas.service.js')
 const {
-  getProductsBySubsidiariesId
+  getInvoiceBatching
+} = require('../services/dosificacionFacturas.service.js')
+const {
+  getAllProductsBySubsidiaryId
+} = require('../services/productos.service.js')
+const {
+  updateSubsidiaryProduct
 } = require('../services/sucursalesProductos.service.js')
+
 const services = require('../services/ventas.service.js')
-const { areValidData, getNewStock } = require('../utils/dataHandler.js')
+const {
+  areValidData,
+  getNewSubdiaryProduct
+} = require('../utils/dataHandler.js')
 
 const msg = {
   notFound: 'Venta no encontrada',
@@ -36,29 +47,63 @@ const findSell = async (req, res, next) => {
 const createSell = async (req, res, next) => {
   try {
     const { body } = req
-    const { productos, idSucursal } = body
+    const { productos, idSucursal, ...sellData } = body
 
-    const allProducts = await getProductsBySubsidiariesId(idSucursal)
-    const targetProducts = body.productos.map((product) => product.idProd)
-    const allIdProducts = allProducts.map((product) => product.idProd)
+    const codVenta = await getInvoiceBatching()
 
-    if (
-      allProducts.length === 0 &&
-      !areValidData(allIdProducts, targetProducts)
-    ) {
-      return ERROR_RESPONSE.notFound(msg.notValid, res)
+    const sell = {
+      codVenta: codVenta.pop().numFactInicial,
+      tipoVenta: 1,
+      metodoPago: 1,
+      ...sellData
     }
 
-    const newStock = getNewStock(allProducts, productos)
-    console.log(newStock)
-    // newStockProducts = productsSelected.map(({ dataValues }) => {
-    //   return {
-    //     stockProd: dataValues.stockProd * 2
-    //   }
-    // })
-    // console.log({ newStockProducts })
-    //const sell = await services.createSell(body)
-    res.json(newStock)
+    const productsBySubsidiary = await getAllProductsBySubsidiaryId(idSucursal)
+    const subsidiaries = productsBySubsidiary.map(({ dataValues }) => {
+      return dataValues.sucursales.pop().dataValues.Sucursales_Productos
+        .dataValues
+    })
+    if (
+      productsBySubsidiary.length === 0 ||
+      !areValidData(subsidiaries, productos, 'idProd', 'idProd')
+    ) {
+      return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
+    }
+
+    const newData = getNewSubdiaryProduct(subsidiaries, productos)
+    console.log(newData)
+
+    const isValid = newData.every((value) => value.stockProd > 0)
+    if (!isValid) return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
+
+    const idSucProdArray = newData.map((value) => value.idSucProd)
+    const stockUpdated = await updateSubsidiaryProduct(idSucProdArray, newData)
+
+    const newSell = await (await services.createSell(sell)).toJSON()
+
+    const sellDetail = newData.map((value) => {
+      const product = productos.find(
+        (product) => product.idProd === value.idProd
+      )
+
+      const { precioVenta } = productsBySubsidiary.find(
+        ({ dataValues }) => dataValues.idProd === value.idProd
+      )
+
+      return {
+        idProd: product.idProd,
+        idVenta: newSell.idVenta,
+        cantidadDetVenta: product.cantidadDetVenta,
+        precioUniVenta: precioVenta
+      }
+    })
+    console.log(sellDetail)
+    const newSellDetail = await addSellDetail(sellDetail)
+
+    res.json({
+      ...newSell,
+      detalle: newSellDetail
+    })
   } catch (error) {
     next(error)
   }

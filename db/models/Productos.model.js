@@ -43,7 +43,12 @@ const ProductsSchema = {
     allowNull: false,
     validate: {
       isFloat: msg.isFloat,
-      notNull: msg.notNull
+      notNull: msg.notNull,
+      isGreaterThanOrEqual(value) {
+        if (parseFloat(value) <= 0) {
+          throw new Error(msg.msgPositiveNumber)
+        }
+      }
     }
   },
   precioVenta: {

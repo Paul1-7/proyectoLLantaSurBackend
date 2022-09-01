@@ -34,6 +34,10 @@ const {
   SubsidiariesProductsSchema
 } = require('./SucursalesProductos.model.js')
 const { User, UserSchema } = require('./Usuarios.model.js')
+const {
+  InvoiceBatchingSchema,
+  InvoiceBatching
+} = require('./DosificacionFacturas.model.js')
 
 function setUpModels(sequelize) {
   Subsidiaries.init(SubsidiariesSchema, Subsidiaries.config(sequelize))
@@ -43,6 +47,7 @@ function setUpModels(sequelize) {
   // Employees.init(EmployeesSchema, Employees.config(sequelize))
   RolUsers.init(RolUsersSchema, RolUsers.config(sequelize))
   BusinessData.init(BusinessDataSchema, BusinessData.config(sequelize))
+  InvoiceBatching.init(InvoiceBatchingSchema, InvoiceBatching.config(sequelize))
   Provider.init(ProviderSchema, Provider.config(sequelize))
   Purchase.init(PurchaseSchema, Purchase.config(sequelize))
   Sells.init(SellsSchema, Sells.config(sequelize))
