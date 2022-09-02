@@ -1,3 +1,8 @@
+const { findProduct } = require('../services/productos.service')
+const {
+  findProductsSubsidiaries
+} = require('../services/sucursalesProductos.service')
+
 /**
  * It returns true if all the elements in the targets array are included in the allData array
  * @param allData - an array of all the data in the database
@@ -67,6 +72,15 @@ const getNewSubdiaryProduct = (allProduct, bodyProducts) => {
       (dataValues) => dataValues.idProd === product.idProd
     )
 
+    // if (!productFound) {
+    //   const productData = findProduct(product.idProd).then(data => data.toJSON())
+    //   const {idSucProd} = productData.sucursales.
+    //   return {
+    //     ...product
+
+    //    }
+    // }
+
     const { idSucProd, stockProd, idSuc, idProd } = productFound
 
     const newStockProd = stockProd - product.cantidadDetVenta
@@ -78,6 +92,28 @@ const getNewSubdiaryProduct = (allProduct, bodyProducts) => {
       idProd
     }
   })
+}
+
+const getStockUpdated = (bodyProducts, oldSale) => {
+  let newBodyProducts = bodyProducts.map((product) => {
+    const oldProduct = oldSale.find(({ idProd }) => idProd === product.idProd)
+
+    if (oldProduct) {
+      const index = oldSale.findIndex(({ idProd }) => product.idProd === idProd)
+      oldSale = oldSale.splice(index - 1, 1)
+      return {
+        ...product,
+        cantidadDetVenta: product.cantidadDetVenta - oldProduct.cantidadDetVenta
+      }
+    } else return product
+  })
+
+  if (oldSale.length > 0) {
+    oldSale = oldSale.map((item) => {
+      return { ...item, cantidadDetVenta: -item.cantidadDetVenta }
+    })
+    return [...newBodyProducts, ...oldSale]
+  } else return bodyProducts
 }
 
 const rolesName = {
@@ -92,5 +128,6 @@ module.exports = {
   existClientRol,
   parseProduct,
   verifySubsidiaries,
-  getNewSubdiaryProduct
+  getNewSubdiaryProduct,
+  getStockUpdated
 }

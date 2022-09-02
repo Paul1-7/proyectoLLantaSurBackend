@@ -1,3 +1,4 @@
+const { Op } = require('sequelize')
 const { models } = require('../libs/sequelize.js')
 
 async function getAllProducts() {
@@ -6,11 +7,12 @@ async function getAllProducts() {
   })
 }
 
-async function getAllProductsBySubsidiaryId(id) {
+async function getProductsBySubsidiaryId(subsidiaryId, productsId) {
   return await models.Productos.findAll({
     include: ['categoria', 'marca', 'proveedor', 'sucursales'],
     where: {
-      '$sucursales.id_suc$': id
+      '$sucursales.id_suc$': subsidiaryId,
+      idProd: { [Op.in]: productsId }
     }
   })
 }
@@ -57,5 +59,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   findProductByName,
-  getAllProductsBySubsidiaryId
+  getProductsBySubsidiaryId
 }

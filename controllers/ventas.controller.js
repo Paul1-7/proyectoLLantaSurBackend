@@ -1,11 +1,10 @@
-const { query } = require('express')
 const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
 const { addSellDetail } = require('../services/detalleVentas.service.js')
 const {
-  getInvoiceBatching
+  incremetToInicialInvoiceNum
 } = require('../services/dosificacionFacturas.service.js')
 const {
-  getAllProductsBySubsidiaryId
+  getProductsBySubsidiaryId
 } = require('../services/productos.service.js')
 const {
   updateSubsidiaryProduct
@@ -13,8 +12,8 @@ const {
 
 const services = require('../services/ventas.service.js')
 const {
-  areValidData,
-  getNewSubdiaryProduct
+  getNewSubdiaryProduct,
+  getStockUpdated
 } = require('../utils/dataHandler.js')
 
 const msg = {
@@ -49,55 +48,62 @@ const createSell = async (req, res, next) => {
     const { body } = req
     const { productos, idSucursal, ...sellData } = body
 
-    const codVenta = await getInvoiceBatching()
+    const codVenta = await incremetToInicialInvoiceNum()
 
     const sell = {
-      codVenta: codVenta.pop().numFactInicial,
+      codVenta: codVenta.numFactInicial,
       tipoVenta: 1,
       metodoPago: 1,
       ...sellData
     }
 
-    const productsBySubsidiary = await getAllProductsBySubsidiaryId(idSucursal)
-    const subsidiaries = productsBySubsidiary.map(({ dataValues }) => {
-      return dataValues.sucursales.pop().dataValues.Sucursales_Productos
-        .dataValues
-    })
+    const productsId = productos.map((product) => product.idProd)
+
+    let productsBySubsidiary = await getProductsBySubsidiaryId(
+      idSucursal,
+      productsId
+    )
+
     if (
       productsBySubsidiary.length === 0 ||
-      !areValidData(subsidiaries, productos, 'idProd', 'idProd')
+      productsBySubsidiary.length !== productos.length
     ) {
       return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
     }
 
-    const newData = getNewSubdiaryProduct(subsidiaries, productos)
-    console.log(newData)
+    productsBySubsidiary = productsBySubsidiary.map((product) =>
+      product.toJSON()
+    )
 
-    const isValid = newData.every((value) => value.stockProd > 0)
-    if (!isValid) return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
+    const subsidiaries = productsBySubsidiary.map(
+      ({ sucursales }) => sucursales.pop().Sucursales_Productos
+    )
+    const newSubsidiaryProd = getNewSubdiaryProduct(subsidiaries, productos)
 
-    const idSucProdArray = newData.map((value) => value.idSucProd)
-    const stockUpdated = await updateSubsidiaryProduct(idSucProdArray, newData)
+    if (!newSubsidiaryProd.every(({ stockProd }) => stockProd > 0))
+      return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
 
-    const newSell = await (await services.createSell(sell)).toJSON()
+    const idSucProdArray = newSubsidiaryProd.map((value) => value.idSucProd)
+    await updateSubsidiaryProduct(idSucProdArray, newSubsidiaryProd)
 
-    const sellDetail = newData.map((value) => {
+    const newSell = await services.createSell(sell)
+
+    const sellDetail = newSubsidiaryProd.map((value) => {
       const product = productos.find(
         (product) => product.idProd === value.idProd
       )
 
       const { precioVenta } = productsBySubsidiary.find(
-        ({ dataValues }) => dataValues.idProd === value.idProd
+        ({ idProd }) => idProd === value.idProd
       )
 
       return {
         idProd: product.idProd,
-        idVenta: newSell.idVenta,
+        idVenta: newSell.toJSON().idVenta,
         cantidadDetVenta: product.cantidadDetVenta,
         precioUniVenta: precioVenta
       }
     })
-    console.log(sellDetail)
     const newSellDetail = await addSellDetail(sellDetail)
 
     res.json({
@@ -113,11 +119,69 @@ const updateSell = async (req, res, next) => {
   try {
     const { id } = req.params
     const { body } = req
-    const sell = await services.updateSell(id, body)
+    const { productos, idSucursal, ...sellData } = body
 
-    if (!sell) return ERROR_RESPONSE.notFound(msg.notFound, res)
+    const oldSale = await services.findSell(id).then((sales) => sales.toJSON())
 
-    res.json(sell)
+    if (!oldSale) {
+      return ERROR_RESPONSE.notFound(msg.notFound, res)
+    }
+
+    const productsId = productos.map((product) => product.idProd)
+    let productsBySubsidiary = await getProductsBySubsidiaryId(
+      idSucursal,
+      productsId
+    )
+
+    if (
+      productsBySubsidiary.length === 0 ||
+      productsBySubsidiary.length !== productos.length
+    ) {
+      return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
+    }
+
+    productsBySubsidiary = productsBySubsidiary.map((product) =>
+      product.toJSON()
+    )
+
+    const subsidiaries = productsBySubsidiary.map(
+      ({ sucursales }) => sucursales.pop().Sucursales_Productos
+    )
+
+    const updateStock = getStockUpdated(productos, oldSale.detalle)
+    console.log({ updateStock })
+    const newSubsidiaryProd = getNewSubdiaryProduct(subsidiaries, updateStock)
+    console.log({ newSubsidiaryProd })
+    if (!newSubsidiaryProd.every(({ stockProd }) => stockProd > 0))
+      return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
+
+    // const idSucProdArray = newSubsidiaryProd.map((value) => value.idSucProd)
+    // await updateSubsidiaryProduct(idSucProdArray, newSubsidiaryProd)
+
+    // const newSell = await services.createSell(sell)
+
+    // const sellDetail = newSubsidiaryProd.map((value) => {
+    //   const product = productos.find(
+    //     (product) => product.idProd === value.idProd
+    //   )
+
+    //   const { precioVenta } = productsBySubsidiary.find(
+    //     ({ idProd }) => idProd === value.idProd
+    //   )
+
+    //   return {
+    //     idProd: product.idProd,
+    //     idVenta: newSell.toJSON().idVenta,
+    //     cantidadDetVenta: product.cantidadDetVenta,
+    //     precioUniVenta: precioVenta
+    //   }
+    // })
+    // const newSellDetail = await addSellDetail(sellDetail)
+
+    res.json({
+      ...newSell,
+      detalle: newSellDetail
+    })
   } catch (error) {
     next(error)
   }
