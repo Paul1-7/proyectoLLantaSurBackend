@@ -5,7 +5,7 @@
   },
   "production": {
     "dialect": "postgres",
-    "url": "postgres://ezqcpxshqyqjrm:c0c8e47e31c714c272cb51965dd36f35c3ac27144fdbdcca6eee9838f78feb47@ec2-44-206-197-71.compute-1.amazonaws.com:5432/d9tuam76b8m2bl",
+    "url": "postgres://witoowubokpsyv:f8456f3a83a18d7b454c375dac1143998abd93b2df4bc54065427a77aa1aedf5@ec2-54-159-175-38.compute-1.amazonaws.com:5432/daso58v29quqkl",
     "dialectOptions": {
       "ssl": {
         "rejectUnauthorized": false
