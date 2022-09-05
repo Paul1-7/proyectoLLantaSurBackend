@@ -9,17 +9,18 @@ const app = express()
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 const whitelist = ['http://localhost:3000']
-const options = {
-  origin: (origin, callback) => {
-    if (whitelist.includes(origin) || !origin) {
-      callback(null, true)
-    } else {
-      callback(new Error('no permitido'))
-    }
-  }
-}
-app.use(cors(options))
+// const options = {
+//   origin: (origin, callback) => {
+//     if (whitelist.includes(origin) || !origin) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('no permitido'))
+//     }
+//   }
+// }
+// app.use(cors(options))
 
+app.use(cors())
 routerApi(app)
 
 app.use(errorHandler)
