@@ -70,7 +70,7 @@ const UserSchema = {
     allowNull: false,
     validate: {
       notNull: msg.notNull,
-      is: msg.password
+      is: msg.isAlphanumeric
     }
   },
   email: {
@@ -78,7 +78,7 @@ const UserSchema = {
     allowNull: true,
     unique: true,
     validate: {
-      isEmail: msg.isEmail
+      is: msg.isEmail
     }
   },
 

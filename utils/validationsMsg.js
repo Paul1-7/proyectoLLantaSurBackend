@@ -6,11 +6,8 @@ const msg = {
   notNull: {
     msg: 'este campo es requerido'
   },
-  password: {
-    args: /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{6,20})/,
-    msg: 'La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una minúscula, un número y un caracter especial'
-  },
   isEmail: {
+    args: /^(|[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*)$/,
     msg: 'el email no es valido'
   },
   isNumeric: {

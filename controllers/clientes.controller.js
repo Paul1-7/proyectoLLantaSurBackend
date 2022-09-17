@@ -14,6 +14,23 @@ const msg = {
 
 const { CLIENTE } = rolesName
 
+const userDataIsEmpty = (user) => {
+  const { email, password, usuario } = user
+
+  if (!email.trim().length === 0) return false
+  if (!password.trim().length === 0) return false
+  if (!usuario.trim().length === 0) return false
+
+  return true
+}
+
+const fillUserDataByDefault = (user) => {
+  const { ciNit, celular } = user
+  ;(user.usuario = ciNit), (user.password = celular)
+
+  return user
+}
+
 const getAllCustomers = async (req, res, next) => {
   try {
     const customer = await services.getAllUsersByRol(CLIENTE)
@@ -40,14 +57,16 @@ const findCustomer = async (req, res, next) => {
 
 const createCustomer = async (req, res, next) => {
   try {
-    const { body } = req
+    let user = req.body
 
-    const user = await services.createUser(body)
+    if (userDataIsEmpty) {
+      user = fillUserDataByDefault(user)
+    }
+    const newUser = await services.createUser(user)
     const rolClient = await findRolByName(rolesName.CLIENTE)
     const { idRol } = rolClient
-    await addRolUser(user.dataValues.idUsuario, [{ idRol }])
 
-    delete user.dataValues.password
+    await addRolUser(newUser.dataValues.idUsuario, [{ idRol }])
 
     res.json(user)
   } catch (error) {
