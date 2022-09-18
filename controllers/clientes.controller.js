@@ -9,7 +9,8 @@ const { rolesName } = require('../utils/dataHandler.js')
 
 const msg = {
   notFound: 'Cliente no encontrado',
-  delete: 'Cliente eliminado'
+  delete: 'Cliente eliminado',
+  success: 'Se registro con exito al cliente'
 }
 
 const { CLIENTE } = rolesName
@@ -68,7 +69,7 @@ const createCustomer = async (req, res, next) => {
 
     await addRolUser(newUser.dataValues.idUsuario, [{ idRol }])
 
-    res.json(user)
+    res.json({ message: msg.success })
   } catch (error) {
     next(error)
   }
@@ -77,9 +78,12 @@ const createCustomer = async (req, res, next) => {
 const updateCustomer = async (req, res, next) => {
   try {
     const { id } = req.params
-    const { body } = req
+    let user = req.body
 
-    const customer = await services.updateUser(id, body)
+    if (userDataIsEmpty) {
+      user = fillUserDataByDefault(user)
+    }
+    const customer = await services.updateUser(id, user)
 
     if (!customer) return ERROR_RESPONSE.notFound(msg.notFound, res)
 

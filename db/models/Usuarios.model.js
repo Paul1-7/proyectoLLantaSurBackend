@@ -53,7 +53,7 @@ const UserSchema = {
     }
   },
   celular: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'celular',
     allowNull: true,
     unique: true,

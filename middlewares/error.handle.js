@@ -1,13 +1,4 @@
-// function ormErrorHandler(err, req, res, next) {
-//   if (err instanceof ValidationError) {
-//     res.status(409).json({
-//       statusCode: 409,
-//       message: err.name,
-//       errors: err.errors
-//     })
-//   }
-//   next(err)
-// }
+const msg = require('../utils/validationsMsg')
 
 const ERROR_RESPONSE = {
   notFound: (msg, res) => {
@@ -21,8 +12,31 @@ const ERROR_RESPONSE = {
   }
 }
 
+const errorFilterByName = (errs, name) => {
+  console.log('TCL: errorFilterByName -> errs', errs)
+
+  return errs.map((err) => err[name]).toString()
+}
+
+const sequelizeErrors = (errorMsg, errors, valueName) => {
+  return {
+    message: `${errorMsg} ${errorFilterByName(errors, valueName)}`
+  }
+}
+
 function errorHandler(err, req, res, next) {
-  console.log({ err })
+  console.log(err)
+  if (err?.name === 'SequelizeUniqueConstraintError') {
+    res
+      .status(500)
+      .json(sequelizeErrors(msg.msgUniqueValue, err.errors, 'path'))
+  }
+  if (err?.name === 'SequelizeValidationError') {
+    res
+      .status(500)
+      .json(sequelizeErrors(msg.msgValidationError, err.errors, 'message'))
+  }
+
   res.status(500).json(err)
 }
 

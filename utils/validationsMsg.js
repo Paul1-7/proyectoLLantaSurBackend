@@ -18,7 +18,7 @@ const msg = {
     msg: 'el valor ingresado no es correcto'
   },
   isPhone: {
-    args: /^[0-9]{8}$/,
+    args: /^[0-9]+$/,
     msg: 'el numero de celular debe tener 8 digitos'
   },
   isFloat: {
@@ -33,7 +33,9 @@ const msg = {
   },
   msgIsGreaterThan:
     'el precio de venta no puede ser menor que el precio de compra',
-  msgPositiveNumber: 'el valor ingresado tiene que ser positivo'
+  msgPositiveNumber: 'el valor ingresado tiene que ser positivo',
+  msgUniqueValue: 'error de valores unicos en:',
+  msgValidationError: 'error de validacion :'
 }
 
 module.exports = msg
