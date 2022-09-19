@@ -28,7 +28,7 @@ const RolUsersSchema = {
       isUUID: 4
     },
     onUpdate: 'CASCADE',
-    onDelete: 'SET NULL'
+    onDelete: 'CASCADE'
   },
   idRol: {
     allowNull: false,

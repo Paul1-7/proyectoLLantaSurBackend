@@ -8,7 +8,8 @@ async function getAllUsers() {
 async function getAllUsersByRol(...rolNames) {
   return await models.Usuarios.findAll({
     where: {
-      '$roles.nombre_rol$': { [Op.in]: rolNames }
+      '$roles.nombre_rol$': { [Op.in]: rolNames },
+      estado: 1
     },
     include: 'roles'
   })

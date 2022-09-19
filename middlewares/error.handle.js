@@ -13,8 +13,6 @@ const ERROR_RESPONSE = {
 }
 
 const errorFilterByName = (errs, name) => {
-  console.log('TCL: errorFilterByName -> errs', errs)
-
   return errs.map((err) => err[name]).toString()
 }
 
@@ -27,17 +25,17 @@ const sequelizeErrors = (errorMsg, errors, valueName) => {
 function errorHandler(err, req, res, next) {
   console.log(err)
   if (err?.name === 'SequelizeUniqueConstraintError') {
-    res
-      .status(500)
-      .json(sequelizeErrors(msg.msgUniqueValue, err.errors, 'path'))
+    return res.status(409).json({
+      message: msg.msgUniqueValue(errorFilterByName(err.errors, 'path'))
+    })
   }
   if (err?.name === 'SequelizeValidationError') {
-    res
+    return res
       .status(500)
       .json(sequelizeErrors(msg.msgValidationError, err.errors, 'message'))
   }
 
-  res.status(500).json(err)
+  return res.status(500).json(err)
 }
 
 module.exports = { errorHandler, ERROR_RESPONSE }

@@ -34,8 +34,9 @@ const msg = {
   msgIsGreaterThan:
     'el precio de venta no puede ser menor que el precio de compra',
   msgPositiveNumber: 'el valor ingresado tiene que ser positivo',
-  msgUniqueValue: 'error de valores unicos en:',
-  msgValidationError: 'error de validacion :'
+  msgUniqueValue: (value) =>
+    `el valor ingresado en el campo "${value}" ya existe en el sistema`,
+  msgValidationError: 'ERROR DE VALIDACIÓN:'
 }
 
 module.exports = msg

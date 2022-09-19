@@ -18,11 +18,11 @@ const { CLIENTE } = rolesName
 const userDataIsEmpty = (user) => {
   const { email, password, usuario } = user
 
-  if (!email.trim().length === 0) return false
-  if (!password.trim().length === 0) return false
-  if (!usuario.trim().length === 0) return false
+  if (email.trim().length === 0) return true
+  if (password.trim().length === 0) return true
+  if (usuario.trim().length === 0) return true
 
-  return true
+  return false
 }
 
 const fillUserDataByDefault = (user) => {
@@ -51,6 +51,7 @@ const findCustomer = async (req, res, next) => {
     delete customer.dataValues.password
 
     res.json(customer)
+    return
   } catch (error) {
     next(error)
   }
@@ -60,8 +61,11 @@ const createCustomer = async (req, res, next) => {
   try {
     let user = req.body
 
-    if (userDataIsEmpty) {
+    if (userDataIsEmpty(user)) {
+      console.log('TCL: createCustomer -> user1', user)
+
       user = fillUserDataByDefault(user)
+      console.log('TCL: createCustomer -> user2', user)
     }
     const newUser = await services.createUser(user)
     const rolClient = await findRolByName(rolesName.CLIENTE)
@@ -70,6 +74,7 @@ const createCustomer = async (req, res, next) => {
     await addRolUser(newUser.dataValues.idUsuario, [{ idRol }])
 
     res.json({ message: msg.success })
+    return
   } catch (error) {
     next(error)
   }
@@ -80,7 +85,7 @@ const updateCustomer = async (req, res, next) => {
     const { id } = req.params
     let user = req.body
 
-    if (userDataIsEmpty) {
+    if (userDataIsEmpty(user)) {
       user = fillUserDataByDefault(user)
     }
     const customer = await services.updateUser(id, user)
@@ -98,11 +103,10 @@ const updateCustomer = async (req, res, next) => {
 const deleteCustomer = async (req, res, next) => {
   try {
     const { id } = req.params
-
-    const rolUser = await removeRolUser(id)
-    const customer = rolUser > 0 && (await services.deleteUser(id))
-
+    const customer = await services.findUser(id)
     if (!customer) return ERROR_RESPONSE.notFound(msg.notFound, res)
+    customer.estado = 0
+    customer.save()
 
     res.json({ message: msg.delete })
   } catch (error) {
