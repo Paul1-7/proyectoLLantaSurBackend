@@ -117,7 +117,7 @@ const getStockUpdated = (bodyProducts, oldSale) => {
 }
 
 const rolesName = {
-  ADMINiSTRADOR: 'Administrador',
+  ADMINISTRADOR: 'Administrador',
   EMPLEADO_VENTAS: 'Empleado de Ventas',
   CLIENTE: 'Cliente'
 }

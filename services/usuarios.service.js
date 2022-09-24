@@ -5,14 +5,17 @@ async function getAllUsers() {
   return await models.Usuarios.findAll()
 }
 
-async function getAllUsersByRol(...rolNames) {
-  return await models.Usuarios.findAll({
+async function getAllUsersByRol(active = false, ...rolNames) {
+  const options = {
     where: {
-      '$roles.nombre_rol$': { [Op.in]: rolNames },
-      estado: 1
+      '$roles.nombre_rol$': { [Op.in]: rolNames }
     },
     include: 'roles'
-  })
+  }
+
+  if (active) options.where.estado = 1
+
+  return await models.Usuarios.findAll(options)
 }
 
 async function findUser(id) {
@@ -26,8 +29,13 @@ async function createUser(User) {
 }
 
 async function updateUser(id, changes) {
-  const User = await models.Usuarios.findByPk(id)
-  return await User?.update(changes)
+  const { password } = changes
+
+  const user = await models.Usuarios.findByPk(id)
+  const newPassword =
+    password.length === 0 ? JSON.stringify(user).password : password
+
+  return await user?.update({ ...changes, password: newPassword })
 }
 
 async function deleteUser(id) {

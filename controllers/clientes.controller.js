@@ -1,25 +1,22 @@
 const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
 const { findRolByName } = require('../services/roles.service.js')
-const {
-  addRolUser,
-  removeRolUser
-} = require('../services/rolesUsuarios.service.js')
+const { addRolUser } = require('../services/rolesUsuarios.service.js')
 const services = require('../services/usuarios.service.js')
 const { rolesName } = require('../utils/dataHandler.js')
 
 const msg = {
   notFound: 'Cliente no encontrado',
   delete: 'Cliente eliminado',
-  success: 'Se registro con exito al cliente'
+  addSuccess: 'Se registro con exito al cliente',
+  modifySuccess: 'Se modificó con exito al cliente'
 }
 
 const { CLIENTE } = rolesName
 
 const userDataIsEmpty = (user) => {
-  const { email, password, usuario } = user
+  const { email, usuario } = user
 
   if (email.trim().length === 0) return true
-  if (password.trim().length === 0) return true
   if (usuario.trim().length === 0) return true
 
   return false
@@ -28,13 +25,24 @@ const userDataIsEmpty = (user) => {
 const fillUserDataByDefault = (user) => {
   const { ciNit, celular } = user
   ;(user.usuario = ciNit), (user.password = celular)
-
+  user.email = null
   return user
 }
 
 const getAllCustomers = async (req, res, next) => {
   try {
-    const customer = await services.getAllUsersByRol(CLIENTE)
+    const isActive = false
+    const customer = await services.getAllUsersByRol(isActive, CLIENTE)
+    res.json(customer)
+  } catch (error) {
+    next(error)
+  }
+}
+
+const getAllCustomersActives = async (req, res, next) => {
+  try {
+    const isActive = true
+    const customer = await services.getAllUsersByRol(isActive, CLIENTE)
     res.json(customer)
   } catch (error) {
     next(error)
@@ -62,10 +70,7 @@ const createCustomer = async (req, res, next) => {
     let user = req.body
 
     if (userDataIsEmpty(user)) {
-      console.log('TCL: createCustomer -> user1', user)
-
       user = fillUserDataByDefault(user)
-      console.log('TCL: createCustomer -> user2', user)
     }
     const newUser = await services.createUser(user)
     const rolClient = await findRolByName(rolesName.CLIENTE)
@@ -73,7 +78,7 @@ const createCustomer = async (req, res, next) => {
 
     await addRolUser(newUser.dataValues.idUsuario, [{ idRol }])
 
-    res.json({ message: msg.success })
+    res.json({ message: msg.addSuccess })
     return
   } catch (error) {
     next(error)
@@ -94,7 +99,7 @@ const updateCustomer = async (req, res, next) => {
 
     delete customer.dataValues.password
 
-    res.json(customer)
+    res.json({ message: msg.modifySuccess })
   } catch (error) {
     next(error)
   }
@@ -119,5 +124,6 @@ module.exports = {
   findCustomer,
   createCustomer,
   updateCustomer,
-  deleteCustomer
+  deleteCustomer,
+  getAllCustomersActives
 }

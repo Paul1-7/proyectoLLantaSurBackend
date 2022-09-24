@@ -12,7 +12,7 @@ const {
   existClientRol
 } = require('../utils/dataHandler.js')
 
-const { EMPLEADO_VENTAS, ADMINiSTRADOR } = rolesName
+const { EMPLEADO_VENTAS, ADMINISTRADOR } = rolesName
 const msg = {
   notFound: 'Empleado no encontrado',
   delete: 'Empleado eliminado',
@@ -21,9 +21,11 @@ const msg = {
 
 const getAllEmployees = async (req, res, next) => {
   try {
+    const isActive = false
     const employe = await userServices.getAllUsersByRol(
+      isActive,
       EMPLEADO_VENTAS,
-      ADMINiSTRADOR
+      ADMINISTRADOR
     )
     res.json(employe)
   } catch (error) {

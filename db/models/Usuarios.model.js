@@ -31,10 +31,6 @@ const UserSchema = {
       notNull: msg.notNull
     }
   },
-  foto: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
   direccion: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -46,6 +42,7 @@ const UserSchema = {
   ciNit: {
     type: DataTypes.STRING,
     field: 'ci_nit',
+    unique: true,
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
