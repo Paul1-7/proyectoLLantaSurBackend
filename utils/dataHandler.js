@@ -1,19 +1,13 @@
-const { findProduct } = require('../services/productos.service')
-const {
-  findProductsSubsidiaries
-} = require('../services/sucursalesProductos.service')
-
 /**
  * It returns true if all the elements in the targets array are included in the allData array
  * @param allData - an array of all the data in the database
  * @param targets - an array of strings that we want to check if they exist in the allData array
  * @returns A boolean value
  */
-const areValidData = (allData, targets, idData, idTarget) => {
-  const targetProducts = targets.map((value) => value[idTarget])
-  const allIdProducts = allData.map((value) => value[idData])
+const areValidData = (allData, targets, idData) => {
+  const allIdData = allData.map((value) => value[idData])
 
-  return targetProducts.every((item) => allIdProducts.includes(item))
+  return targets.every((item) => allIdData.includes(item))
 }
 
 const existClientRol = (allRoles, rolesUser) => {

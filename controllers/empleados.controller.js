@@ -16,7 +16,25 @@ const { EMPLEADO_VENTAS, ADMINISTRADOR } = rolesName
 const msg = {
   notFound: 'Empleado no encontrado',
   delete: 'Empleado eliminado',
-  rolNotFound: 'Rol no encontrado'
+  rolNotFound: 'Rol no encontrado',
+  addSuccess: 'Se registro el empleado correctamente',
+  updateSuccess: 'Se actualizo el registro del cliente correctamente'
+}
+
+const userDataIsEmpty = (user) => {
+  const { email, usuario } = user
+
+  if (email.trim().length === 0) return true
+  if (usuario.trim().length === 0) return true
+
+  return false
+}
+
+const fillUserDataByDefault = (user) => {
+  const { ciNit, celular } = user
+  ;(user.usuario = ciNit), (user.password = celular)
+  user.email = null
+  return user
 }
 
 const getAllEmployees = async (req, res, next) => {
@@ -52,23 +70,25 @@ const createEmployee = async (req, res, next) => {
 
     const allRoles = await getAllRols()
 
-    if (!areValidData(allRoles, roles, 'idRol', 'idRol'))
+    if (!areValidData(allRoles, roles, 'idRol'))
       return ERROR_RESPONSE.notFound(msg.rolNotFound, res)
 
+    roles = roles.map((rol) => ({ idRol: rol }))
     if (!existClientRol(allRoles, roles)) {
       const clientRol = allRoles.find(
         (rol) => rol.nombreRol === rolesName.CLIENTE
       )
       roles = [...roles, { idRol: clientRol.idRol }]
     }
+    if (userDataIsEmpty(dataUser)) {
+      dataUser = fillUserDataByDefault(dataUser)
+    }
 
     const user = await userServices.createUser(dataUser)
 
     await addRolUser(user.dataValues.idUsuario, roles)
 
-    delete user.dataValues.password
-
-    res.json(user)
+    res.json({ message: msg.addSuccess })
   } catch (error) {
     next(error)
   }
@@ -82,9 +102,10 @@ const updateEmployee = async (req, res, next) => {
 
     const allRoles = await getAllRols()
 
-    if (!areValidData(allRoles, roles, 'idRol', 'idRol'))
+    if (!areValidData(allRoles, roles, 'idRol'))
       return ERROR_RESPONSE.notFound(msg.rolNotFound, res)
 
+    roles = roles.map((rol) => ({ idRol: rol }))
     if (!existClientRol(allRoles, roles)) {
       const clientRol = allRoles.find(
         (rol) => rol.nombreRol === rolesName.CLIENTE
@@ -97,8 +118,7 @@ const updateEmployee = async (req, res, next) => {
 
     if (!employe) return ERROR_RESPONSE.notFound(msg.notFound, res)
 
-    delete employe.dataValues.password
-    res.json(employe)
+    res.json({ message: msg.updateSuccess })
   } catch (error) {
     next(error)
   }

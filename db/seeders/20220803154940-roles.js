@@ -7,7 +7,7 @@ module.exports = {
       [
         {
           id_rol: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
-          nombre_rol: rolesName.ADMINiSTRADOR,
+          nombre_rol: rolesName.ADMINISTRADOR,
           estado_rol: 1
         },
         {
