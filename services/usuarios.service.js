@@ -38,16 +38,10 @@ async function updateUser(id, changes) {
   return await user?.update({ ...changes, password: newPassword })
 }
 
-async function deleteUser(id) {
-  const User = await models.Usuarios.findByPk(id)
-  return await User?.destroy()
-}
-
 module.exports = {
   getAllUsers,
   findUser,
   createUser,
   updateUser,
-  deleteUser,
   getAllUsersByRol
 }

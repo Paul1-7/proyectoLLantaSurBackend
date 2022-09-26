@@ -12,13 +12,13 @@ const {
   existClientRol
 } = require('../utils/dataHandler.js')
 
-const { EMPLEADO_VENTAS, ADMINISTRADOR } = rolesName
+const { EMPLEADO_VENTAS, ADMINISTRADOR, CLIENTE } = rolesName
 const msg = {
   notFound: 'Empleado no encontrado',
-  delete: 'Empleado eliminado',
+  delete: 'Empleado deshabilitado',
   rolNotFound: 'Rol no encontrado',
   addSuccess: 'Se registro el empleado correctamente',
-  updateSuccess: 'Se actualizo el registro del cliente correctamente'
+  updateSuccess: 'Se actualizo el registro del empleado correctamente'
 }
 
 const userDataIsEmpty = (user) => {
@@ -43,7 +43,8 @@ const getAllEmployees = async (req, res, next) => {
     const employe = await userServices.getAllUsersByRol(
       isActive,
       EMPLEADO_VENTAS,
-      ADMINISTRADOR
+      ADMINISTRADOR,
+      CLIENTE
     )
     res.json(employe)
   } catch (error) {
@@ -54,10 +55,13 @@ const getAllEmployees = async (req, res, next) => {
 const findEmployee = async (req, res, next) => {
   try {
     const { id } = req.params
-    const employe = await userServices.findUser(id)
+    const employee = await userServices.findUser(id)
 
-    if (!employe) return ERROR_RESPONSE.notFound(msg.notFound, res)
-    res.json(employe)
+    if (!employee) return ERROR_RESPONSE.notFound(msg.notFound, res)
+
+    delete employee.dataValues.password
+
+    res.json(employee)
   } catch (error) {
     next(error)
   }
@@ -127,14 +131,12 @@ const updateEmployee = async (req, res, next) => {
 const deleteEmployee = async (req, res, next) => {
   try {
     const { id } = req.params
+    const employee = await userServices.findUser(id)
+    if (!employee) return ERROR_RESPONSE.notFound(msg.notFound, res)
+    employee.estado = 0
+    employee.save()
 
-    const existEmployee = await userServices.findUser(id)
-    if (!existEmployee) return ERROR_RESPONSE.notFound(msg.notFound, res)
-
-    await removeRolUser(id)
-    await userServices.deleteUser(id)
-
-    res.json({ message: msg.delete })
+    res.json({ message: msg.delete, id })
   } catch (error) {
     next(error)
   }

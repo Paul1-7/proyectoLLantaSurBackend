@@ -35,9 +35,7 @@ function errorHandler(err, req, res, next) {
       .json(sequelizeErrors(msg.msgValidationError, err.errors, 'message'))
   }
   if (err?.name === 'SequelizeDatabaseError') {
-    return res
-      .status(500)
-      .json({ message: 'ocurrio un error al guardar en la base de datos' })
+    return res.status(500).json({ message: msg.msgDatabaseError })
   }
 
   return res.status(500).json(err)

@@ -7,8 +7,8 @@ const { rolesName } = require('../utils/dataHandler.js')
 const msg = {
   notFound: 'Cliente no encontrado',
   delete: 'Cliente eliminado',
-  addSuccess: 'Se registro con exito al cliente',
-  modifySuccess: 'Se modificó con exito al cliente'
+  addSuccess: 'Se registro el cliente correctamente',
+  modifySuccess: 'Se actualizo el registro del cliente correctamente'
 }
 
 const { CLIENTE } = rolesName
