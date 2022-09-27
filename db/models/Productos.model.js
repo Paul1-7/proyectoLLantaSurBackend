@@ -120,7 +120,7 @@ const ProductsSchema = {
     },
     references: {
       model: CATEGORIES_TABLE,
-      key: 'id_cat'
+      key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
@@ -129,7 +129,7 @@ const ProductsSchema = {
 
 class Products extends Model {
   static associate(models) {
-    this.belongsTo(models.Categorias, { foreignKey: 'id_cat', as: 'categoria' })
+    this.belongsTo(models.Categorias, { foreignKey: 'idCat', as: 'categoria' })
     this.belongsTo(models.Proveedores, {
       foreignKey: 'id_prov',
       as: 'proveedor'

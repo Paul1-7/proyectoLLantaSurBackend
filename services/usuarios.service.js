@@ -1,5 +1,7 @@
 const { Op } = require('sequelize')
 const { models } = require('../libs/sequelize.js')
+const msg = require('../utils/validationsMsg.js')
+const { removeRolUser } = require('./rolesUsuarios.service.js')
 
 async function getAllUsers() {
   return await models.Usuarios.findAll()
@@ -38,10 +40,27 @@ async function updateUser(id, changes) {
   return await user?.update({ ...changes, password: newPassword })
 }
 
+async function deleteUser(id) {
+  const user = await models.Usuarios.findByPk(id, {
+    include: ['compras', 'ventas', 'favoritos']
+  })
+  console.log(user)
+  if (
+    user.compras.length > 0 ||
+    user.ventas.length > 0 ||
+    user.favoritos.length > 0
+  )
+    return new Error(msg.msgErrorForeignKey)
+
+  await removeRolUser(id)
+  return await user?.destroy()
+}
+
 module.exports = {
   getAllUsers,
   findUser,
   createUser,
   updateUser,
-  getAllUsersByRol
+  getAllUsersByRol,
+  deleteUser
 }

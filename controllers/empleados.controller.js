@@ -2,8 +2,7 @@ const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
 const { getAllRols } = require('../services/roles.service.js')
 const {
   addRolUser,
-  updateRolUser,
-  removeRolUser
+  updateRolUser
 } = require('../services/rolesUsuarios.service.js')
 const userServices = require('../services/usuarios.service.js')
 const {
@@ -15,7 +14,7 @@ const {
 const { EMPLEADO_VENTAS, ADMINISTRADOR, CLIENTE } = rolesName
 const msg = {
   notFound: 'Empleado no encontrado',
-  delete: 'Empleado deshabilitado',
+  delete: 'Se elimino correctamente el empleado',
   rolNotFound: 'Rol no encontrado',
   addSuccess: 'Se registro el empleado correctamente',
   updateSuccess: 'Se actualizo el registro del empleado correctamente'
@@ -131,10 +130,13 @@ const updateEmployee = async (req, res, next) => {
 const deleteEmployee = async (req, res, next) => {
   try {
     const { id } = req.params
-    const employee = await userServices.findUser(id)
-    if (!employee) return ERROR_RESPONSE.notFound(msg.notFound, res)
-    employee.estado = 0
-    employee.save()
+    const existEmployee = await userServices.findUser(id)
+    if (!existEmployee) return ERROR_RESPONSE.notFound(msg.notFound, res)
+
+    const employeeDeleted = await userServices.deleteUser(id)
+
+    if (employeeDeleted instanceof Error)
+      return ERROR_RESPONSE.notAcceptable(employeeDeleted.message, res)
 
     res.json({ message: msg.delete, id })
   } catch (error) {

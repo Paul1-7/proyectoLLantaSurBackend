@@ -6,7 +6,7 @@ const { rolesName } = require('../utils/dataHandler.js')
 
 const msg = {
   notFound: 'Cliente no encontrado',
-  delete: 'Cliente eliminado',
+  delete: 'Se elimino correctamente el empleado',
   addSuccess: 'Se registro el cliente correctamente',
   modifySuccess: 'Se actualizo el registro del cliente correctamente'
 }
@@ -108,12 +108,15 @@ const updateCustomer = async (req, res, next) => {
 const deleteCustomer = async (req, res, next) => {
   try {
     const { id } = req.params
-    const customer = await services.findUser(id)
-    if (!customer) return ERROR_RESPONSE.notFound(msg.notFound, res)
-    customer.estado = 0
-    customer.save()
+    const existCustomer = await services.findUser(id)
+    if (!existCustomer) return ERROR_RESPONSE.notFound(msg.notFound, res)
 
-    res.json({ message: msg.delete })
+    const customerDeleted = await services.deleteUser(id)
+
+    if (customerDeleted instanceof Error)
+      return ERROR_RESPONSE.notAcceptable(customerDeleted.message, res)
+
+    res.json({ message: msg.delete, id })
   } catch (error) {
     next(error)
   }

@@ -4,19 +4,17 @@ const msg = require('../../utils/validationsMsg.js')
 const CATEGORIES_TABLE = 'Categorias'
 
 const CategoriesSchema = {
-  idCat: {
+  id: {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
-    field: 'id_cat',
     validate: {
       isUUID: 4
     }
   },
-  nombreCat: {
+  nombre: {
     type: DataTypes.STRING,
-    field: 'nombre_cat',
     unique: true,
     allowNull: false,
     validate: {
@@ -24,18 +22,16 @@ const CategoriesSchema = {
       notNull: msg.notNull
     }
   },
-  descCat: {
+  descripcion: {
     type: DataTypes.STRING,
-    field: 'desc_cat',
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },
-  estadoCat: {
+  estado: {
     type: DataTypes.INTEGER,
-    field: 'estado_cat',
     allowNull: false,
     defaultValue: 1,
     validate: {
@@ -46,7 +42,7 @@ const CategoriesSchema = {
 
 class Categories extends Model {
   static associate(models) {
-    this.hasMany(models.Productos, { foreignKey: 'id_cat' })
+    this.hasMany(models.Productos, { foreignKey: 'idCat', as: 'productos' })
   }
 
   static config(sequelize) {

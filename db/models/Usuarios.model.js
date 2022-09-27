@@ -124,7 +124,8 @@ class User extends Model {
     })
     this.hasMany(models.Ventas, {
       foreignKey: 'idVendedor',
-      sourceKey: 'idUsuario'
+      sourceKey: 'idUsuario',
+      as: 'ventas'
     })
     this.hasMany(models.Ventas, {
       foreignKey: 'idCliente',
@@ -134,17 +135,13 @@ class User extends Model {
       foreignKey: 'idEmp',
       as: 'compras'
     })
-    // this.hasMany(models.Pedidos, {
-    //   foreignKey: 'idCliente',
-    //   as: 'pedidos'
-    // })
     this.hasMany(models.Reviews, {
       foreignKey: 'idCliente',
       as: 'reviews'
     })
     this.hasMany(models.Favoritos, {
       foreignKey: 'idCliente',
-      as: 'favorito'
+      as: 'favoritos'
     })
     this.belongsTo(models.Sucursales, {
       foreignKey: 'idSuc',
