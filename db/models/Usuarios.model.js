@@ -125,11 +125,12 @@ class User extends Model {
     this.hasMany(models.Ventas, {
       foreignKey: 'idVendedor',
       sourceKey: 'idUsuario',
-      as: 'ventas'
+      as: 'ventasVendedor'
     })
     this.hasMany(models.Ventas, {
       foreignKey: 'idCliente',
-      sourceKey: 'idUsuario'
+      sourceKey: 'idUsuario',
+      as: 'ventasCliente'
     })
     this.hasMany(models.Compras, {
       foreignKey: 'idEmp',

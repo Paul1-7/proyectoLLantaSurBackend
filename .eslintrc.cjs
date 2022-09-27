@@ -10,7 +10,6 @@ module.exports = {
   },
   rules: {
     'require-jsdoc': 0,
-    'new-cap': false,
-    'no-console': 'warn'
+    'new-cap': false
   }
 }

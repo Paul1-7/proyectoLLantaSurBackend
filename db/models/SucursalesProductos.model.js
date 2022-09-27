@@ -46,7 +46,7 @@ const SubsidiariesProductsSchema = {
     field: 'id_prod',
     references: {
       model: PRODUCTS_TABLE,
-      key: 'id_prod'
+      key: 'id'
     },
     validate: {
       isUUID: 4

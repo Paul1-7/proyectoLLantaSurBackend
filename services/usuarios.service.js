@@ -42,12 +42,12 @@ async function updateUser(id, changes) {
 
 async function deleteUser(id) {
   const user = await models.Usuarios.findByPk(id, {
-    include: ['compras', 'ventas', 'favoritos']
+    include: ['compras', 'ventasVendedor', 'ventasCliente', 'favoritos']
   })
-  console.log(user)
   if (
     user.compras.length > 0 ||
-    user.ventas.length > 0 ||
+    user.ventasVendedor.length > 0 ||
+    user.ventasCliente.length > 0 ||
     user.favoritos.length > 0
   )
     return new Error(msg.msgErrorForeignKey)

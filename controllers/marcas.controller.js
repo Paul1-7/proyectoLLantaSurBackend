@@ -3,7 +3,9 @@ const services = require('../services/marcas.service.js')
 
 const msg = {
   notFound: 'Marca no encontrada',
-  delete: 'Marca eliminada'
+  delete: 'Se elimino la marca correctamente',
+  addSuccess: 'Se registro la marca correctamente',
+  modifySuccess: 'Se actualizo el registro de la marca correctamente'
 }
 const getAllBrands = async (req, res, next) => {
   try {
@@ -29,8 +31,8 @@ const findBrand = async (req, res, next) => {
 const createBrand = async (req, res, next) => {
   try {
     const { body } = req
-    const brand = await services.createBrand(body)
-    res.json(brand)
+    await services.createBrand(body)
+    res.json({ message: msg.addSuccess })
   } catch (error) {
     next(error)
   }
@@ -44,7 +46,7 @@ const updateBrand = async (req, res, next) => {
 
     if (!brand) return ERROR_RESPONSE.notFound(msg.notFound, res)
 
-    res.json(brand)
+    res.json({ message: msg.modifySuccess })
   } catch (error) {
     next(error)
   }
@@ -55,9 +57,12 @@ const deleteBrand = async (req, res, next) => {
     const { id } = req.params
     const brand = await services.deleteBrand(id)
 
+    if (brand instanceof Error)
+      return ERROR_RESPONSE.notAcceptable(brand.message, res)
+
     if (!brand) return ERROR_RESPONSE.notFound(msg.notFound, res)
 
-    res.json({ message: msg.delete })
+    res.json({ message: msg.delete, id })
   } catch (error) {
     next(error)
   }

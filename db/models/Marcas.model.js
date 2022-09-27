@@ -4,19 +4,17 @@ const msg = require('../../utils/validationsMsg.js')
 const BRANDS_TABLE = 'Marcas'
 
 const BrandsSchema = {
-  idMarca: {
+  id: {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
-    field: 'id_marca',
     validate: {
       isUUID: 4
     }
   },
-  nombreMarca: {
+  nombre: {
     type: DataTypes.STRING,
-    field: 'nombre_marca',
     allowNull: false,
     unique: true,
     validate: {
@@ -24,9 +22,8 @@ const BrandsSchema = {
       notNull: msg.notNull
     }
   },
-  estadoMarca: {
+  estado: {
     type: DataTypes.INTEGER,
-    field: 'estado_marca',
     allowNull: false,
     defaultValue: 1,
     validate: {
@@ -37,7 +34,7 @@ const BrandsSchema = {
 
 class Brands extends Model {
   static associate(models) {
-    this.hasMany(models.Productos, { foreignKey: 'id_marca' })
+    this.hasMany(models.Productos, { foreignKey: 'idMarca', as: 'productos' })
   }
 
   static config(sequelize) {

@@ -47,8 +47,6 @@ paymentRoute.post('/crear-orden', async (req, res, next) => {
       }
     })
 
-    console.log({ access_token })
-
     // make a request
     const response = await axios.post(
       `${PAYPAL_API}/v2/checkout/orders`,
@@ -59,8 +57,6 @@ paymentRoute.post('/crear-orden', async (req, res, next) => {
         }
       }
     )
-
-    console.log(response.data)
 
     return res.json(response.data)
   } catch (error) {

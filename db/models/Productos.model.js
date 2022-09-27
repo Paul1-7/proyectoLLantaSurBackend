@@ -7,29 +7,26 @@ const { PROVIDER_TABLE } = require('./Proveedores.model.js')
 const PRODUCTS_TABLE = 'Productos'
 
 const ProductsSchema = {
-  idProd: {
+  id: {
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
     allowNull: false,
-    field: 'id_prod',
     validate: {
       isUUID: 4
     }
   },
-  imagenProd: {
+  imagen: {
     type: DataTypes.STRING,
-    field: 'imagen_prod',
     allowNull: true
   },
-  idImgProd: {
+  idImg: {
     type: DataTypes.STRING,
     allowNull: true,
-    field: 'id_img_prod'
+    field: 'id_img'
   },
-  nombreProd: {
+  nombre: {
     type: DataTypes.STRING,
-    field: 'nombre_prod',
     allowNull: false,
     unique: true,
     validate: {
@@ -65,18 +62,16 @@ const ProductsSchema = {
       }
     }
   },
-  fechaProd: {
+  fecha: {
     type: DataTypes.DATE,
-    field: 'fecha_prod',
     allowNull: false,
     validate: {
       isDate: msg.isDate,
       notNull: msg.notNull
     }
   },
-  estadoProd: {
+  estado: {
     type: DataTypes.INTEGER,
-    field: 'estado_prod',
     allowNull: false,
     defaultValue: 1,
     validate: {
@@ -106,7 +101,7 @@ const ProductsSchema = {
     },
     references: {
       model: BRANDS_TABLE,
-      key: 'id_marca'
+      key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
@@ -131,32 +126,39 @@ class Products extends Model {
   static associate(models) {
     this.belongsTo(models.Categorias, { foreignKey: 'idCat', as: 'categoria' })
     this.belongsTo(models.Proveedores, {
-      foreignKey: 'id_prov',
+      foreignKey: 'idProv',
       as: 'proveedor'
     })
-    this.belongsTo(models.Marcas, { foreignKey: 'id_marca', as: 'marca' })
+    this.belongsTo(models.Marcas, { foreignKey: 'idMarca', as: 'marca' })
     this.hasMany(models.Detalle_Compras, {
-      foreignKey: 'id_prod'
-    })
-    this.hasMany(models.Detalle_Pedidos, {
-      foreignKey: 'id_prod'
+      foreignKey: 'idProd',
+      as: 'detalleCompras'
     })
     this.hasMany(models.Detalle_Ventas, {
-      foreignKey: 'idProd'
+      foreignKey: 'idProd',
+      as: 'detalleVentas'
     })
-    this.hasMany(models.Productos_Defectuosos, { foreignKey: 'id_prod' })
-    this.hasMany(models.Descuentos_Productos, { foreignKey: 'id_prod' })
+    this.hasMany(models.Productos_Defectuosos, {
+      foreignKey: 'idProd',
+      as: 'productosDefectuosos'
+    })
+    this.hasMany(models.Descuentos_Productos, {
+      foreignKey: 'idProd',
+      as: 'descuentosPorductos'
+    })
     this.hasMany(models.Favoritos, {
-      foreignKey: 'id_prod'
+      foreignKey: 'idProd',
+      as: 'favoritos'
     })
     this.hasMany(models.Reviews, {
-      foreignKey: 'id_prod'
+      foreignKey: 'idProd',
+      as: 'reviews'
     })
     this.belongsToMany(models.Sucursales, {
       through: models.Sucursales_Productos,
       as: 'sucursales',
-      foreignKey: 'id_prod',
-      otherKey: 'id_suc'
+      foreignKey: 'idProd',
+      otherKey: 'idSuc'
     })
   }
 

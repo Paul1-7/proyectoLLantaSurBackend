@@ -67,7 +67,7 @@ class Provider extends Model {
     this.hasMany(models.Compras, {
       foreignKey: 'id_prov'
     })
-    this.hasMany(models.Productos, { foreignKey: 'id_prov' })
+    this.hasMany(models.Productos, { foreignKey: 'idProv' })
   }
 
   static config(sequelize) {

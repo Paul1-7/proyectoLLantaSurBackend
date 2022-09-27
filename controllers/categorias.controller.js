@@ -3,7 +3,7 @@ const services = require('../services/categorias.service.js')
 
 const msg = {
   notFound: 'Categoria no encontrada',
-  delete: 'Categoria eliminada',
+  delete: 'Se elimino la categoria correctamente',
   addSuccess: 'Se registro la categoria correctamente',
   modifySuccess: 'Se actualizo el registro de la categoria correctamente'
 }

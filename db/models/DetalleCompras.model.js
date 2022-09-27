@@ -29,7 +29,7 @@ const PurchaseDetailSchema = {
     field: 'id_prod',
     references: {
       model: PRODUCTS_TABLE,
-      key: 'id_prod'
+      key: 'id'
     },
     validate: {
       isUUID: 4
@@ -72,7 +72,7 @@ class PurchaseDetail extends Model {
       foreignKey: 'id_compra'
     })
     this.belongsTo(models.Productos, {
-      foreignKey: 'id_prod'
+      foreignKey: 'idProd'
     })
   }
 

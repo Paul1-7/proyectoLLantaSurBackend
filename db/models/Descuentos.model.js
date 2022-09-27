@@ -45,7 +45,7 @@ const DiscountsSchema = {
 
 class Discounts extends Model {
   static associate(models) {
-    this.hasMany(models.Descuentos_Productos, { foreignKey: 'id_desc' })
+    this.hasMany(models.Descuentos_Productos, { foreignKey: 'idDesc' })
   }
 
   static config(sequelize) {

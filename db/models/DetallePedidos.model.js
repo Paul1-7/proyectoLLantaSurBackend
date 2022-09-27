@@ -28,7 +28,7 @@ const OrdersDetailSchema = {
     field: 'id_prod',
     references: {
       model: PRODUCTS_TABLE,
-      key: 'id_prod'
+      key: 'id'
     },
     validate: {
       isUUID: 4
@@ -71,7 +71,7 @@ class OrdersDetail extends Model {
     //   foreignKey: 'id_pedido'
     // })
     this.belongsTo(models.Productos, {
-      foreignKey: 'id_prod'
+      foreignKey: 'idProd'
     })
   }
 

@@ -28,7 +28,7 @@ const DiscountsProductsSchema = {
     field: 'id_prod',
     references: {
       model: PRODUCTS_TABLE,
-      key: 'id_prod'
+      key: 'id'
     },
     validate: {
       isUUID: 4
@@ -40,8 +40,8 @@ const DiscountsProductsSchema = {
 
 class DiscountsProducts extends Model {
   static associate(models) {
-    this.belongsTo(models.Descuentos, { foreignKey: 'id_desc' })
-    this.belongsTo(models.Productos, { foreignKey: 'id_prod' })
+    this.belongsTo(models.Descuentos, { foreignKey: 'idDesc' })
+    this.belongsTo(models.Productos, { foreignKey: 'idProd' })
   }
 
   static config(sequelize) {

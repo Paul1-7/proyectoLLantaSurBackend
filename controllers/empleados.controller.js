@@ -14,7 +14,7 @@ const {
 const { EMPLEADO_VENTAS, ADMINISTRADOR, CLIENTE } = rolesName
 const msg = {
   notFound: 'Empleado no encontrado',
-  delete: 'Se elimino correctamente el empleado',
+  delete: 'Se elimino el empleado correctamente',
   rolNotFound: 'Rol no encontrado',
   addSuccess: 'Se registro el empleado correctamente',
   updateSuccess: 'Se actualizo el registro del empleado correctamente'

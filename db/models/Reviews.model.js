@@ -28,7 +28,7 @@ const ReviewsSchema = {
     field: 'id_prod',
     references: {
       model: PRODUCTS_TABLE,
-      key: 'id_prod'
+      key: 'id'
     },
     validate: {
       isUUID: 4
@@ -86,7 +86,7 @@ class Reviews extends Model {
       as: 'usuarios'
     })
     this.belongsTo(models.Productos, {
-      foreignKey: 'id_prod'
+      foreignKey: 'idProd'
     })
   }
 

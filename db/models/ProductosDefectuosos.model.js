@@ -52,7 +52,7 @@ const DefectiveProductsSchema = {
     },
     references: {
       model: PRODUCTS_TABLE,
-      key: 'id_prod'
+      key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
@@ -61,7 +61,7 @@ const DefectiveProductsSchema = {
 
 class DefectiveProducts extends Model {
   static associate(models) {
-    this.belongsTo(models.Productos, { foreignKey: 'id_prod' })
+    this.belongsTo(models.Productos, { foreignKey: 'idProd' })
   }
 
   static config(sequelize) {
