@@ -4,19 +4,17 @@ const msg = require('../../utils/validationsMsg.js')
 const PROVIDER_TABLE = 'Proveedores'
 
 const ProviderSchema = {
-  idProv: {
+  id: {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
-    field: 'id_prov',
     validate: {
       isUUID: 4
     }
   },
-  nombreProv: {
+  nombre: {
     type: DataTypes.STRING,
-    field: 'nombre_prov',
     allowNull: false,
     unique: true,
     validate: {
@@ -24,36 +22,34 @@ const ProviderSchema = {
       notNull: msg.notNull
     }
   },
-  telProv: {
+  tel: {
     type: DataTypes.STRING,
-    field: 'tel_prov',
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },
-  nombreEncProv: {
+  nombreEnc: {
     type: DataTypes.STRING,
-    field: 'nombre_enc_prov',
+    field: 'nombre_enc',
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },
-  apEncProv: {
+  apEnc: {
     type: DataTypes.STRING,
-    field: 'ap_enc_prov',
     allowNull: false,
+    field: 'ap_enc',
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },
-  estadoProv: {
+  estado: {
     type: DataTypes.INTEGER,
-    field: 'estado_prov',
     allowNull: false,
     defaultValue: 1,
     validate: {
@@ -65,9 +61,10 @@ const ProviderSchema = {
 class Provider extends Model {
   static associate(models) {
     this.hasMany(models.Compras, {
-      foreignKey: 'id_prov'
+      as: 'compras',
+      foreignKey: 'idProv'
     })
-    this.hasMany(models.Productos, { foreignKey: 'idProv' })
+    this.hasMany(models.Productos, { foreignKey: 'idProv', as: 'productos' })
   }
 
   static config(sequelize) {

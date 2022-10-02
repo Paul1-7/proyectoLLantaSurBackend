@@ -3,7 +3,9 @@ const services = require('../services/proveedores.service.js')
 
 const msg = {
   notFound: 'Proveedor no encontrado',
-  delete: 'Proveedor eliminado'
+  delete: 'Proveedor eliminado',
+  addSuccess: 'Se registró el proveedor correctamente',
+  modifySuccess: 'Se actualizó el registró del proveedor correctamente'
 }
 
 const getAllProviders = async (req, res, next) => {
@@ -30,8 +32,8 @@ const findProvider = async (req, res, next) => {
 const createProvider = async (req, res, next) => {
   try {
     const { body } = req
-    const provider = await services.createProvider(body)
-    res.json(provider)
+    await services.createProvider(body)
+    res.json({ message: msg.addSuccess })
   } catch (error) {
     next(error)
   }
@@ -45,7 +47,7 @@ const updateProvider = async (req, res, next) => {
 
     if (!provider) return ERROR_RESPONSE.notFound(msg.notFound, res)
 
-    res.json(provider)
+    res.json({ message: msg.modifySuccess })
   } catch (error) {
     next(error)
   }
@@ -56,9 +58,12 @@ const deleteProvider = async (req, res, next) => {
     const { id } = req.params
     const provider = await services.deleteProvider(id)
 
+    if (provider instanceof Error)
+      return ERROR_RESPONSE.notAcceptable(provider.message, res)
+
     if (!provider) return ERROR_RESPONSE.notFound(msg.notFound, res)
 
-    res.json({ message: msg.delete })
+    res.json({ message: msg.delete, id })
   } catch (error) {
     next(error)
   }

@@ -51,7 +51,7 @@ const PurchaseSchema = {
     },
     references: {
       model: PROVIDER_TABLE,
-      key: 'id_prov'
+      key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
@@ -74,7 +74,7 @@ const PurchaseSchema = {
 
 class Purchase extends Model {
   static associate(models) {
-    this.belongsTo(models.Proveedores, { foreignKey: 'id_prov' })
+    this.belongsTo(models.Proveedores, { foreignKey: 'idProv' })
     this.belongsTo(models.Usuarios, { foreignKey: 'idEmp' })
     this.hasMany(models.Detalle_Compras, {
       foreignKey: 'id_compra'

@@ -4,8 +4,8 @@ const services = require('../services/marcas.service.js')
 const msg = {
   notFound: 'Marca no encontrada',
   delete: 'Se elimino la marca correctamente',
-  addSuccess: 'Se registro la marca correctamente',
-  modifySuccess: 'Se actualizo el registro de la marca correctamente'
+  addSuccess: 'Se registró la marca correctamente',
+  modifySuccess: 'Se actualizó el registró de la marca correctamente'
 }
 const getAllBrands = async (req, res, next) => {
   try {

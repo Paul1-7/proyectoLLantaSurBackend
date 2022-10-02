@@ -87,7 +87,7 @@ const ProductsSchema = {
     },
     references: {
       model: PROVIDER_TABLE,
-      key: 'id_prov'
+      key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'

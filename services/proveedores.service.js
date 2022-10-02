@@ -1,4 +1,5 @@
 const { models } = require('../libs/sequelize.js')
+const msg = require('../utils/validationsMsg.js')
 
 async function getAllProviders() {
   return await models.Proveedores.findAll()
@@ -18,7 +19,12 @@ async function updateProvider(id, changes) {
 }
 
 async function deleteProvider(id) {
-  const provider = await models.Proveedores.findByPk(id)
+  const provider = await models.Proveedores.findByPk(id, {
+    include: ['productos', 'compras']
+  })
+
+  if (provider.productos.length > 0 || provider.compras.length > 0)
+    return new Error(msg.msgErrorForeignKey)
   return await provider?.destroy()
 }
 

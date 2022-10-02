@@ -16,8 +16,8 @@ const msg = {
   notFound: 'Empleado no encontrado',
   delete: 'Se elimino el empleado correctamente',
   rolNotFound: 'Rol no encontrado',
-  addSuccess: 'Se registro el empleado correctamente',
-  updateSuccess: 'Se actualizo el registro del empleado correctamente'
+  addSuccess: 'Se registró el empleado correctamente',
+  updateSuccess: 'Se actualizó el registró del empleado correctamente'
 }
 
 const userDataIsEmpty = (user) => {

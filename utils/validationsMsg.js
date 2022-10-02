@@ -39,7 +39,7 @@ const msg = {
   msgValidationError: 'ERROR DE VALIDACIÓN:',
   msgDatabaseError: 'ocurrio un error al guardar en la base de datos',
   msgErrorForeignKey:
-    'Otras partes del sistema estan haciendo uso del registro seleccionado'
+    'Otras partes del sistema estan haciendo uso del registró seleccionado'
 }
 
 module.exports = msg
