@@ -107,7 +107,7 @@ const UserSchema = {
     },
     references: {
       model: SUBSIDIARIES_TABLE,
-      key: 'id_suc'
+      key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'

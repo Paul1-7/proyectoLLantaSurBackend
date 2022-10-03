@@ -5,12 +5,11 @@ const { USER_TABLE } = require('./Usuarios.model.js')
 const SELLS_TABLE = 'Ventas'
 
 const SellsSchema = {
-  idVenta: {
+  id: {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
-    field: 'id_venta',
     validate: {
       isUUID: 4
     }

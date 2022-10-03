@@ -4,19 +4,17 @@ const msg = require('../../utils/validationsMsg.js')
 const DISCOUNTS_TABLE = 'Descuentos'
 
 const DiscountsSchema = {
-  idDesc: {
+  id: {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
-    field: 'id_desc',
     validate: {
       isUUID: 4
     }
   },
-  cantMaxDesc: {
+  cantMax: {
     type: DataTypes.INTEGER,
-    field: 'cant_max_desc',
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,

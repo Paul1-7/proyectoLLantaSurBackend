@@ -1,5 +1,4 @@
 const { Model, DataTypes } = require('sequelize')
-const { EMPLOYEES_TABLE } = require('./Empleados.model.js')
 const { ROL_TABLE } = require('./Roles.model.js')
 const { USER_TABLE } = require('./Usuarios.model.js')
 

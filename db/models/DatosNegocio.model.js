@@ -4,46 +4,44 @@ const msg = require('../../utils/validationsMsg.js')
 const BUSINESS_DATA_TABLE = 'Datos_Negocio'
 
 const BusinessDataSchema = {
-  idNeg: {
+  id: {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
-    field: 'id_neg',
     validate: {
       isUUID: 4
     }
   },
-  numDocNeg: {
+  numDoc: {
     type: DataTypes.STRING,
-    field: 'num_doc_neg',
+    field: 'num_doc',
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },
-  nombreNeg: {
+  nombre: {
     type: DataTypes.STRING,
-    field: 'nombre_neg',
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },
-  actividadEcoNeg: {
+  actividadEco: {
     type: DataTypes.STRING,
-    field: 'actividad_eco_neg',
+    field: 'actividad_eco',
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },
-  leyendaNeg: {
+  leyenda: {
     type: DataTypes.STRING,
-    field: 'leyenda_neg',
+    field: 'leyenda',
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -59,19 +57,19 @@ const BusinessDataSchema = {
       notNull: msg.notNull
     }
   },
-  logotipoNeg: {
+  logotipo: {
     type: DataTypes.STRING,
-    field: 'logotipo_neg',
+    field: 'logotipo',
     allowNull: false
   },
-  idLogoNeg: {
+  idLogo: {
     type: DataTypes.STRING,
-    field: 'id_logo_neg',
+    field: 'id_logo',
     allowNull: false
   },
-  emailNeg: {
+  email: {
     type: DataTypes.STRING,
-    field: 'email_neg',
+    field: 'email',
     allowNull: true,
     unique: true,
     validate: {

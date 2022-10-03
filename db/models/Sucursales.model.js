@@ -4,19 +4,17 @@ const msg = require('../../utils/validationsMsg.js')
 const SUBSIDIARIES_TABLE = 'Sucursales'
 
 const SubsidiariesSchema = {
-  idSuc: {
+  id: {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
-    field: 'id_suc',
     validate: {
       isUUID: 4
     }
   },
-  nombreSuc: {
+  nombre: {
     type: DataTypes.STRING,
-    field: 'nombre_suc',
     unique: true,
     allowNull: false,
     validate: {
@@ -24,27 +22,24 @@ const SubsidiariesSchema = {
       notNull: msg.notNull
     }
   },
-  direccionSuc: {
+  direccion: {
     type: DataTypes.STRING,
-    field: 'direccion_suc',
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },
-  telSuc: {
+  tel: {
     type: DataTypes.STRING,
-    field: 'tel_suc',
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },
-  estadoSuc: {
+  estado: {
     type: DataTypes.INTEGER,
-    field: 'estado_suc',
     allowNull: false,
     defaultValue: 1,
     validate: {
@@ -59,8 +54,8 @@ class Subsidiaries extends Model {
     this.belongsToMany(models.Productos, {
       through: models.Sucursales_Productos,
       as: 'productos',
-      foreignKey: 'id_suc',
-      otherKey: 'id_prod'
+      foreignKey: 'idSuc',
+      otherKey: 'idProd'
     })
   }
 

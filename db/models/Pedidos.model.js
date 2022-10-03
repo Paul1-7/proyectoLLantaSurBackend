@@ -5,24 +5,22 @@ const { SELLS_TABLE } = require('./Ventas.model.js')
 const ORDERS_TABLE = 'Pedidos'
 
 const OrdersSchema = {
-  idPedido: {
+  id: {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
-    field: 'id_pedido',
     validate: {
       isUUID: 4
     },
     references: {
       model: SELLS_TABLE,
-      key: 'id_venta'
+      key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   },
-  estadoPedido: {
+  estado: {
     type: DataTypes.INTEGER,
-    field: 'estado_pedido',
     allowNull: false,
     defaultValue: 0,
     validate: {

@@ -6,15 +6,22 @@ const { PRODUCTS_TABLE } = require('./Productos.model.js')
 const PURCHASE_DETAIL_TABLE = 'Detalle_Compras'
 
 const PurchaseDetailSchema = {
-  idCompra: {
-    primaryKey: true,
+  id: {
     allowNull: false,
+    primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
+    validate: {
+      isUUID: 4
+    }
+  },
+  idCompra: {
+    allowNull: false,
+    type: DataTypes.STRING,
     field: 'id_compra',
     references: {
       model: PURCHASE_TABLE,
-      key: 'id_compra'
+      key: 'id'
     },
     validate: {
       isUUID: 4
@@ -23,7 +30,6 @@ const PurchaseDetailSchema = {
     onDelete: 'SET NULL'
   },
   idProd: {
-    primaryKey: true,
     allowNull: false,
     type: DataTypes.STRING,
     field: 'id_prod',
@@ -37,27 +43,24 @@ const PurchaseDetailSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   },
-  cantidadDetCompra: {
+  cantidad: {
     type: DataTypes.INTEGER,
-    field: 'cantidad_det_compra',
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
       notNull: msg.notNull
     }
   },
-  precioUniCompra: {
+  precio: {
     type: DataTypes.FLOAT,
-    field: 'precio_uni_compra',
     allowNull: false,
     validate: {
       isFloat: msg.isFloat,
       notNull: msg.notNull
     }
   },
-  subtotalDetCompra: {
+  subtotal: {
     type: DataTypes.FLOAT,
-    field: 'subtotal_det_compra',
     allowNull: false,
     validate: {
       isFloat: msg.isFloat,
@@ -69,7 +72,7 @@ const PurchaseDetailSchema = {
 class PurchaseDetail extends Model {
   static associate(models) {
     this.belongsTo(models.Compras, {
-      foreignKey: 'id_compra'
+      foreignKey: 'idCompra'
     })
     this.belongsTo(models.Productos, {
       foreignKey: 'idProd'

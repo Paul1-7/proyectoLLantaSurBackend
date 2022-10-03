@@ -5,11 +5,18 @@ const { USER_TABLE } = require('./Usuarios.model')
 const FAVORITES_TABLE = 'Favoritos'
 
 const FavoritesSchema = {
-  idCliente: {
-    primaryKey: true,
+  id: {
     allowNull: false,
+    primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
+    validate: {
+      isUUID: 4
+    }
+  },
+  idCliente: {
+    allowNull: false,
+    type: DataTypes.STRING,
     field: 'id_cliente',
     references: {
       model: USER_TABLE,

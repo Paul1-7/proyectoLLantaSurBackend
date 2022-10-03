@@ -5,15 +5,22 @@ const { PRODUCTS_TABLE } = require('./Productos.model.js')
 const ORDERS_DETAIL_TABLE = 'Detalle_Pedidos'
 
 const OrdersDetailSchema = {
-  idPedido: {
-    primaryKey: true,
+  id: {
     allowNull: false,
+    primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
+    validate: {
+      isUUID: 4
+    }
+  },
+  idPedido: {
+    allowNull: false,
+    type: DataTypes.STRING,
     field: 'id_pedido',
     references: {
       model: ORDERS_TABLE,
-      key: 'id_pedido'
+      key: 'id'
     },
     validate: {
       isUUID: 4
@@ -22,7 +29,6 @@ const OrdersDetailSchema = {
     onDelete: 'SET NULL'
   },
   idProd: {
-    primaryKey: true,
     allowNull: false,
     type: DataTypes.STRING,
     field: 'id_prod',
@@ -36,27 +42,24 @@ const OrdersDetailSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   },
-  cantidadDetPed: {
+  cantidad: {
     type: DataTypes.INTEGER,
-    field: 'cantidad_det_ped',
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
       notNull: msg.notNull
     }
   },
-  precioUniPed: {
+  precio: {
     type: DataTypes.FLOAT,
-    field: 'precio_uni_ped',
     allowNull: false,
     validate: {
       isFloat: msg.isFloat,
       notNull: msg.notNull
     }
   },
-  subtotalDetPed: {
+  subtotal: {
     type: DataTypes.FLOAT,
-    field: 'subtotal_det_ped',
     allowNull: false,
     validate: {
       isFloat: msg.isFloat,
@@ -67,9 +70,6 @@ const OrdersDetailSchema = {
 
 class OrdersDetail extends Model {
   static associate(models) {
-    // this.belongsTo(models.Pedidos, {
-    //   foreignKey: 'id_pedido'
-    // })
     this.belongsTo(models.Productos, {
       foreignKey: 'idProd'
     })

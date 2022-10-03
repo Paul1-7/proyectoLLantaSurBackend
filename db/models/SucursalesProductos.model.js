@@ -6,19 +6,17 @@ const { SUBSIDIARIES_TABLE } = require('./Sucursales.model.js')
 const SUBSIDIARIES_PRODUCTS_TABLE = 'Sucursales_Productos'
 
 const SubsidiariesProductsSchema = {
-  idSucProd: {
+  id: {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
-    field: 'id_suc_prod',
     validate: {
       isUUID: 4
     }
   },
-  stockProd: {
+  stock: {
     type: DataTypes.INTEGER,
-    field: 'stock_prod',
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
@@ -32,7 +30,7 @@ const SubsidiariesProductsSchema = {
     field: 'id_suc',
     references: {
       model: SUBSIDIARIES_TABLE,
-      key: 'id_suc'
+      key: 'id'
     },
     validate: {
       isUUID: 4

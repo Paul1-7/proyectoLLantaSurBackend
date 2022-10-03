@@ -6,10 +6,17 @@ const { USER_TABLE } = require('./Usuarios.model.js')
 const REVIEWS_TABLE = 'Reviews'
 
 const ReviewsSchema = {
-  idCliente: {
+  id: {
+    allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
+    validate: {
+      isUUID: 4
+    }
+  },
+  idCliente: {
+    type: DataTypes.STRING,
     field: 'id_cliente',
     references: {
       model: USER_TABLE,
@@ -36,41 +43,36 @@ const ReviewsSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   },
-  tituloReview: {
+  titulo: {
     type: DataTypes.STRING,
-    field: 'titulo_review',
     validate: {
       is: msg.isAlphanumeric
     }
   },
-  descReview: {
+  descripcion: {
     type: DataTypes.STRING,
-    field: 'desc_review',
     validate: {
       is: msg.isAlphanumeric
     }
   },
-  fechaReview: {
+  fecha: {
     type: DataTypes.DATE,
-    field: 'fecha_review',
     allowNull: false,
     validate: {
       isDate: msg.isDate,
       notNull: msg.notNull
     }
   },
-  calificacionReview: {
+  calificacion: {
     type: DataTypes.INTEGER,
-    field: 'calificacion_review',
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
       notNull: msg.notNull
     }
   },
-  estadoReview: {
+  estado: {
     type: DataTypes.INTEGER,
-    field: 'estado_review',
     allowNull: false,
     defaultValue: 1,
     validate: {

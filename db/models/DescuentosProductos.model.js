@@ -5,15 +5,22 @@ const { PRODUCTS_TABLE } = require('./Productos.model')
 const DISCOUNTS_PRODUCTS_TABLE = 'Descuentos_Productos'
 
 const DiscountsProductsSchema = {
-  idDesc: {
-    primaryKey: true,
+  id: {
     allowNull: false,
+    primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
+    validate: {
+      isUUID: 4
+    }
+  },
+  idDesc: {
+    allowNull: false,
+    type: DataTypes.STRING,
     field: 'id_desc',
     references: {
       model: DISCOUNTS_TABLE,
-      key: 'id_desc'
+      key: 'id'
     },
     validate: {
       isUUID: 4
@@ -22,7 +29,6 @@ const DiscountsProductsSchema = {
     onDelete: 'SET NULL'
   },
   idProd: {
-    primaryKey: true,
     allowNull: false,
     type: DataTypes.STRING,
     field: 'id_prod',

@@ -5,15 +5,22 @@ const { SELLS_TABLE } = require('./Ventas.model.js')
 const SELLS_DETAIL_TABLE = 'Detalle_Ventas'
 
 const SellsDetailSchema = {
-  idVenta: {
-    primaryKey: true,
+  id: {
     allowNull: false,
+    primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
+    validate: {
+      isUUID: 4
+    }
+  },
+  idVenta: {
+    allowNull: false,
+    type: DataTypes.STRING,
     field: 'id_venta',
     references: {
       model: SELLS_TABLE,
-      key: 'id_venta'
+      key: 'id'
     },
     validate: {
       isUUID: 4
@@ -22,7 +29,6 @@ const SellsDetailSchema = {
     onDelete: 'SET NULL'
   },
   idProd: {
-    primaryKey: true,
     allowNull: false,
     type: DataTypes.STRING,
     field: 'id_prod',
@@ -36,18 +42,17 @@ const SellsDetailSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   },
-  cantidadDetVenta: {
+  cantidad: {
     type: DataTypes.INTEGER,
-    field: 'cantidad_det_venta',
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
       notNull: msg.notNull
     }
   },
-  precioUniVenta: {
+  precioUni: {
     type: DataTypes.FLOAT,
-    field: 'precio_uni_venta',
+    field: 'precio_uni',
     allowNull: false,
     validate: {
       isFloat: msg.isFloat,

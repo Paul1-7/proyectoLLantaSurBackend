@@ -4,7 +4,7 @@ module.exports = {
       'Ventas',
       [
         {
-          id_venta: '54a4b3f3-da45-4645-8ad7-1a3d37b64272',
+          id: '54a4b3f3-da45-4645-8ad7-1a3d37b64272',
           cod_venta: 6800,
           tipo_venta: 0,
           metodo_pago: 1,
@@ -13,7 +13,7 @@ module.exports = {
           id_cliente: 'd71ac730-e43b-4c9c-a480-164f9c630e07'
         },
         {
-          id_venta: '721e8d0e-3a0d-4d62-ae8a-e2df0054e1e7',
+          id: '721e8d0e-3a0d-4d62-ae8a-e2df0054e1e7',
           cod_venta: 6801,
           tipo_venta: 1,
           metodo_pago: 0,
@@ -22,7 +22,7 @@ module.exports = {
           id_cliente: 'd71ac730-e43b-4c9c-a480-164f9c630e07'
         },
         {
-          id_venta: 'ea49ee5b-90c3-456a-88a1-8a97a349d046',
+          id: 'ea49ee5b-90c3-456a-88a1-8a97a349d046',
           cod_venta: 6802,
           tipo_venta: 0,
           metodo_pago: 1,
@@ -31,7 +31,7 @@ module.exports = {
           id_cliente: 'eb31ccf2-68f2-4f42-97ec-ebd8133f98c2'
         },
         {
-          id_venta: '20ec796d-044c-4871-8494-df736c07c062',
+          id: '20ec796d-044c-4871-8494-df736c07c062',
           cod_venta: 6803,
           tipo_venta: 0,
           metodo_pago: 0,
@@ -40,7 +40,7 @@ module.exports = {
           id_cliente: 'bfd25eb9-badb-4cdc-bc6d-2bc472312427'
         },
         {
-          id_venta: '3e0a090a-4441-4c4a-b458-57c162fe6d47',
+          id: '3e0a090a-4441-4c4a-b458-57c162fe6d47',
           cod_venta: 6804,
           tipo_venta: 1,
           metodo_pago: 1,
@@ -49,7 +49,7 @@ module.exports = {
           id_cliente: 'bfd25eb9-badb-4cdc-bc6d-2bc472312427'
         },
         {
-          id_venta: '0ca5a61d-ab58-4cb5-84a0-0960aafaed08',
+          id: '0ca5a61d-ab58-4cb5-84a0-0960aafaed08',
           cod_venta: 6800,
           tipo_venta: 1,
           metodo_pago: 1,
@@ -58,7 +58,7 @@ module.exports = {
           id_cliente: '8a84d79b-49d5-4c6a-8f9d-391c12aed841'
         },
         {
-          id_venta: '13d7c78c-0b92-4863-9747-06f283d8f078',
+          id: '13d7c78c-0b92-4863-9747-06f283d8f078',
           cod_venta: 6801,
           tipo_venta: 0,
           metodo_pago: 1,
@@ -67,7 +67,7 @@ module.exports = {
           id_cliente: '8a84d79b-49d5-4c6a-8f9d-391c12aed841'
         },
         {
-          id_venta: '9f5d43c1-ef74-4b97-8fdc-6afc2f63a7b9',
+          id: '9f5d43c1-ef74-4b97-8fdc-6afc2f63a7b9',
           cod_venta: 6802,
           tipo_venta: 1,
           metodo_pago: 0,
@@ -76,7 +76,7 @@ module.exports = {
           id_cliente: '8a84d79b-49d5-4c6a-8f9d-391c12aed841'
         }, //
         {
-          id_venta: '6bbc40fe-6be0-438c-b745-63ca4567ca6e',
+          id: '6bbc40fe-6be0-438c-b745-63ca4567ca6e',
           cod_venta: 6803,
           tipo_venta: 1,
           metodo_pago: 1,
@@ -85,7 +85,7 @@ module.exports = {
           id_cliente: '567c0552-c250-4d69-bc54-482296a95e4b'
         },
         {
-          id_venta: '774ecd9b-2106-425b-9f68-ef13de57ef2f',
+          id: '774ecd9b-2106-425b-9f68-ef13de57ef2f',
           cod_venta: 6804,
           tipo_venta: 1,
           metodo_pago: 1,
@@ -94,7 +94,7 @@ module.exports = {
           id_cliente: '567c0552-c250-4d69-bc54-482296a95e4b'
         },
         {
-          id_venta: 'b532ae83-dc85-4fcb-ae0a-43a6aef4a5d6',
+          id: 'b532ae83-dc85-4fcb-ae0a-43a6aef4a5d6',
           cod_venta: 6800,
           tipo_venta: 0,
           metodo_pago: 1,
@@ -103,7 +103,7 @@ module.exports = {
           id_cliente: '567c0552-c250-4d69-bc54-482296a95e4b'
         },
         {
-          id_venta: '6198a0e3-2b41-480c-b759-e3ca7038ec75',
+          id: '6198a0e3-2b41-480c-b759-e3ca7038ec75',
           cod_venta: 6801,
           tipo_venta: 1,
           metodo_pago: 0,
@@ -112,7 +112,7 @@ module.exports = {
           id_cliente: 'e57e500b-5162-4159-bba7-732228c10ed8'
         },
         {
-          id_venta: '981d8304-5b3a-4ef5-a00f-3d3537ff94f1',
+          id: '981d8304-5b3a-4ef5-a00f-3d3537ff94f1',
           cod_venta: 6802,
           tipo_venta: 0,
           metodo_pago: 1,
@@ -121,7 +121,7 @@ module.exports = {
           id_cliente: 'e57e500b-5162-4159-bba7-732228c10ed8'
         },
         {
-          id_venta: 'a2500625-0f83-4d61-ad20-9b80c87e5736',
+          id: 'a2500625-0f83-4d61-ad20-9b80c87e5736',
           cod_venta: 6803,
           tipo_venta: 1,
           metodo_pago: 0,
@@ -130,7 +130,7 @@ module.exports = {
           id_cliente: '741c6697-22d7-4f87-a4f2-7c835b21176d'
         },
         {
-          id_venta: 'aa5ce698-6929-4470-b6e2-4b4c2518d273',
+          id: 'aa5ce698-6929-4470-b6e2-4b4c2518d273',
           cod_venta: 6804,
           tipo_venta: 1,
           metodo_pago: 1,

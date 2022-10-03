@@ -6,17 +6,17 @@ module.exports = {
       'Datos_Negocio',
       [
         {
-          id_neg: '7bb98029-8c22-450d-ba9d-06a264a220d9',
-          num_doc_neg: '1020269020',
-          nombre_neg: 'Llantas sur',
-          actividad_eco_neg:
+          id: '7bb98029-8c22-450d-ba9d-06a264a220d9',
+          num_doc: '1020269020',
+          nombre: 'Llantas sur',
+          actividad_eco:
             'Venta de partes, piezas y accesorios de vehículos automotores',
-          leyenda_neg:
+          leyenda:
             'Esta factura contribuye al desarrollo del país, el uso ilicito será sancionado penalmente de acuerdo a ley',
           cant_min_prod: 5,
-          logotipo_neg: 'logo.jpg',
-          id_logo_neg: 'idlogo',
-          email_neg: 'llantas-sur@gmail.com'
+          logotipo: 'logo.jpg',
+          id_logo: 'idlogo',
+          email: 'llantas-sur@gmail.com'
         }
       ],
       {}

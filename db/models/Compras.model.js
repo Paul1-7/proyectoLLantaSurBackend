@@ -6,12 +6,11 @@ const { USER_TABLE } = require('./Usuarios.model.js')
 const PURCHASE_TABLE = 'Compras'
 
 const PurchaseSchema = {
-  idCompra: {
+  id: {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
-    field: 'id_compra',
     validate: {
       isUUID: 4
     }
@@ -77,7 +76,7 @@ class Purchase extends Model {
     this.belongsTo(models.Proveedores, { foreignKey: 'idProv' })
     this.belongsTo(models.Usuarios, { foreignKey: 'idEmp' })
     this.hasMany(models.Detalle_Compras, {
-      foreignKey: 'id_compra'
+      foreignKey: 'idCompra'
     })
   }
 

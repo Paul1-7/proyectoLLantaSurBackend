@@ -4,12 +4,11 @@ const msg = require('../../utils/validationsMsg.js')
 const INVOICE_BATCHING_TABLE = 'Dosificacion_Facturas'
 
 const InvoiceBatchingSchema = {
-  idDosificacion: {
+  id: {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
-    field: 'id_dosificacion',
     validate: {
       isUUID: 4
     }

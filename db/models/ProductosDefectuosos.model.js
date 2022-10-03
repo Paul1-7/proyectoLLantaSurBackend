@@ -5,44 +5,39 @@ const { PRODUCTS_TABLE } = require('./Productos.model.js')
 const DEFECTIVE_PRODUCTS_TABLE = 'Productos_Defectuosos'
 
 const DefectiveProductsSchema = {
-  idProdDef: {
+  id: {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
-    field: 'id_prod_def',
     validate: {
       isUUID: 4
     }
   },
-  descProdDef: {
+  descripcion: {
     type: DataTypes.STRING,
-    field: 'desc_prod_def',
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },
-  cantidadProdDef: {
+  cantidad: {
     type: DataTypes.INTEGER,
-    field: 'cantidad_prod_def',
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
       notNull: msg.notNull
     }
   },
-  fechaProdDef: {
+  fecha: {
     type: DataTypes.DATE,
-    field: 'fecha_prod_def',
     allowNull: false,
     validate: {
       isDate: msg.isDate,
       notNull: msg.notNull
     }
   },
-
   idProd: {
     type: DataTypes.STRING,
     field: 'id_prod',
