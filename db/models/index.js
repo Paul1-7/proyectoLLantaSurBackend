@@ -42,9 +42,7 @@ const {
 function setUpModels(sequelize) {
   Subsidiaries.init(SubsidiariesSchema, Subsidiaries.config(sequelize))
   User.init(UserSchema, User.config(sequelize))
-  // Customer.init(CustomerSchema, Customer.config(sequelize))
   Rol.init(RolSchema, Rol.config(sequelize))
-  // Employees.init(EmployeesSchema, Employees.config(sequelize))
   RolUsers.init(RolUsersSchema, RolUsers.config(sequelize))
   BusinessData.init(BusinessDataSchema, BusinessData.config(sequelize))
   InvoiceBatching.init(InvoiceBatchingSchema, InvoiceBatching.config(sequelize))

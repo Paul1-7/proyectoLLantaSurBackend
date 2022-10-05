@@ -25,14 +25,12 @@ const existClientRol = (allRoles, rolesUser) => {
  * @returns The product object is being returned.
  */
 const parseProduct = (product) => {
-  const { sucursales, stockProd, precioCompra, precioVenta, fechaProd } =
-    product
+  const { sucursales, precioCompra, precioVenta, fecha } = product
 
   product.precioCompra = parseFloat(precioCompra)
   product.precioVenta = parseFloat(precioVenta)
-  product.fechaProd = new Date(fechaProd)
-  product.sucursales = sucursales.split(',')
-  product.stockProd = stockProd.split(',')
+  product.fecha = new Date(fecha)
+  product.sucursales = JSON.parse(sucursales)
   return product
 }
 
@@ -44,13 +42,16 @@ const parseProduct = (product) => {
  * @returns A boolean value.
  */
 const verifySubsidiaries = (allSubsidiaries, bodySubsidiaries) => {
-  const areValid = allSubsidiaries.every((subsidiary) => {
-    return bodySubsidiaries.includes(subsidiary.idSuc)
-  })
-
   const isCorrectLength = allSubsidiaries.length === bodySubsidiaries.length
 
-  return isCorrectLength && areValid
+  if (!isCorrectLength) return false
+
+  const idSubsidiaries = bodySubsidiaries.map(({ idSuc }) => idSuc)
+  const areValid = allSubsidiaries.every((subsidiary) => {
+    return idSubsidiaries.includes(subsidiary.id)
+  })
+
+  return areValid
 }
 
 /**
@@ -65,18 +66,7 @@ const getNewSubdiaryProduct = (allProduct, bodyProducts) => {
     const productFound = allProduct.find(
       (dataValues) => dataValues.idProd === product.idProd
     )
-
-    // if (!productFound) {
-    //   const productData = findProduct(product.idProd).then(data => data.toJSON())
-    //   const {idSucProd} = productData.sucursales.
-    //   return {
-    //     ...product
-
-    //    }
-    // }
-
     const { idSucProd, stockProd, idSuc, idProd } = productFound
-
     const newStockProd = stockProd - product.cantidadDetVenta
 
     return {

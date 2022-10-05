@@ -1,5 +1,6 @@
 const { Op } = require('sequelize')
 const { models } = require('../libs/sequelize.js')
+const msg = require('../utils/validationsMsg.js')
 
 async function getAllProducts() {
   return await models.Productos.findAll({
@@ -41,13 +42,30 @@ async function updateProduct(id, changes) {
 }
 
 async function deleteProduct(id) {
-  const product = await models.Productos.findByPk(id)
-
-  await models.Productos.destroy({
-    where: {
-      idProd: id
-    }
+  const product = await models.Productos.findByPk(id, {
+    include: [
+      'productosDefectuosos',
+      'descuentosPorductos',
+      'favoritos',
+      'sucursales',
+      'detalleCompras',
+      'detalleVentas',
+      'proveedor'
+    ]
   })
+
+  if (
+    product.productosDefectuosos.length > 0 ||
+    product.descuentosPorductos.length > 0 ||
+    product.favoritos.length > 0 ||
+    product.sucursales.length > 0 ||
+    product.detalleCompras.length > 0 ||
+    product.detalleVentas.length > 0 ||
+    product.proveedor.length > 0
+  )
+    return new Error(msg.msgErrorForeignKey)
+
+  await product?.destroy()
 
   return product
 }
