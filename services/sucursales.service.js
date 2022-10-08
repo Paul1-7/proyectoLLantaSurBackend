@@ -1,4 +1,5 @@
 const { models } = require('../libs/sequelize.js')
+const msg = require('../utils/validationsMsg.js')
 
 async function getAllSubsidiaries() {
   return await models.Sucursales.findAll()
@@ -18,7 +19,11 @@ async function updateSubsidiary(id, changes) {
 }
 
 async function deleteSubsidiary(id) {
-  const subsidiary = await models.Sucursales.findByPk(id)
+  const subsidiary = await models.Sucursales.findByPk(id, {
+    include: ['productos', 'usuarios']
+  })
+  if (subsidiary.productos.length > 0 || subsidiary.usuarios.length > 0)
+    return new Error(msg.msgErrorForeignKey)
   return await subsidiary?.destroy()
 }
 

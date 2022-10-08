@@ -3,7 +3,9 @@ const services = require('../services/sucursales.service.js')
 
 const msg = {
   notFound: 'Sucursal no encontrada',
-  delete: 'Sucursal eliminada'
+  delete: 'Sucursal eliminada',
+  addSuccess: 'Se registró la sucursal correctamente',
+  modifySuccess: 'Se actualizó el registró de la sucursal correctamente'
 }
 
 const getAllSubsidiaries = async (req, res, next) => {
@@ -30,8 +32,8 @@ const findSubsidiary = async (req, res, next) => {
 const createSubsidiary = async (req, res, next) => {
   try {
     const { body } = req
-    const subsidiary = await services.createSubsidiary(body)
-    res.json(subsidiary)
+    await services.createSubsidiary(body)
+    res.json({ message: msg.addSuccess })
   } catch (error) {
     next(error)
   }
@@ -45,7 +47,7 @@ const updateSubsidiary = async (req, res, next) => {
 
     if (!subsidiary) return ERROR_RESPONSE.notFound(msg.notFound, res)
 
-    res.json(subsidiary)
+    res.json({ message: msg.modifySuccess })
   } catch (error) {
     next(error)
   }
@@ -56,9 +58,12 @@ const deleteSubsidiary = async (req, res, next) => {
     const { id } = req.params
     const subsidiary = await services.deleteSubsidiary(id)
 
+    if (subsidiary instanceof Error)
+      return ERROR_RESPONSE.notAcceptable(subsidiary.message, res)
+
     if (!subsidiary) return ERROR_RESPONSE.notFound(msg.notFound, res)
 
-    res.json({ message: msg.delete })
+    res.json({ message: msg.delete, id })
   } catch (error) {
     next(error)
   }
