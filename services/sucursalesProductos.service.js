@@ -35,6 +35,16 @@ async function removeSubsidiaryProduct(id) {
   })
 }
 
+async function updataSeveralSubsidiaryProduct(ids, newData) {
+  const removed = await models.Sucursales_Productos.destroy({
+    where: {
+      id: { [Op.in]: ids }
+    }
+  })
+
+  return removed > 0 ? models.Sucursales_Productos.bulkCreate(newData) : null
+}
+
 async function updateSubsidiaryProduct(id, data) {
   const removed = await removeSubsidiaryProduct(id)
   const result = removed > 0 ? await addSubsidiaryProduct(id, data) : null
@@ -53,5 +63,6 @@ module.exports = {
   addSubsidiaryProduct,
   updateSubsidiaryProduct,
   getProductsBySubsidiariesId,
-  removeSubsidiaryProduct
+  removeSubsidiaryProduct,
+  updataSeveralSubsidiaryProduct
 }

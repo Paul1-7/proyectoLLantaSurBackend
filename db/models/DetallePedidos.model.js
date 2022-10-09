@@ -70,9 +70,9 @@ const OrdersDetailSchema = {
 
 class OrdersDetail extends Model {
   static associate(models) {
-    this.belongsTo(models.Productos, {
-      foreignKey: 'idProd'
-    })
+    // this.belongsTo(models.Productos, {
+    //   foreignKey: 'idProd'
+    // })
   }
 
   static config(sequelize) {

@@ -61,17 +61,17 @@ const verifySubsidiaries = (allSubsidiaries, bodySubsidiaries) => {
  * @param bodyProducts - [{idProd: 1, cantidadDetVenta: 2}, {idProd: 2, cantidadDetVenta: 3}]
  * @returns An array of objects with the idSucProd and stockProd of the product.
  */
-const getNewSubdiaryProduct = (allProduct, bodyProducts) => {
+const getNewStock = (allProduct, bodyProducts) => {
   return bodyProducts.map((product) => {
     const productFound = allProduct.find(
       (dataValues) => dataValues.idProd === product.idProd
     )
-    const { idSucProd, stockProd, idSuc, idProd } = productFound
-    const newStockProd = stockProd - product.cantidadDetVenta
+    const { id, stock, idSuc, idProd } = productFound
+    const newStockProd = stock - product.cantidad
 
     return {
-      idSucProd,
-      stockProd: newStockProd,
+      id,
+      stock: newStockProd,
       idSuc,
       idProd
     }
@@ -112,6 +112,6 @@ module.exports = {
   existClientRol,
   parseProduct,
   verifySubsidiaries,
-  getNewSubdiaryProduct,
+  getNewStock,
   getStockUpdated
 }

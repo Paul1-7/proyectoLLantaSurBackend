@@ -7,19 +7,18 @@ const {
   getProductsBySubsidiaryId
 } = require('../services/productos.service.js')
 const {
-  updateSubsidiaryProduct
+  updataSeveralSubsidiaryProduct
 } = require('../services/sucursalesProductos.service.js')
 
 const services = require('../services/ventas.service.js')
-const {
-  getNewSubdiaryProduct,
-  getStockUpdated
-} = require('../utils/dataHandler.js')
+const { getNewStock, getStockUpdated } = require('../utils/dataHandler.js')
 
 const msg = {
   notFound: 'Venta no encontrada',
   delete: 'Venta eliminada',
-  notValid: 'La informacion es incorrecta'
+  notValid: 'La informacion es incorrecta',
+  addSuccess: 'Se registró la venta correctamente',
+  modifySuccess: 'Se actualizó el registró de la venta correctamente'
 }
 
 const getAllSells = async (req, res, next) => {
@@ -76,40 +75,37 @@ const createSell = async (req, res, next) => {
     )
 
     const subsidiaries = productsBySubsidiary.map(
-      ({ sucursales }) => sucursales.pop().Sucursales_Productos
+      ({ sucursales }) => sucursales[0].Sucursales_Productos
     )
-    const newSubsidiaryProd = getNewSubdiaryProduct(subsidiaries, productos)
+    const newStock = getNewStock(subsidiaries, productos)
 
-    if (!newSubsidiaryProd.every(({ stockProd }) => stockProd > 0))
+    if (!newStock.every(({ stock }) => stock >= 0))
       return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
 
-    const idSucProdArray = newSubsidiaryProd.map((value) => value.idSucProd)
-    await updateSubsidiaryProduct(idSucProdArray, newSubsidiaryProd)
+    const idSucProdArray = newStock.map(({ id }) => id)
+    await updataSeveralSubsidiaryProduct(idSucProdArray, newStock)
 
     const newSell = await services.createSell(sell)
 
-    const sellDetail = newSubsidiaryProd.map((value) => {
+    const sellDetail = newStock.map((value) => {
       const product = productos.find(
         (product) => product.idProd === value.idProd
       )
 
       const { precioVenta } = productsBySubsidiary.find(
-        ({ idProd }) => idProd === value.idProd
+        ({ id }) => id === value.idProd
       )
 
       return {
         idProd: product.idProd,
-        idVenta: newSell.toJSON().idVenta,
-        cantidadDetVenta: product.cantidadDetVenta,
-        precioUniVenta: precioVenta
+        idVenta: newSell.toJSON().id,
+        cantidad: product.cantidad,
+        precioUni: precioVenta
       }
     })
-    const newSellDetail = await addSellDetail(sellDetail)
+    await addSellDetail(sellDetail)
 
-    res.json({
-      ...newSell,
-      detalle: newSellDetail
-    })
+    res.json({ message: msg.addSuccess })
   } catch (error) {
     next(error)
   }
@@ -149,9 +145,7 @@ const updateSell = async (req, res, next) => {
     )
 
     const updateStock = getStockUpdated(productos, oldSale.detalle)
-    console.log({ updateStock })
-    const newSubsidiaryProd = getNewSubdiaryProduct(subsidiaries, updateStock)
-    console.log({ newSubsidiaryProd })
+    const newSubsidiaryProd = getNewStock(subsidiaries, updateStock)
     if (!newSubsidiaryProd.every(({ stockProd }) => stockProd > 0))
       return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
 

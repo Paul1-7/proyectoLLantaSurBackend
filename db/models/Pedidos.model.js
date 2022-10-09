@@ -16,6 +16,7 @@ const OrdersSchema = {
       model: SELLS_TABLE,
       key: 'id'
     },
+    idVenta: {},
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   },
@@ -31,11 +32,7 @@ const OrdersSchema = {
 
 class Orders extends Model {
   static associate(models) {
-    this.belongsTo(models.Ventas, { foreignKey: 'idPedido', as: 'venta' })
-    // this.hasMany(models.Detalle_Pedidos, {
-    //   foreignKey: 'id_pedido',
-    //   as: 'detalle'
-    // })
+    this.belongsTo(models.Ventas, { foreignKey: 'id', as: 'venta' })
   }
 
   static config(sequelize) {

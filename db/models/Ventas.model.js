@@ -95,7 +95,7 @@ class Sells extends Model {
       as: 'cliente',
       targetKey: 'idUsuario'
     })
-    this.hasOne(models.Pedidos, { foreignKey: 'idPedido', as: 'pedido' })
+    this.hasOne(models.Pedidos, { foreignKey: 'id', as: 'pedido' })
   }
 
   static config(sequelize) {
