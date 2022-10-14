@@ -51,8 +51,8 @@ const createSell = async (req, res, next) => {
 
     const sell = {
       codVenta: codVenta.numFactInicial,
-      tipoVenta: 1,
-      metodoPago: 1,
+      tipoVenta: 0,
+      metodoPago: 0,
       ...sellData
     }
 

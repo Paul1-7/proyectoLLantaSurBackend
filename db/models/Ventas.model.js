@@ -22,9 +22,8 @@ const SellsSchema = {
       isNumeric: msg.isNumeric
     }
   },
-  fechaVenta: {
+  fecha: {
     type: DataTypes.DATE,
-    field: 'fecha_venta',
     allowNull: false,
     validate: {
       isDate: msg.isDate,
