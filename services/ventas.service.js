@@ -8,7 +8,16 @@ async function getAllSells() {
 
 async function findSell(id) {
   return await models.Ventas.findByPk(id, {
-    include: ['cliente', 'vendedor', 'detalle', 'pedido']
+    include: [
+      'cliente',
+      'vendedor',
+      'detalle',
+      'pedido',
+      {
+        association: 'detalle',
+        include: [{ association: 'productos', include: 'sucursales' }]
+      }
+    ]
   })
 }
 

@@ -67,6 +67,7 @@ class SellsDetail extends Model {
       foreignKey: 'idVenta'
     })
     this.belongsTo(models.Productos, {
+      as: 'productos',
       foreignKey: 'idProd'
     })
   }
