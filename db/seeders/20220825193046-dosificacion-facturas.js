@@ -10,7 +10,7 @@ module.exports = {
           num_autorizacion: '2584046000004536',
           num_fact_inicial: 1000,
           llave_dosificacion: '16ase81ca9s8e1ca49acsa',
-          fecha_lim_emision: '15-06-2023'
+          fecha_lim_emision: '15 dec 2023'
         }
       ],
       {}

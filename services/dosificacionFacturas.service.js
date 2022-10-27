@@ -1,7 +1,7 @@
 const { models } = require('../libs/sequelize.js')
 
 async function getInvoiceBatching() {
-  return await await models.Dosificacion_Facturas.findAll().pop()
+  return (await models.Dosificacion_Facturas.findAll()).pop()
 }
 
 async function updateInvoiceBatching(id, changes) {

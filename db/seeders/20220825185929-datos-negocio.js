@@ -14,8 +14,6 @@ module.exports = {
           leyenda:
             'Esta factura contribuye al desarrollo del país, el uso ilicito será sancionado penalmente de acuerdo a ley',
           cant_min_prod: 5,
-          logotipo: 'logo.jpg',
-          id_logo: 'idlogo',
           email: 'llantas-sur@gmail.com'
         }
       ],

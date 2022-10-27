@@ -57,16 +57,6 @@ const BusinessDataSchema = {
       notNull: msg.notNull
     }
   },
-  logotipo: {
-    type: DataTypes.STRING,
-    field: 'logotipo',
-    allowNull: false
-  },
-  idLogo: {
-    type: DataTypes.STRING,
-    field: 'id_logo',
-    allowNull: false
-  },
   email: {
     type: DataTypes.STRING,
     field: 'email',
