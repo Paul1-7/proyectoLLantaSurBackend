@@ -10,6 +10,8 @@ const SellsDetailSchema = {
     primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
+    comment: 'identificador del registro',
+
     validate: {
       isUUID: 4
     }
@@ -17,6 +19,8 @@ const SellsDetailSchema = {
   idVenta: {
     allowNull: false,
     type: DataTypes.STRING,
+    comment: 'identificador de la venta',
+
     field: 'id_venta',
     references: {
       model: SELLS_TABLE,
@@ -31,6 +35,8 @@ const SellsDetailSchema = {
   idProd: {
     allowNull: false,
     type: DataTypes.STRING,
+    comment: 'identificador del producto',
+
     field: 'id_prod',
     references: {
       model: PRODUCTS_TABLE,
@@ -44,6 +50,8 @@ const SellsDetailSchema = {
   },
   cantidad: {
     type: DataTypes.INTEGER,
+    comment: 'cantidad del producto',
+
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
@@ -53,6 +61,8 @@ const SellsDetailSchema = {
   precioUni: {
     type: DataTypes.FLOAT,
     field: 'precio_uni',
+    comment: 'precio unitario del producto',
+
     allowNull: false,
     validate: {
       isFloat: msg.isFloat,

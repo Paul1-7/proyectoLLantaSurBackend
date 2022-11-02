@@ -7,6 +7,7 @@ const CategoriesSchema = {
   id: {
     allowNull: false,
     primaryKey: true,
+    comment: 'identificador de la categoria',
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
     validate: {
@@ -16,6 +17,7 @@ const CategoriesSchema = {
   nombre: {
     type: DataTypes.STRING,
     unique: true,
+    comment: 'nombre para la categoria',
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -24,6 +26,7 @@ const CategoriesSchema = {
   },
   descripcion: {
     type: DataTypes.STRING,
+    comment: 'descripcion para la categoria',
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -32,6 +35,7 @@ const CategoriesSchema = {
   },
   estado: {
     type: DataTypes.INTEGER,
+    comment: 'estado de la categoria',
     allowNull: false,
     defaultValue: 1,
     validate: {

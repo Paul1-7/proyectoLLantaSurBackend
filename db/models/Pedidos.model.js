@@ -8,6 +8,8 @@ const OrdersSchema = {
   id: {
     allowNull: false,
     primaryKey: true,
+    comment: 'identificador del registro',
+
     type: DataTypes.STRING,
     validate: {
       isUUID: 4
@@ -22,6 +24,8 @@ const OrdersSchema = {
   },
   estado: {
     type: DataTypes.INTEGER,
+    comment: 'estado del pedido',
+
     allowNull: false,
     defaultValue: 0,
     validate: {

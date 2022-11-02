@@ -7,6 +7,8 @@ const RolSchema = {
   idRol: {
     allowNull: false,
     primaryKey: true,
+    comment: 'identificador del registro',
+
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
     field: 'id_rol',
@@ -17,6 +19,8 @@ const RolSchema = {
   nombreRol: {
     type: DataTypes.STRING,
     allowNull: false,
+    comment: 'nombre del rol',
+
     field: 'nombre_rol',
     validate: {
       is: msg.isAlphanumeric,
@@ -26,6 +30,8 @@ const RolSchema = {
   estadoRol: {
     type: DataTypes.INTEGER,
     field: 'estado_rol',
+    comment: 'estado del rol',
+
     allowNull: false,
     defaultValue: 1,
     validate: {

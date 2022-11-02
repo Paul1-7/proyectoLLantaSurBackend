@@ -8,6 +8,8 @@ const RolUsersSchema = {
   idRolUsuario: {
     allowNull: false,
     primaryKey: true,
+    comment: 'identificador del registro',
+
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
     field: 'id_rol_usuario',
@@ -18,6 +20,8 @@ const RolUsersSchema = {
   idUsuario: {
     allowNull: false,
     type: DataTypes.STRING,
+    comment: 'identificador del usuario',
+
     field: 'id_usuario',
     references: {
       model: USER_TABLE,
@@ -32,6 +36,8 @@ const RolUsersSchema = {
   idRol: {
     allowNull: false,
     type: DataTypes.STRING,
+    comment: 'identificador del rol',
+
     field: 'id_rol',
     references: {
       model: ROL_TABLE,

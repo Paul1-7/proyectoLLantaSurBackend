@@ -9,6 +9,8 @@ const InvoiceBatchingSchema = {
     primaryKey: true,
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
+    comment: 'identificador del registro',
+
     validate: {
       isUUID: 4
     }
@@ -16,6 +18,8 @@ const InvoiceBatchingSchema = {
   numAutorizacion: {
     type: DataTypes.STRING,
     field: 'num_autorizacion',
+    comment: 'numero de autorizacion para las facturas',
+
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -25,6 +29,8 @@ const InvoiceBatchingSchema = {
   numFactInicial: {
     type: DataTypes.INTEGER,
     field: 'num_fact_inicial',
+    comment: 'numero de factura inicial',
+
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
@@ -33,6 +39,8 @@ const InvoiceBatchingSchema = {
   },
   llaveDosificacion: {
     type: DataTypes.STRING,
+    comment: 'llave de dosificacion para las facturas',
+
     field: 'llave_dosificacion',
     allowNull: false,
     validate: {
@@ -43,6 +51,8 @@ const InvoiceBatchingSchema = {
   fechaLimEmision: {
     type: DataTypes.STRING,
     field: 'fecha_lim_emision',
+    comment: 'fecha limite de emision de las facturas',
+
     allowNull: false,
     validate: {
       isDate: msg.isDate,

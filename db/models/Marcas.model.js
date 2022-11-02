@@ -8,6 +8,8 @@ const BrandsSchema = {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
+    comment: 'identificador del registro',
+
     defaultValue: DataTypes.UUIDV4,
     validate: {
       isUUID: 4
@@ -15,6 +17,8 @@ const BrandsSchema = {
   },
   nombre: {
     type: DataTypes.STRING,
+    comment: 'nombre de la marca',
+
     allowNull: false,
     unique: true,
     validate: {
@@ -24,6 +28,8 @@ const BrandsSchema = {
   },
   estado: {
     type: DataTypes.INTEGER,
+    comment: 'estado de la marca',
+
     allowNull: false,
     defaultValue: 1,
     validate: {

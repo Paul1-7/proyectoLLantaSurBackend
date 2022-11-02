@@ -16,9 +16,13 @@ const errorFilterByName = (errs, name) => {
   return errs.map((err) => err[name]).toString()
 }
 
-const sequelizeErrors = (errorMsg, errors, valueName) => {
+const sequelizeErrors = (errorMsg, errors) => {
+  const errorParsed = errors
+    .map((err) => `${err.path}: ${err.message}`)
+    .toString()
+
   return {
-    message: `${errorMsg} ${errorFilterByName(errors, valueName)}`
+    message: `${errorMsg} ${errorParsed} `
   }
 }
 
@@ -32,7 +36,7 @@ function errorHandler(err, req, res, next) {
   if (err?.name === 'SequelizeValidationError') {
     return res
       .status(500)
-      .json(sequelizeErrors(msg.msgValidationError, err.errors, 'message'))
+      .json(sequelizeErrors(msg.msgValidationError, err.errors))
   }
   if (err?.name === 'SequelizeDatabaseError') {
     return res.status(500).json({ message: msg.msgDatabaseError })

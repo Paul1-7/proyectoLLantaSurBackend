@@ -10,7 +10,8 @@ module.exports = {
           metodo_pago: 1,
           fecha: '2022-05-27',
           id_vendedor: 'a5f92b6e-77c0-4522-89d5-53ec8c141e76',
-          id_cliente: 'd71ac730-e43b-4c9c-a480-164f9c630e07'
+          id_cliente: 'd71ac730-e43b-4c9c-a480-164f9c630e07',
+          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d'
         },
         {
           id: '721e8d0e-3a0d-4d62-ae8a-e2df0054e1e7',
@@ -19,6 +20,7 @@ module.exports = {
           metodo_pago: 0,
           fecha: '2022-06-02',
           id_vendedor: 'a5f92b6e-77c0-4522-89d5-53ec8c141e76',
+          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
           id_cliente: 'd71ac730-e43b-4c9c-a480-164f9c630e07'
         },
         {
@@ -28,6 +30,7 @@ module.exports = {
           metodo_pago: 0,
           fecha: '2022-06-15',
           id_vendedor: 'a5f92b6e-77c0-4522-89d5-53ec8c141e76',
+          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
           id_cliente: 'eb31ccf2-68f2-4f42-97ec-ebd8133f98c2'
         },
         {
@@ -37,6 +40,7 @@ module.exports = {
           metodo_pago: 0,
           fecha: '2022-03-18',
           id_vendedor: 'a5f92b6e-77c0-4522-89d5-53ec8c141e76',
+          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
           id_cliente: 'bfd25eb9-badb-4cdc-bc6d-2bc472312427'
         },
         {
@@ -46,6 +50,7 @@ module.exports = {
           metodo_pago: 1,
           fecha: '2021-11-09',
           id_vendedor: '08f07e13-d12e-45e7-86ca-9b17e3158aad',
+          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
           id_cliente: 'bfd25eb9-badb-4cdc-bc6d-2bc472312427'
         },
         {
@@ -55,6 +60,7 @@ module.exports = {
           metodo_pago: 1,
           fecha: '2022-02-27',
           id_vendedor: '08f07e13-d12e-45e7-86ca-9b17e3158aad',
+          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
           id_cliente: '8a84d79b-49d5-4c6a-8f9d-391c12aed841'
         },
         {
@@ -64,6 +70,7 @@ module.exports = {
           metodo_pago: 1,
           fecha: '2022-01-04',
           id_vendedor: '08f07e13-d12e-45e7-86ca-9b17e3158aad',
+          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
           id_cliente: '8a84d79b-49d5-4c6a-8f9d-391c12aed841'
         },
         {
@@ -73,6 +80,7 @@ module.exports = {
           metodo_pago: 1,
           fecha: '2022-08-05',
           id_vendedor: '08f07e13-d12e-45e7-86ca-9b17e3158aad',
+          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
           id_cliente: '8a84d79b-49d5-4c6a-8f9d-391c12aed841'
         }, //
         {
@@ -82,6 +90,7 @@ module.exports = {
           metodo_pago: 1,
           fecha: '2021-11-01',
           id_vendedor: '08f07e13-d12e-45e7-86ca-9b17e3158aad',
+          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
           id_cliente: '567c0552-c250-4d69-bc54-482296a95e4b'
         },
         {
@@ -91,6 +100,7 @@ module.exports = {
           metodo_pago: 1,
           fecha: '2022-07-20',
           id_vendedor: '08f07e13-d12e-45e7-86ca-9b17e3158aad',
+          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
           id_cliente: '567c0552-c250-4d69-bc54-482296a95e4b'
         },
         {
@@ -100,6 +110,7 @@ module.exports = {
           metodo_pago: 0,
           fecha: '2021-12-09',
           id_vendedor: '08f07e13-d12e-45e7-86ca-9b17e3158aad',
+          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
           id_cliente: '567c0552-c250-4d69-bc54-482296a95e4b'
         },
         {
@@ -109,6 +120,7 @@ module.exports = {
           metodo_pago: 0,
           fecha: '2022-07-02',
           id_vendedor: '08f07e13-d12e-45e7-86ca-9b17e3158aad',
+          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
           id_cliente: 'e57e500b-5162-4159-bba7-732228c10ed8'
         },
         {
@@ -118,6 +130,7 @@ module.exports = {
           metodo_pago: 0,
           fecha: '2022-01-15',
           id_vendedor: '08f07e13-d12e-45e7-86ca-9b17e3158aad',
+          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
           id_cliente: 'e57e500b-5162-4159-bba7-732228c10ed8'
         },
         {
@@ -127,6 +140,7 @@ module.exports = {
           metodo_pago: 1,
           fecha: '2022-07-05',
           id_vendedor: '08f07e13-d12e-45e7-86ca-9b17e3158aad',
+          id_suc: '678197a0-69a8-4c24-89a5-bf13873cc08b',
           id_cliente: '741c6697-22d7-4f87-a4f2-7c835b21176d'
         },
         {
@@ -135,6 +149,7 @@ module.exports = {
           tipo_venta: 1,
           metodo_pago: 1,
           fecha: '2021-09-14',
+          id_suc: '678197a0-69a8-4c24-89a5-bf13873cc08b',
           id_vendedor: '08f07e13-d12e-45e7-86ca-9b17e3158aad',
           id_cliente: '741c6697-22d7-4f87-a4f2-7c835b21176d'
         }

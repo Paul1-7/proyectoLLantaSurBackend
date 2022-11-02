@@ -9,6 +9,8 @@ const PurchaseDetailSchema = {
   id: {
     allowNull: false,
     primaryKey: true,
+    comment: 'identificador del registro',
+
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
     validate: {
@@ -18,6 +20,8 @@ const PurchaseDetailSchema = {
   idCompra: {
     allowNull: false,
     type: DataTypes.STRING,
+    comment: 'identificador de la compra',
+
     field: 'id_compra',
     references: {
       model: PURCHASE_TABLE,
@@ -32,6 +36,8 @@ const PurchaseDetailSchema = {
   idProd: {
     allowNull: false,
     type: DataTypes.STRING,
+    comment: 'identificador del producto',
+
     field: 'id_prod',
     references: {
       model: PRODUCTS_TABLE,
@@ -45,6 +51,8 @@ const PurchaseDetailSchema = {
   },
   cantidad: {
     type: DataTypes.INTEGER,
+    comment: 'cantidad del producto',
+
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
@@ -53,6 +61,8 @@ const PurchaseDetailSchema = {
   },
   precio: {
     type: DataTypes.FLOAT,
+    comment: 'precio unitario del producto',
+
     allowNull: false,
     validate: {
       isFloat: msg.isFloat,
@@ -61,6 +71,8 @@ const PurchaseDetailSchema = {
   },
   subtotal: {
     type: DataTypes.FLOAT,
+    comment: 'subtotal del producto',
+
     allowNull: false,
     validate: {
       isFloat: msg.isFloat,

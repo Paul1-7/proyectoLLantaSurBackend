@@ -9,6 +9,8 @@ const ReviewsSchema = {
   id: {
     allowNull: false,
     primaryKey: true,
+    comment: 'identificador del registro',
+
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
     validate: {
@@ -18,6 +20,8 @@ const ReviewsSchema = {
   idCliente: {
     type: DataTypes.STRING,
     field: 'id_cliente',
+    comment: 'identificador del cliente',
+
     references: {
       model: USER_TABLE,
       key: 'id_usuario'
@@ -29,8 +33,9 @@ const ReviewsSchema = {
     onDelete: 'SET NULL'
   },
   idProd: {
-    primaryKey: true,
     allowNull: false,
+    comment: 'identificador del producto',
+
     type: DataTypes.STRING,
     field: 'id_prod',
     references: {
@@ -45,12 +50,16 @@ const ReviewsSchema = {
   },
   titulo: {
     type: DataTypes.STRING,
+    comment: 'titulo de la review',
+
     validate: {
       is: msg.isAlphanumeric
     }
   },
   descripcion: {
     type: DataTypes.STRING,
+    comment: 'descripcion de la review',
+
     validate: {
       is: msg.isAlphanumeric
     }
@@ -58,6 +67,8 @@ const ReviewsSchema = {
   fecha: {
     type: DataTypes.DATE,
     allowNull: false,
+    comment: 'fecha que se realizo la review',
+
     validate: {
       isDate: msg.isDate,
       notNull: msg.notNull
@@ -65,6 +76,8 @@ const ReviewsSchema = {
   },
   calificacion: {
     type: DataTypes.INTEGER,
+    comment: 'calificacion que el usuario asigna al producto',
+
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
@@ -73,6 +86,8 @@ const ReviewsSchema = {
   },
   estado: {
     type: DataTypes.INTEGER,
+    comment: 'estado de la review',
+
     allowNull: false,
     defaultValue: 1,
     validate: {

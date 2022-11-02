@@ -8,6 +8,8 @@ const UserSchema = {
   idUsuario: {
     allowNull: false,
     primaryKey: true,
+    comment: 'identificador del registro',
+
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
     field: 'id_usuario',
@@ -17,6 +19,8 @@ const UserSchema = {
   },
   nombre: {
     type: DataTypes.STRING,
+    comment: 'nombre del usuario',
+
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -25,6 +29,8 @@ const UserSchema = {
   },
   apellido: {
     type: DataTypes.STRING,
+    comment: 'apellido del usuario',
+
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -33,6 +39,8 @@ const UserSchema = {
   },
   direccion: {
     type: DataTypes.STRING,
+    comment: 'direccion del usuario',
+
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -41,6 +49,8 @@ const UserSchema = {
   },
   ciNit: {
     type: DataTypes.STRING,
+    comment: 'carnet de identidad o NIT del usuario',
+
     field: 'ci_nit',
     unique: true,
     allowNull: false,
@@ -51,6 +61,8 @@ const UserSchema = {
   },
   celular: {
     type: DataTypes.STRING,
+    comment: 'celular del usuario',
+
     field: 'celular',
     allowNull: true,
     unique: true,
@@ -60,10 +72,14 @@ const UserSchema = {
   },
   estado: {
     type: DataTypes.INTEGER,
+    comment: 'estado del usuario',
+
     defaultValue: 1
   },
   password: {
     type: DataTypes.STRING,
+    comment: 'password para ingresar al sistema',
+
     allowNull: false,
     validate: {
       notNull: msg.notNull,
@@ -72,6 +88,8 @@ const UserSchema = {
   },
   email: {
     type: DataTypes.STRING,
+    comment: 'email del usuario',
+
     allowNull: true,
     unique: true,
     validate: {
@@ -81,6 +99,8 @@ const UserSchema = {
 
   usuario: {
     type: DataTypes.STRING,
+    comment: 'usuario para ingresar al sistema',
+
     allowNull: false,
     unique: true,
     validate: {
@@ -90,16 +110,22 @@ const UserSchema = {
   },
 
   tokenRecovery: {
+    comment: 'token para recuperar si la password es olvidada',
+
     type: DataTypes.STRING,
     allowNull: true
   },
   smsValidacion: {
     type: DataTypes.STRING,
+    comment: 'token para validar la cuenta',
+
     field: 'sms_validacion',
     allowNull: true
   },
   idSuc: {
     type: DataTypes.STRING,
+    comment: 'identificador de la sucursal',
+
     field: 'id_suc',
     allowNull: false,
     validate: {

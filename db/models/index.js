@@ -54,7 +54,6 @@ function setUpModels(sequelize) {
   Brands.init(BrandsSchema, Brands.config(sequelize))
   Products.init(ProductsSchema, Products.config(sequelize))
   PurchaseDetail.init(PurchaseDetailSchema, PurchaseDetail.config(sequelize))
-  OrdersDetail.init(OrdersDetailSchema, OrdersDetail.config(sequelize))
   SellsDetail.init(SellsDetailSchema, SellsDetail.config(sequelize))
   DefectiveProducts.init(
     DefectiveProductsSchema,
@@ -88,7 +87,6 @@ function setUpModels(sequelize) {
   Reviews.associate(sequelize.models)
   Favorites.associate(sequelize.models)
   DiscountsProducts.associate(sequelize.models)
-  OrdersDetail.associate(sequelize.models)
   PurchaseDetail.associate(sequelize.models)
   SellsDetail.associate(sequelize.models)
   SubsidiariesProducts.associate(sequelize.models)

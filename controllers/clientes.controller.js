@@ -39,7 +39,7 @@ const getAllCustomers = async (req, res, next) => {
   }
 }
 
-const getAllCustomersActives = async (req, res, next) => {
+const getAllActivesCustomers = async (req, res, next) => {
   try {
     const isActive = true
     const customer = await services.getAllUsersByRol(isActive, CLIENTE)
@@ -128,5 +128,5 @@ module.exports = {
   createCustomer,
   updateCustomer,
   deleteCustomer,
-  getAllCustomersActives
+  getAllActivesCustomers
 }

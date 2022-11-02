@@ -5,7 +5,7 @@ const {
   updateCustomer,
   createCustomer,
   deleteCustomer,
-  getAllCustomersActives
+  getAllActivesCustomers
 } = require('../controllers/clientes.controller.js')
 
 const { checkId } = require('../middlewares/validator.handle.js')
@@ -13,7 +13,7 @@ const { checkId } = require('../middlewares/validator.handle.js')
 const customerRoute = express.Router()
 
 customerRoute.get('/', getAllCustomers)
-customerRoute.get('/actives', getAllCustomersActives)
+customerRoute.get('/actives', getAllActivesCustomers)
 customerRoute.get('/:id', checkId, findCustomer)
 customerRoute.post('/', createCustomer)
 customerRoute.put('/:id', checkId, updateCustomer)

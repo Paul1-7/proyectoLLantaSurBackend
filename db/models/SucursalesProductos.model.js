@@ -9,6 +9,8 @@ const SubsidiariesProductsSchema = {
   id: {
     allowNull: false,
     primaryKey: true,
+    comment: 'identificador del registro',
+
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
     validate: {
@@ -17,6 +19,8 @@ const SubsidiariesProductsSchema = {
   },
   stock: {
     type: DataTypes.INTEGER,
+    comment: 'stock de la sucursal',
+
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
@@ -27,6 +31,8 @@ const SubsidiariesProductsSchema = {
   idSuc: {
     allowNull: false,
     type: DataTypes.STRING,
+    comment: 'identificador de la sucursal',
+
     field: 'id_suc',
     references: {
       model: SUBSIDIARIES_TABLE,
@@ -41,6 +47,8 @@ const SubsidiariesProductsSchema = {
   idProd: {
     allowNull: false,
     type: DataTypes.STRING,
+    comment: 'identificador del producto',
+
     field: 'id_prod',
     references: {
       model: PRODUCTS_TABLE,

@@ -8,6 +8,8 @@ const DiscountsProductsSchema = {
   id: {
     allowNull: false,
     primaryKey: true,
+    comment: 'identificador de la registro',
+
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
     validate: {
@@ -17,6 +19,8 @@ const DiscountsProductsSchema = {
   idDesc: {
     allowNull: false,
     type: DataTypes.STRING,
+    comment: 'identificador del descuento',
+
     field: 'id_desc',
     references: {
       model: DISCOUNTS_TABLE,
@@ -31,6 +35,7 @@ const DiscountsProductsSchema = {
   idProd: {
     allowNull: false,
     type: DataTypes.STRING,
+    comment: 'identificador del producto',
     field: 'id_prod',
     references: {
       model: PRODUCTS_TABLE,

@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
+const { SUBSIDIARIES_TABLE } = require('./Sucursales.model.js')
 const { USER_TABLE } = require('./Usuarios.model.js')
 
 const SELLS_TABLE = 'Ventas'
@@ -8,6 +9,8 @@ const SellsSchema = {
   id: {
     allowNull: false,
     primaryKey: true,
+    comment: 'identificador del registro',
+
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
     validate: {
@@ -16,6 +19,8 @@ const SellsSchema = {
   },
   codVenta: {
     allowNull: false,
+    comment: 'codigo de la venta',
+
     type: DataTypes.INTEGER,
     field: 'cod_venta',
     validate: {
@@ -23,6 +28,8 @@ const SellsSchema = {
     }
   },
   fecha: {
+    comment: 'fecha de la venta',
+
     type: DataTypes.DATE,
     allowNull: false,
     validate: {
@@ -31,6 +38,8 @@ const SellsSchema = {
     }
   },
   tipoVenta: {
+    comment: 'tipo de venta realizada',
+
     type: DataTypes.INTEGER,
     field: 'tipo_venta',
     allowNull: false,
@@ -40,6 +49,8 @@ const SellsSchema = {
     }
   },
   metodoPago: {
+    comment: 'metodo de pago de la venta',
+
     type: DataTypes.INTEGER,
     field: 'metodo_pago',
     allowNull: false,
@@ -48,6 +59,8 @@ const SellsSchema = {
     }
   },
   idCliente: {
+    comment: 'identificador del cliente',
+
     type: DataTypes.STRING,
     field: 'id_cliente',
     allowNull: false,
@@ -63,6 +76,8 @@ const SellsSchema = {
   },
   idVendedor: {
     type: DataTypes.STRING,
+    comment: 'identificador del vendedor',
+
     field: 'id_vendedor',
     allowNull: true,
     validate: {
@@ -71,6 +86,22 @@ const SellsSchema = {
     references: {
       model: USER_TABLE,
       key: 'id_usuario'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  },
+  idSuc: {
+    type: DataTypes.STRING,
+    comment: 'identificador de la sucursal',
+
+    field: 'id_suc',
+    allowNull: false,
+    validate: {
+      isUUID: 4
+    },
+    references: {
+      model: SUBSIDIARIES_TABLE,
+      key: 'id'
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
@@ -83,7 +114,14 @@ class Sells extends Model {
       foreignKey: 'idVenta',
       as: 'detalle'
     })
-
+    this.hasMany(models.Productos_Defectuosos, {
+      foreignKey: 'idVenta',
+      as: 'productosDefectuosos'
+    })
+    this.belongsTo(models.Sucursales, {
+      foreignKey: 'idSuc',
+      as: 'sucursal'
+    })
     this.belongsTo(models.Usuarios, {
       foreignKey: 'idVendedor',
       as: 'vendedor',

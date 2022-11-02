@@ -9,6 +9,8 @@ const FavoritesSchema = {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
+    comment: 'identificador del registro',
+
     defaultValue: DataTypes.UUIDV4,
     validate: {
       isUUID: 4
@@ -17,6 +19,8 @@ const FavoritesSchema = {
   idCliente: {
     allowNull: false,
     type: DataTypes.STRING,
+    comment: 'identificador del cliente',
+
     field: 'id_cliente',
     references: {
       model: USER_TABLE,
@@ -32,6 +36,8 @@ const FavoritesSchema = {
     primaryKey: true,
     allowNull: false,
     type: DataTypes.STRING,
+    comment: 'identificador del producto',
+
     field: 'id_prod',
     references: {
       model: PRODUCTS_TABLE,

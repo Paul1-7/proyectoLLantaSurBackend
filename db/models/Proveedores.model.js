@@ -8,6 +8,8 @@ const ProviderSchema = {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
+    comment: 'identificador del registro',
+
     defaultValue: DataTypes.UUIDV4,
     validate: {
       isUUID: 4
@@ -15,6 +17,8 @@ const ProviderSchema = {
   },
   nombre: {
     type: DataTypes.STRING,
+    comment: 'nombre del proveedor',
+
     allowNull: false,
     unique: true,
     validate: {
@@ -24,6 +28,8 @@ const ProviderSchema = {
   },
   tel: {
     type: DataTypes.STRING,
+    comment: 'telefono o celular del proveedor',
+
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -32,6 +38,8 @@ const ProviderSchema = {
   },
   nombreEnc: {
     type: DataTypes.STRING,
+    comment: 'nombre del encargado',
+
     field: 'nombre_enc',
     allowNull: false,
     validate: {
@@ -41,7 +49,9 @@ const ProviderSchema = {
   },
   apEnc: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
+    comment: 'apellido del encargado',
+
     field: 'ap_enc',
     validate: {
       is: msg.isAlphanumeric,
@@ -50,6 +60,8 @@ const ProviderSchema = {
   },
   estado: {
     type: DataTypes.INTEGER,
+    comment: 'estado del proveedor',
+
     allowNull: false,
     defaultValue: 1,
     validate: {

@@ -7,6 +7,8 @@ const SubsidiariesSchema = {
   id: {
     allowNull: false,
     primaryKey: true,
+    comment: 'identificador del registro',
+
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
     validate: {
@@ -15,6 +17,8 @@ const SubsidiariesSchema = {
   },
   nombre: {
     type: DataTypes.STRING,
+    comment: 'nombre de la sucursal',
+
     unique: true,
     allowNull: false,
     validate: {
@@ -24,6 +28,8 @@ const SubsidiariesSchema = {
   },
   direccion: {
     type: DataTypes.STRING,
+    comment: 'direccion de la sucursal',
+
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -32,6 +38,8 @@ const SubsidiariesSchema = {
   },
   tel: {
     type: DataTypes.STRING,
+    comment: 'telefono o celular de la sucursal',
+
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -40,6 +48,8 @@ const SubsidiariesSchema = {
   },
   estado: {
     type: DataTypes.INTEGER,
+    comment: 'estado de la sucursal',
+
     allowNull: false,
     defaultValue: 1,
     validate: {
@@ -56,6 +66,10 @@ class Subsidiaries extends Model {
       as: 'productos',
       foreignKey: 'idSuc',
       otherKey: 'idProd'
+    })
+    this.hasMany(models.Ventas, {
+      foreignKey: 'idSuc',
+      as: 'ventas'
     })
   }
 

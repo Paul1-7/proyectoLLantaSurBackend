@@ -9,6 +9,7 @@ const PurchaseSchema = {
   id: {
     allowNull: false,
     primaryKey: true,
+    comment: 'identificador de la compra',
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
     validate: {
@@ -17,24 +18,25 @@ const PurchaseSchema = {
   },
   codCompra: {
     allowNull: false,
+    comment: 'codigo de la compra',
     type: DataTypes.INTEGER,
     field: 'cod_compra',
     validate: {
       isNumeric: msg.isNumeric
     }
   },
-  totalCompra: {
+  total: {
     type: DataTypes.FLOAT,
-    field: 'total_compra',
+    comment: 'precio total de la compra',
     allowNull: false,
     validate: {
       isFloat: msg.isFloat,
       notNull: msg.notNull
     }
   },
-  fechaCompra: {
+  fecha: {
     type: DataTypes.DATE,
-    field: 'fecha_compra',
+    comment: 'fecha de la compra',
     allowNull: false,
     validate: {
       isDate: msg.isDate,
@@ -44,6 +46,7 @@ const PurchaseSchema = {
   idProv: {
     type: DataTypes.STRING,
     field: 'id_prov',
+    comment: 'identicador del proveedor',
     allowNull: false,
     validate: {
       isUUID: 4
@@ -57,6 +60,7 @@ const PurchaseSchema = {
   },
   idEmp: {
     type: DataTypes.STRING,
+    comment: 'identificador del usuario con el rol de empleado',
     field: 'id_emp',
     allowNull: false,
     validate: {

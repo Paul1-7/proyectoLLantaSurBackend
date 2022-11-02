@@ -8,7 +8,7 @@ const { CategoriesSchema } = require('../models/Categorias.model.js')
 const { BrandsSchema } = require('../models/Marcas.model.js')
 const { ProductsSchema } = require('../models/Productos.model.js')
 const { PurchaseDetailSchema } = require('../models/DetalleCompras.model.js')
-const { OrdersDetailSchema } = require('../models/DetallePedidos.model.js')
+
 const { SellsDetailSchema } = require('../models/DetalleVentas.model.js')
 const {
   DefectiveProductsSchema
@@ -48,7 +48,7 @@ module.exports = {
     await queryInterface.createTable('Ventas', SellsSchema)
     await queryInterface.createTable('Pedidos', OrdersSchema)
     await queryInterface.createTable('Detalle_Compras', PurchaseDetailSchema)
-    await queryInterface.createTable('Detalle_Pedidos', OrdersDetailSchema)
+
     await queryInterface.createTable('Detalle_Ventas', SellsDetailSchema)
     await queryInterface.createTable(
       'Productos_Defectuosos',
@@ -70,7 +70,6 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Sucursales_Productos')
     await queryInterface.dropTable('Detalle_Compras')
-    await queryInterface.dropTable('Detalle_Pedidos')
     await queryInterface.dropTable('Detalle_Ventas')
     await queryInterface.dropTable('Favoritos')
     await queryInterface.dropTable('Roles_Usuarios')

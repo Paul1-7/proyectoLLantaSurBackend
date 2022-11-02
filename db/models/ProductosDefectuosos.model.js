@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
 const { PRODUCTS_TABLE } = require('./Productos.model.js')
+const { SELLS_TABLE } = require('./Ventas.model.js')
 
 const DEFECTIVE_PRODUCTS_TABLE = 'Productos_Defectuosos'
 
@@ -8,6 +9,8 @@ const DefectiveProductsSchema = {
   id: {
     allowNull: false,
     primaryKey: true,
+    comment: 'identificador del registro',
+
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
     validate: {
@@ -16,6 +19,8 @@ const DefectiveProductsSchema = {
   },
   descripcion: {
     type: DataTypes.STRING,
+    comment: 'descripcion del producto defectuoso',
+
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -24,6 +29,8 @@ const DefectiveProductsSchema = {
   },
   cantidad: {
     type: DataTypes.INTEGER,
+    comment: 'cantidad del producto defectuoso',
+
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
@@ -32,6 +39,8 @@ const DefectiveProductsSchema = {
   },
   fecha: {
     type: DataTypes.DATE,
+    comment: 'fecha de registro del producto defectuoso',
+
     allowNull: false,
     validate: {
       isDate: msg.isDate,
@@ -40,6 +49,8 @@ const DefectiveProductsSchema = {
   },
   idProd: {
     type: DataTypes.STRING,
+    comment: 'identificador del producto',
+
     field: 'id_prod',
     allowNull: false,
     validate: {
@@ -47,6 +58,21 @@ const DefectiveProductsSchema = {
     },
     references: {
       model: PRODUCTS_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
+  },
+  idVenta: {
+    type: DataTypes.STRING,
+    comment: 'identificador de la venta',
+    field: 'id_venta',
+    allowNull: false,
+    validate: {
+      isUUID: 4
+    },
+    references: {
+      model: SELLS_TABLE,
       key: 'id'
     },
     onUpdate: 'CASCADE',

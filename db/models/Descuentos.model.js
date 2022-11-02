@@ -7,6 +7,8 @@ const DiscountsSchema = {
   id: {
     allowNull: false,
     primaryKey: true,
+    comment: 'identificador de descuentos',
+
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
     validate: {
@@ -15,6 +17,8 @@ const DiscountsSchema = {
   },
   cantMax: {
     type: DataTypes.INTEGER,
+    comment: 'cantidad maxima del producto para el descuento',
+
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
@@ -23,6 +27,8 @@ const DiscountsSchema = {
   },
   fechaInicio: {
     type: DataTypes.DATE,
+    comment: 'fecha de inicio del descuento',
+
     field: 'fecha_inicio',
     allowNull: false,
     validate: {
@@ -32,11 +38,22 @@ const DiscountsSchema = {
   },
   fechaFin: {
     type: DataTypes.DATE,
+    comment: 'fecha de fin del descuento',
+
     field: 'fecha_fin',
     allowNull: false,
     validate: {
       isDate: msg.isDate,
       notNull: msg.notNull
+    }
+  },
+  estado: {
+    type: DataTypes.INTEGER,
+    comment: 'estado del descuento',
+    allowNull: false,
+    defaultValue: 1,
+    validate: {
+      is: msg.isState
     }
   }
 }

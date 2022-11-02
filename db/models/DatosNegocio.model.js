@@ -8,6 +8,7 @@ const BusinessDataSchema = {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.STRING,
+    comment: 'identificador de los datos del negocio',
     defaultValue: DataTypes.UUIDV4,
     validate: {
       isUUID: 4
@@ -16,6 +17,8 @@ const BusinessDataSchema = {
   numDoc: {
     type: DataTypes.STRING,
     field: 'num_doc',
+    comment: 'numero de documento del negocio (NIT)',
+
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -24,6 +27,8 @@ const BusinessDataSchema = {
   },
   nombre: {
     type: DataTypes.STRING,
+    comment: 'nombre del negocio',
+
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -33,6 +38,8 @@ const BusinessDataSchema = {
   actividadEco: {
     type: DataTypes.STRING,
     field: 'actividad_eco',
+    comment: 'actividad economica del negocio',
+
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -42,6 +49,8 @@ const BusinessDataSchema = {
   leyenda: {
     type: DataTypes.STRING,
     field: 'leyenda',
+    comment: 'leyenda que se muestra en las facturas',
+
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -51,6 +60,8 @@ const BusinessDataSchema = {
   cantMinProd: {
     allowNull: false,
     type: DataTypes.INTEGER,
+    comment: 'cantidad minima de productos para el control del inventario',
+
     field: 'cant_min_prod',
     validate: {
       isInt: true,
@@ -59,6 +70,8 @@ const BusinessDataSchema = {
   },
   email: {
     type: DataTypes.STRING,
+    comment: 'email del negocio',
+
     field: 'email',
     allowNull: true,
     unique: true,
