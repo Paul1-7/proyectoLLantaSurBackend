@@ -21,10 +21,49 @@ const msg = {
   modifySuccess: 'Se actualizó el registró de la venta correctamente'
 }
 
+function getSaleDetail(clientProducts, productsBySubsidiary, newStock) {
+  console.log(
+    'TCL: getSaleDetail -> productsBySubsidiary',
+    productsBySubsidiary
+  )
+  console.log('TCL: getSaleDetail -> productos', clientProducts)
+
+  let totalSales = 0
+  const sellDetail = newStock.map((value) => {
+    const product = clientProducts.find(
+      (product) => product.idProd === value.idProd
+    )
+
+    const { precioVenta } = productsBySubsidiary.find(
+      ({ id }) => id === value.idProd
+    )
+
+    totalSales += precioVenta * product.cantidad
+
+    return {
+      idProd: product.idProd,
+      cantidad: product.cantidad,
+      precioUni: precioVenta
+    }
+  })
+
+  return { sellDetail, totalSales }
+}
+
 const getAllSells = async (req, res, next) => {
   try {
     const sell = await services.getAllSells()
     res.json(sell)
+  } catch (error) {
+    next(error)
+  }
+}
+
+const getSaleToReport = async (req, res, next) => {
+  try {
+    const { query } = req
+    const sales = await services.getSalesToReport(query)
+    res.json(sales)
   } catch (error) {
     next(error)
   }
@@ -47,17 +86,7 @@ const createSell = async (req, res, next) => {
     const { body } = req
     const { productos, idSucursal, ...sellData } = body
 
-    const codVenta = await incremetToInicialInvoiceNum()
-
-    const sell = {
-      codVenta: codVenta.numFactInicial,
-      tipoVenta: 0,
-      metodoPago: 0,
-      ...sellData
-    }
-
     const productsId = productos.map((product) => product.idProd)
-
     let productsBySubsidiary = await getProductsBySubsidiaryId(
       idSucursal,
       productsId
@@ -70,10 +99,6 @@ const createSell = async (req, res, next) => {
       return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
     }
 
-    productsBySubsidiary = productsBySubsidiary.map((product) =>
-      product.toJSON()
-    )
-
     const subsidiaries = productsBySubsidiary.map(
       ({ sucursales }) => sucursales[0].Sucursales_Productos
     )
@@ -83,27 +108,34 @@ const createSell = async (req, res, next) => {
       return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
 
     const idSucProdArray = newStock.map(({ id }) => id)
-    await updataSeveralSubsidiaryProduct(idSucProdArray, newStock)
+    const codVenta = await incremetToInicialInvoiceNum()
 
-    const newSell = await services.createSell(sell)
+    const sell = {
+      codVenta: codVenta.numFactInicial,
+      tipoVenta: 0,
+      metodoPago: 0,
+      idSuc: idSucursal,
+      ...sellData
+    }
 
-    const sellDetail = newStock.map((value) => {
-      const product = productos.find(
-        (product) => product.idProd === value.idProd
-      )
+    let { totalSales, sellDetail } = getSaleDetail(
+      productos,
+      productsBySubsidiary,
+      newStock
+    )
 
-      const { precioVenta } = productsBySubsidiary.find(
-        ({ id }) => id === value.idProd
-      )
-
-      return {
-        idProd: product.idProd,
-        idVenta: newSell.toJSON().id,
-        cantidad: product.cantidad,
-        precioUni: precioVenta
-      }
+    const { id: idVenta } = await services.createSell({
+      ...sell,
+      total: totalSales
     })
+
+    sellDetail = sellDetail.map((detail) => ({
+      ...detail,
+      idVenta
+    }))
+
     await addSellDetail(sellDetail)
+    await updataSeveralSubsidiaryProduct(idSucProdArray, newStock)
 
     res.json({ message: msg.addSuccess })
   } catch (error) {
@@ -199,5 +231,6 @@ module.exports = {
   findSell,
   createSell,
   updateSell,
-  deleteSell
+  deleteSell,
+  getSaleToReport
 }

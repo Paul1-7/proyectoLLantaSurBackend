@@ -54,8 +54,7 @@ const ProviderSchema = {
 
     field: 'ap_enc',
     validate: {
-      is: msg.isAlphanumeric,
-      notNull: msg.notNull
+      is: msg.isAlphanumeric
     }
   },
   estado: {

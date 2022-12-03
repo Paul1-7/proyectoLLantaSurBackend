@@ -11,10 +11,7 @@ const {
   PurchaseDetail,
   PurchaseDetailSchema
 } = require('./DetalleCompras.model.js')
-const {
-  OrdersDetail,
-  OrdersDetailSchema
-} = require('./DetallePedidos.model.js')
+
 const { SellsDetail, SellsDetailSchema } = require('./DetalleVentas.model.js')
 const {
   DefectiveProducts,

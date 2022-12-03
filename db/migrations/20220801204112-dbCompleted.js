@@ -74,7 +74,7 @@ module.exports = {
     await queryInterface.dropTable('Favoritos')
     await queryInterface.dropTable('Roles_Usuarios')
     await queryInterface.dropTable('Pedidos')
-    await queryInterface.dropTable('Ventas')
+
     await queryInterface.dropTable('Reviews')
     await queryInterface.dropTable('Descuentos_Productos')
     await queryInterface.dropTable('Compras')
@@ -85,6 +85,7 @@ module.exports = {
     await queryInterface.dropTable('Descuentos')
     await queryInterface.dropTable('Categorias')
     await queryInterface.dropTable('Marcas')
+    await queryInterface.dropTable('Ventas')
     await queryInterface.dropTable('Usuarios')
     await queryInterface.dropTable('Sucursales')
     await queryInterface.dropTable('Datos_Negocio')

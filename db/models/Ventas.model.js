@@ -48,6 +48,14 @@ const SellsSchema = {
       is: msg.isState
     }
   },
+  total: {
+    comment: 'total de la venta realizada',
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    validate: {
+      isFloat: msg.isFloat
+    }
+  },
   metodoPago: {
     comment: 'metodo de pago de la venta',
 

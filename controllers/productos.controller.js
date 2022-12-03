@@ -123,13 +123,13 @@ const deleteProduct = async (req, res, next) => {
     const existProduct = await services.findProduct(id)
     if (!existProduct) return ERROR_RESPONSE.notFound(msg.notFound, res)
 
-    await removeSubsidiaryProduct(id)
     const productDeleted = await services.deleteProduct(id)
     const { idImg } = existProduct
 
     if (productDeleted instanceof Error)
       return ERROR_RESPONSE.notAcceptable(productDeleted.message, res)
-
+      
+    await removeSubsidiaryProduct(id)
     idImg && (await removeImgCloudinary(idImg))
 
     res.json({ message: msg.delete, id })

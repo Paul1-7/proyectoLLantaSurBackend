@@ -9,13 +9,15 @@ async function getAllProducts() {
 }
 
 async function getProductsBySubsidiaryId(subsidiaryId, productsId) {
-  return await models.Productos.findAll({
+  const products = await models.Productos.findAll({
     include: ['categoria', 'marca', 'proveedor', 'sucursales'],
     where: {
       '$sucursales.id$': subsidiaryId,
       id: { [Op.in]: productsId }
     }
   })
+
+  return products.map((product) => product.toJSON())
 }
 
 async function findProduct(id) {

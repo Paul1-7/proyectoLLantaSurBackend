@@ -66,7 +66,6 @@ const ProductsSchema = {
     allowNull: true,
     validate: {
       isFloat: msg.isFloat,
-      notNull: msg.notNull,
       isGreaterThan(value) {
         if (parseInt(value) < parseInt(this.precioCompra)) {
           throw new Error(msg.msgIsGreaterThan)

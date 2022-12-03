@@ -1,8 +1,20 @@
+const { Op } = require('sequelize')
 const { models } = require('../libs/sequelize.js')
 
 async function getAllSells() {
   return await models.Ventas.findAll({
     include: ['cliente', 'vendedor', 'detalle', 'pedido']
+  })
+}
+
+async function getSalesToReport({ start, final }) {
+  return await models.Ventas.findAll({
+    include: ['cliente', 'vendedor', 'detalle', 'pedido'],
+    where: {
+      fecha: {
+        [Op.between]: [start, final]
+      }
+    }
   })
 }
 
@@ -22,7 +34,7 @@ async function findSell(id) {
 }
 
 async function createSell(sell) {
-  return await models.Ventas.create(sell)
+  return await (await models.Ventas.create(sell)).toJSON()
 }
 
 async function updateSell(id, changes) {
@@ -40,5 +52,6 @@ module.exports = {
   findSell,
   createSell,
   updateSell,
-  deleteSell
+  deleteSell,
+  getSalesToReport
 }
