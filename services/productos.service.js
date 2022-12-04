@@ -20,6 +20,38 @@ async function getProductsBySubsidiaryId(subsidiaryId, productsId) {
   return products.map((product) => product.toJSON())
 }
 
+async function getAllProductsBySubsidiaryId(subsidiaryId) {
+  const products = await models.Productos.findAll({
+    include: [
+      {
+        model: models.Categorias,
+        as: 'categoria',
+        attributes: { exclude: ['descripcion', 'estado', 'id'] }
+      },
+      {
+        model: models.Marcas,
+        as: 'marca',
+        attributes: { exclude: ['estado', 'id'] }
+      },
+      {
+        model: models.Proveedores,
+        as: 'proveedor',
+        attributes: ['nombre'],
+        nested: false
+      },
+      'sucursales'
+    ],
+    where: {
+      '$sucursales.id$': subsidiaryId
+    },
+    attributes: {
+      exclude: ['estado', 'imagen', 'idImg', 'idProv', 'idMarca', 'idCat']
+    }
+  })
+
+  return products.map((product) => product.toJSON())
+}
+
 async function findProduct(id) {
   return await models.Productos.findByPk(id, {
     include: ['categoria', 'marca', 'proveedor', 'sucursales']
@@ -79,5 +111,6 @@ module.exports = {
   updateProduct,
   deleteProduct,
   findProductByName,
-  getProductsBySubsidiaryId
+  getProductsBySubsidiaryId,
+  getAllProductsBySubsidiaryId
 }

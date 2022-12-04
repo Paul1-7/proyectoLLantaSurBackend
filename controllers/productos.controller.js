@@ -41,6 +41,18 @@ const findProduct = async (req, res, next) => {
   }
 }
 
+const getAllProductsBySubsidiary = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const product = await services.getAllProductsBySubsidiaryId(id)
+
+    if (!product) return ERROR_RESPONSE.notFound(msg.notFound, res)
+    res.json(product)
+  } catch (error) {
+    next(error)
+  }
+}
+
 const createProduct = async (req, res, next) => {
   try {
     const { body, files } = req
@@ -128,7 +140,7 @@ const deleteProduct = async (req, res, next) => {
 
     if (productDeleted instanceof Error)
       return ERROR_RESPONSE.notAcceptable(productDeleted.message, res)
-      
+
     await removeSubsidiaryProduct(id)
     idImg && (await removeImgCloudinary(idImg))
 
@@ -143,5 +155,6 @@ module.exports = {
   findProduct,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  getAllProductsBySubsidiary
 }
