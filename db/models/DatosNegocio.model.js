@@ -25,6 +25,15 @@ const BusinessDataSchema = {
       notNull: msg.notNull
     }
   },
+  cuf: {
+    type: DataTypes.STRING,
+    comment: 'codigo unico de factura',
+    allowNull: false,
+    validate: {
+      is: msg.isAlphanumeric,
+      notNull: msg.notNull
+    }
+  },
   nombre: {
     type: DataTypes.STRING,
     comment: 'nombre del negocio',
@@ -39,7 +48,6 @@ const BusinessDataSchema = {
     type: DataTypes.STRING,
     field: 'actividad_eco',
     comment: 'actividad economica del negocio',
-
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -50,7 +58,6 @@ const BusinessDataSchema = {
     type: DataTypes.STRING,
     field: 'leyenda',
     comment: 'leyenda que se muestra en las facturas',
-
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
@@ -71,12 +78,37 @@ const BusinessDataSchema = {
   email: {
     type: DataTypes.STRING,
     comment: 'email del negocio',
-
-    field: 'email',
     allowNull: true,
     unique: true,
     validate: {
       isEmail: msg.isEmail
+    }
+  },
+  tel: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    comment: 'telefono de la casa matriz',
+    validate: {
+      is: msg.isAlphanumeric,
+      notNull: msg.notNull
+    }
+  },
+  direccion: {
+    type: DataTypes.STRING,
+    comment: 'dirección de la casa matriz',
+    allowNull: false,
+    validate: {
+      is: msg.isAlphanumeric,
+      notNull: msg.notNull
+    }
+  },
+  ciudad: {
+    type: DataTypes.STRING,
+    comment: 'ciudad de la casa matriz',
+    allowNull: false,
+    validate: {
+      is: msg.isAlphanumeric,
+      notNull: msg.notNull
     }
   }
 }

@@ -37,7 +37,6 @@ async function getAllProductsBySubsidiaryId(subsidiaryId) {
         model: models.Proveedores,
         as: 'proveedor',
         attributes: ['nombre'],
-        nested: false
       },
       'sucursales'
     ],
