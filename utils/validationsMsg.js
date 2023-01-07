@@ -1,6 +1,6 @@
 const msg = {
   isAlphanumeric: {
-    args: /^[a-zA-Z\d\-_./\s,éáíóúñ+]+$/,
+    args: /^[a-zA-Z\d\-_./\s,éáíóúñ"'°|+]+$/,
     msg: 'solo se permite valores alphanumericos'
   },
   notNull: {
