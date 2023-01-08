@@ -5,7 +5,7 @@
   },
   "production": {
     "dialect": "postgres",
-    "url": "postgres://witoowubokpsyv:f8456f3a83a18d7b454c375dac1143998abd93b2df4bc54065427a77aa1aedf5@ec2-54-159-175-38.compute-1.amazonaws.com:5432/daso58v29quqkl",
+    "url": "postgresql://postgres:z6gh9b4BmrEWx2ekeJbr@containers-us-west-96.railway.app:7876/railway",
     "dialectOptions": {
       "ssl": {
         "rejectUnauthorized": false
