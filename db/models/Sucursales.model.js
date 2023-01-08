@@ -67,6 +67,11 @@ class Subsidiaries extends Model {
       foreignKey: 'idSuc',
       otherKey: 'idProd'
     })
+    this.hasMany(models.Sucursales_Productos, {
+      as: 'sucursalesProductos',
+      foreignKey: 'idSuc'
+    })
+
     this.hasMany(models.Ventas, {
       foreignKey: 'idSuc',
       as: 'ventas'

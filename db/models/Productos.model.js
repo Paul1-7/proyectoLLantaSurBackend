@@ -181,6 +181,10 @@ class Products extends Model {
       foreignKey: 'idProd',
       otherKey: 'idSuc'
     })
+    this.hasMany(models.Sucursales_Productos, {
+      foreignKey: 'idProd',
+      as: 'sucursalesProductos'
+    })
   }
 
   static config(sequelize) {

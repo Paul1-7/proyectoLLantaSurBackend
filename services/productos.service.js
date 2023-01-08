@@ -1,3 +1,4 @@
+const sequelize = require('sequelize')
 const { Op } = require('sequelize')
 const { models } = require('../libs/sequelize.js')
 const msg = require('../utils/validationsMsg.js')
@@ -20,7 +21,22 @@ async function getProductsBySubsidiaryId(subsidiaryId, productsId) {
   return products.map((product) => product.toJSON())
 }
 
-async function getAllProductsBySubsidiaryId(subsidiaryId) {
+async function getAllProductsToReport(subsidiariesId, criteria) {
+  const where =
+    subsidiariesId.length > 1
+      ? {
+          '$sucursales.id$': {
+            [Op.in]: subsidiariesId
+          },
+          '$sucursalesProductos.id_suc$': {
+            [Op.in]: subsidiariesId
+          }
+        }
+      : {
+          '$sucursales.id$': subsidiariesId.at(0),
+          '$sucursalesProductos.id_suc$': subsidiariesId.at(0)
+        }
+
   const products = await models.Productos.findAll({
     include: [
       {
@@ -36,13 +52,24 @@ async function getAllProductsBySubsidiaryId(subsidiaryId) {
       {
         model: models.Proveedores,
         as: 'proveedor',
-        attributes: ['nombre'],
+        attributes: ['nombre']
       },
-      'sucursales'
+      {
+        model: models.Sucursales_Productos,
+        as: 'sucursalesProductos',
+        attributes: ['stock', 'idSuc']
+      },
+      {
+        model: models.Sucursales,
+        as: 'sucursales',
+        attributes: ['nombre'],
+        through: {
+          attributes: []
+        }
+      }
     ],
-    where: {
-      '$sucursales.id$': subsidiaryId
-    },
+    where,
+    order: [criteria],
     attributes: {
       exclude: ['estado', 'imagen', 'idImg', 'idProv', 'idMarca', 'idCat']
     }
@@ -111,5 +138,5 @@ module.exports = {
   deleteProduct,
   findProductByName,
   getProductsBySubsidiaryId,
-  getAllProductsBySubsidiaryId
+  getAllProductsToReport
 }

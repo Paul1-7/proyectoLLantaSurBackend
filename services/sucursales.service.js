@@ -1,3 +1,4 @@
+const { Op } = require('sequelize')
 const { models } = require('../libs/sequelize.js')
 const msg = require('../utils/validationsMsg.js')
 
@@ -27,10 +28,19 @@ async function deleteSubsidiary(id) {
   return await subsidiary?.destroy()
 }
 
+async function subsidiaryByIds(ids) {
+  return await models.Sucursales.findAll({
+    where: {
+      id: { [Op.in]: ids }
+    }
+  })
+}
+
 module.exports = {
   getAllSubsidiaries,
   findSubsidiary,
   createSubsidiary,
   updateSubsidiary,
-  deleteSubsidiary
+  deleteSubsidiary,
+  subsidiaryByIds
 }
