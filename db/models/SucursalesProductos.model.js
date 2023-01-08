@@ -63,7 +63,14 @@ const SubsidiariesProductsSchema = {
 }
 
 class SubsidiariesProducts extends Model {
-  static associate(models) {}
+  static associate(models) {
+    this.belongsTo(models.Sucursales, {
+      foreignKey: 'id'
+    })
+    this.belongsTo(models.Productos, {
+      foreignKey: 'id'
+    })
+  }
 
   static config(sequelize) {
     return {

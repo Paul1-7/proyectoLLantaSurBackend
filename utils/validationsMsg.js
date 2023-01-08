@@ -1,6 +1,6 @@
 const msg = {
   isAlphanumeric: {
-    args: /^[a-zA-Z\d\-_./\s,éáíóúñ+]+$/,
+    args: /^[a-zA-Z\d\-_./\s,éáíóúñ"'°|+]+$/,
     msg: 'solo se permite valores alphanumericos'
   },
   notNull: {
@@ -37,7 +37,7 @@ const msg = {
   msgUniqueValue: (value) =>
     `el valor ingresado en el campo "${value}" ya existe en el sistema`,
   msgValidationError: 'ERROR DE VALIDACIÓN:',
-  msgDatabaseError: 'ocurrio un error al guardar en la base de datos',
+  msgDatabaseError: 'ocurrio un error en el servidor',
   msgErrorForeignKey:
     'Otras partes del sistema estan haciendo uso del registró seleccionado'
 }

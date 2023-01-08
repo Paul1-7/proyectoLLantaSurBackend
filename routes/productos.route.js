@@ -6,7 +6,7 @@ const {
   createProduct,
   deleteProduct,
   updateProduct,
-  getAllProductsBySubsidiary
+  getDataToReport
 } = require('../controllers/productos.controller.js')
 const {
   checkId,
@@ -18,8 +18,8 @@ const {
 const productsRoute = express.Router()
 
 productsRoute.get('/', getAllProducts)
+productsRoute.get('/reportes/', getDataToReport)
 productsRoute.get('/:id', checkId, findProduct)
-productsRoute.get('/reportes/:id', checkId, getAllProductsBySubsidiary)
 productsRoute.post(
   '/',
   fileUpload({

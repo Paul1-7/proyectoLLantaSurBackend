@@ -32,7 +32,7 @@ const findCategory = async (req, res, next) => {
 const createCategory = async (req, res, next) => {
   try {
     const { body } = req
-    const category = await services.createCategory(body)
+    await services.createCategory(body)
     res.json({ message: msg.addSuccess })
   } catch (error) {
     next(error)

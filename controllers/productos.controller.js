@@ -1,8 +1,12 @@
 const config = require('../config/config.js')
+const { INVENTORY_REPORT_CRITERIA } = require('../constants/index.js')
 const { removeImgCloudinary } = require('../libs/cloudinary.js')
 const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
 const services = require('../services/productos.service.js')
-const { getAllSubsidiaries } = require('../services/sucursales.service.js')
+const {
+  getAllSubsidiaries,
+  subsidiaryByIds
+} = require('../services/sucursales.service.js')
 const {
   addSubsidiaryProduct,
   updateSubsidiaryProduct,
@@ -16,8 +20,10 @@ const msg = {
   notFound: 'Producto no encontrado',
   delete: 'se eliminó el producto correctamente',
   addSuccess: 'Se registró el producto correctamente',
-  modifySuccess: 'Se actualizó el registró del producto correctamente'
+  modifySuccess: 'Se actualizó el registró del producto correctamente',
+  notValid: 'La información no esta completa o es incorrecta'
 }
+
 const { DEFAULT_PRODUCT_IMG_URl } = config
 
 const getAllProducts = async (req, res, next) => {
@@ -41,10 +47,30 @@ const findProduct = async (req, res, next) => {
   }
 }
 
-const getAllProductsBySubsidiary = async (req, res, next) => {
+const getDataToReport = async (req, res, next) => {
   try {
-    const { id } = req.params
-    const product = await services.getAllProductsBySubsidiaryId(id)
+    const { query } = req ?? {}
+    const { criterio, sucursal } = query ?? {}
+
+    if (!criterio || !sucursal)
+      return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
+
+    const subsidiaries =
+      sucursal?.length !== 1
+        ? await subsidiaryByIds([sucursal])
+        : await getAllSubsidiaries(sucursal)
+
+    const criteria = INVENTORY_REPORT_CRITERIA.find(({ id }) => id === criterio)
+
+    if (!criteria || subsidiaries.length === 0)
+      return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
+
+    const subsidiariesId = subsidiaries.map((subsidiary) => subsidiary.id)
+
+    const product = await services.getAllProductsToReport(
+      subsidiariesId,
+      criteria.criteria
+    )
 
     if (!product) return ERROR_RESPONSE.notFound(msg.notFound, res)
     res.json(product)
@@ -156,5 +182,5 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
-  getAllProductsBySubsidiary
+  getDataToReport
 }
