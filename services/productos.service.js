@@ -21,6 +21,17 @@ async function getProductsBySubsidiaryId(subsidiaryId, productsId) {
   return products.map((product) => product.toJSON())
 }
 
+async function getProductsById(productsId) {
+  const products = await models.Productos.findAll({
+    include: ['sucursales'],
+    where: {
+      id: { [Op.in]: productsId }
+    }
+  })
+
+  return products.map((product) => product.toJSON())
+}
+
 async function getAllProductsToReport(subsidiariesId, criteria) {
   const where =
     subsidiariesId.length > 1
@@ -136,6 +147,7 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
+  getProductsById,
   findProductByName,
   getProductsBySubsidiaryId,
   getAllProductsToReport

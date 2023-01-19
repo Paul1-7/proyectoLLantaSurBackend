@@ -1,13 +1,13 @@
 const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
 
-const DISCOUNTS_TABLE = 'Descuentos'
+const OFFERS_TABLE = 'Ofertas'
 
-const DiscountsSchema = {
+const OffersSchema = {
   id: {
     allowNull: false,
     primaryKey: true,
-    comment: 'identificador de descuentos',
+    comment: 'identificador de la oferta',
 
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
@@ -16,18 +16,26 @@ const DiscountsSchema = {
     }
   },
   nombre: {
-    type: DataTypes.STRING,
-    comment: 'el nombre para el descuento',
+    type: DataTypes.INTEGER,
+    comment: 'el nombre para la oferta',
     allowNull: false,
     validate: {
       is: msg.isAlphanumeric,
       notNull: msg.notNull
     }
   },
+  precio: {
+    type: DataTypes.FLOAT,
+    comment: 'precio de los productos para la oferta',
+    allowNull: false,
+    validate: {
+      isFloat: msg.isFloat,
+      notNull: msg.notNull
+    }
+  },
   fechaInicio: {
     type: DataTypes.DATE,
-    comment: 'fecha de inicio del descuento',
-
+    comment: 'fecha de inicio de la oferta',
     field: 'fecha_inicio',
     allowNull: false,
     validate: {
@@ -37,8 +45,7 @@ const DiscountsSchema = {
   },
   fechaFin: {
     type: DataTypes.DATE,
-    comment: 'fecha de fin del descuento',
-
+    comment: 'fecha de fin de la oferta',
     field: 'fecha_fin',
     allowNull: false,
     validate: {
@@ -48,7 +55,7 @@ const DiscountsSchema = {
   },
   estado: {
     type: DataTypes.INTEGER,
-    comment: 'estado del descuento',
+    comment: 'estado de la oferta',
     allowNull: false,
     defaultValue: 1,
     validate: {
@@ -57,22 +64,23 @@ const DiscountsSchema = {
   }
 }
 
-class Discounts extends Model {
+class Offers extends Model {
   static associate(models) {
-    this.hasMany(models.Descuentos_Productos, {
-      foreignKey: 'idDesc',
-      as: 'productos'
-    })
+    this.hasMany(models.Ofertas_Productos, { foreignKey: 'idOferta' })
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: DISCOUNTS_TABLE,
-      modelName: DISCOUNTS_TABLE,
+      tableName: OFFERS_TABLE,
+      modelName: OFFERS_TABLE,
       timestamps: false
     }
   }
 }
 
-module.exports = { Discounts, DiscountsSchema, DISCOUNTS_TABLE }
+module.exports = {
+  Offers,
+  OffersSchema,
+  OFFERS_TABLE
+}

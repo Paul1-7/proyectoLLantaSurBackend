@@ -1,11 +1,11 @@
 const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg')
-const { DISCOUNTS_TABLE } = require('./Descuentos.model')
+const { OFFERS_TABLE } = require('./Ofertas.model')
 const { PRODUCTS_TABLE } = require('./Productos.model')
 
-const DISCOUNTS_PRODUCTS_TABLE = 'Descuentos_Productos'
+const OFFERS_PRODUCTS_TABLE = 'Ofertas_Productos'
 
-const DiscountsProductsSchema = {
+const OffersProductsSchema = {
   id: {
     allowNull: false,
     primaryKey: true,
@@ -17,14 +17,14 @@ const DiscountsProductsSchema = {
       isUUID: 4
     }
   },
-  idDesc: {
+  idOferta: {
     allowNull: false,
     type: DataTypes.STRING,
-    comment: 'identificador del descuento',
+    comment: 'identificador de la oferta',
 
-    field: 'id_desc',
+    field: 'id_oferta',
     references: {
-      model: DISCOUNTS_TABLE,
+      model: OFFERS_TABLE,
       key: 'id'
     },
     validate: {
@@ -48,46 +48,36 @@ const DiscountsProductsSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   },
-  cantMax: {
+  cantidad: {
     type: DataTypes.INTEGER,
-    comment: 'cantidad maxima del producto para el descuento',
-    field: 'cant_max',
+    comment: 'cantidad del producto para la oferta',
+
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
       notNull: msg.notNull
     }
-  },
-  precio: {
-    type: DataTypes.FLOAT,
-    comment: 'el precio del producto para el descuento',
-    field: 'porcent_desc',
-    allowNull: false,
-    validate: {
-      isFloat: msg.isFloat,
-      notNull: msg.notNull
-    }
   }
 }
 
-class DiscountsProducts extends Model {
+class OffersProducts extends Model {
   static associate(models) {
-    this.belongsTo(models.Descuentos, { foreignKey: 'idDesc' })
+    this.belongsTo(models.Ofertas, { foreignKey: 'idOfertas' })
     this.belongsTo(models.Productos, { foreignKey: 'idProd' })
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: DISCOUNTS_PRODUCTS_TABLE,
-      modelName: DISCOUNTS_PRODUCTS_TABLE,
+      tableName: OFFERS_PRODUCTS_TABLE,
+      modelName: OFFERS_PRODUCTS_TABLE,
       timestamps: false
     }
   }
 }
 
 module.exports = {
-  DiscountsProducts,
-  DiscountsProductsSchema,
-  DISCOUNTS_PRODUCTS_TABLE
+  OffersProducts,
+  OffersProductsSchema,
+  OFFERS_PRODUCTS_TABLE
 }

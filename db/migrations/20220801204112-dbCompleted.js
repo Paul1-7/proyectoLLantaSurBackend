@@ -29,6 +29,8 @@ const {
 } = require('../models/DosificacionFacturas.model.js')
 const { RolUsersSchema } = require('../models/RolesUsuarios.model.js')
 const { UserSchema } = require('../models/Usuarios.model.js')
+const { OffersSchema } = require('../models/Ofertas.model.js')
+const { OffersProductsSchema } = require('../models/OfertasProductos.model.js')
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
@@ -65,9 +67,13 @@ module.exports = {
       'Sucursales_Productos',
       SubsidiariesProductsSchema
     )
+    await queryInterface.createTable('Ofertas', OffersSchema)
+    await queryInterface.createTable('Ofertas_Productos', OffersProductsSchema)
   },
 
   async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('Ofertas_Productos')
+    await queryInterface.dropTable('Ofertas')
     await queryInterface.dropTable('Sucursales_Productos')
     await queryInterface.dropTable('Detalle_Compras')
     await queryInterface.dropTable('Detalle_Ventas')

@@ -35,6 +35,11 @@ const {
   InvoiceBatchingSchema,
   InvoiceBatching
 } = require('./DosificacionFacturas.model.js')
+const { Offers, OffersSchema } = require('./Ofertas.model.js')
+const {
+  OffersProducts,
+  OffersProductsSchema
+} = require('./OfertasProductos.model.js')
 
 function setUpModels(sequelize) {
   Subsidiaries.init(SubsidiariesSchema, Subsidiaries.config(sequelize))
@@ -67,6 +72,8 @@ function setUpModels(sequelize) {
     SubsidiariesProductsSchema,
     SubsidiariesProducts.config(sequelize)
   )
+  Offers.init(OffersSchema, Offers.config(sequelize))
+  OffersProducts.init(OffersProductsSchema, OffersProducts.config(sequelize))
 
   Subsidiaries.associate(sequelize.models)
   User.associate(sequelize.models)
@@ -87,6 +94,8 @@ function setUpModels(sequelize) {
   PurchaseDetail.associate(sequelize.models)
   SellsDetail.associate(sequelize.models)
   SubsidiariesProducts.associate(sequelize.models)
+  Offers.associate(sequelize.models)
+  OffersProducts.associate(sequelize.models)
 }
 
 module.exports = setUpModels
