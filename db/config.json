@@ -1,4 +1,8 @@
 {
+  "development": {
+    "dialect": "postgres",
+    "url": "postgres://postgres:root@localhost:5433/llanta_sur"
+  },
   "production": {
     "dialect": "postgres",
     "url": "postgresql://postgres:z6gh9b4BmrEWx2ekeJbr@containers-us-west-96.railway.app:7876/railway",
