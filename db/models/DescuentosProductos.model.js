@@ -73,7 +73,7 @@ const DiscountsProductsSchema = {
 class DiscountsProducts extends Model {
   static associate(models) {
     this.belongsTo(models.Descuentos, { foreignKey: 'idDesc' })
-    this.belongsTo(models.Productos, { foreignKey: 'idProd' })
+    this.belongsTo(models.Productos, { foreignKey: 'idProd', as: 'producto' })
   }
 
   static config(sequelize) {
