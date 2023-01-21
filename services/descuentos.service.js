@@ -8,7 +8,16 @@ async function getAllDiscounts() {
 
 async function findDiscount(id) {
   return await models.Descuentos.findByPk(id, {
-    include: ['productos']
+    include: [
+      {
+        association: 'productos',
+        include: {
+          model: models.Productos,
+          as: 'producto',
+          attributes: ['nombre']
+        }
+      }
+    ]
   })
 }
 
