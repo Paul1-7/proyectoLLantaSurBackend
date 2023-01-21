@@ -61,7 +61,6 @@ const DiscountsProductsSchema = {
   precio: {
     type: DataTypes.FLOAT,
     comment: 'el precio del producto para el descuento',
-    field: 'porcent_desc',
     allowNull: false,
     validate: {
       isFloat: msg.isFloat,
