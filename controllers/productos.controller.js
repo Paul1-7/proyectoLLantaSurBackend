@@ -2,6 +2,9 @@ const config = require('../config/config.js')
 const { INVENTORY_REPORT_CRITERIA } = require('../constants/index.js')
 const { removeImgCloudinary } = require('../libs/cloudinary.js')
 const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
+const {
+  getBestSellingProductsService
+} = require('../services/detalleVentas.service.js')
 const services = require('../services/productos.service.js')
 const {
   getAllSubsidiaries,
@@ -29,6 +32,16 @@ const { DEFAULT_PRODUCT_IMG_URl } = config
 const getAllProducts = async (req, res, next) => {
   try {
     const products = await services.getAllProducts()
+    res.json(products)
+  } catch (error) {
+    next(error)
+  }
+}
+
+const getBestSellingProducts = async (req, res, next) => {
+  try {
+    const { query } = req
+    const products = await getBestSellingProductsService(query)
     res.json(products)
   } catch (error) {
     next(error)
@@ -182,5 +195,6 @@ module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
-  getDataToReport
+  getDataToReport,
+  getBestSellingProducts
 }

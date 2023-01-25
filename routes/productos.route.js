@@ -6,7 +6,8 @@ const {
   createProduct,
   deleteProduct,
   updateProduct,
-  getDataToReport
+  getDataToReport,
+  getBestSellingProducts
 } = require('../controllers/productos.controller.js')
 const {
   checkId,
@@ -18,6 +19,7 @@ const {
 const productsRoute = express.Router()
 
 productsRoute.get('/', getAllProducts)
+productsRoute.get('/best-selling', getBestSellingProducts)
 productsRoute.get('/reportes/', getDataToReport)
 productsRoute.get('/:id', checkId, findProduct)
 productsRoute.post(
