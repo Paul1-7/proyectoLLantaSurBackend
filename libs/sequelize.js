@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize')
 const config = require('./../config/config.js')
 const setupModels = require('./../db/models/index.js')
-let URL_DATABASE = config.DB_URL_DEV
+let { DATABASE_URL } = config
 
 const options = {
   dialect: 'postgres',
@@ -14,10 +14,9 @@ if (config.ISPROD) {
       rejectUnauthorized: false
     }
   }
-  URL_DATABASE = config.DB_URL_PRODUCTION
 }
 
-const sequelize = new Sequelize(URL_DATABASE, options)
+const sequelize = new Sequelize(DATABASE_URL, options)
 
 setupModels(sequelize)
 
