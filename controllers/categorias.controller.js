@@ -1,5 +1,6 @@
 const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
 const services = require('../services/categorias.service.js')
+const { normalizeText } = require('../utils/dataHandler.js')
 
 const msg = {
   notFound: 'Categoria no encontrada',
@@ -29,9 +30,22 @@ const findCategory = async (req, res, next) => {
   }
 }
 
+const findCategoryByURL = async (req, res, next) => {
+  try {
+    const { url } = req.params
+    const category = await services.findCategoryByURL(url)
+
+    if (!category) return ERROR_RESPONSE.notFound(msg.notFound, res)
+    res.json(category)
+  } catch (error) {
+    next(error)
+  }
+}
+
 const createCategory = async (req, res, next) => {
   try {
     const { body } = req
+    body.url = normalizeText(body.nombre)
     await services.createCategory(body)
     res.json({ message: msg.addSuccess })
   } catch (error) {
@@ -43,6 +57,7 @@ const updateCategory = async (req, res, next) => {
   try {
     const { id } = req.params
     const { body } = req
+    body.url = normalizeText(body.nombre)
     const category = await services.updateCategory(id, body)
 
     if (!category) return ERROR_RESPONSE.notFound(msg.notFound, res)
@@ -75,5 +90,6 @@ module.exports = {
   findCategory,
   createCategory,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+  findCategoryByURL
 }

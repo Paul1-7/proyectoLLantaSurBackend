@@ -11,6 +11,15 @@ async function findCategory(id) {
   })
 }
 
+async function findCategoryByURL(url) {
+  return await models.Categorias.findOne({
+    where: {
+      url
+    },
+    include: 'productos'
+  })
+}
+
 async function createCategory(category) {
   return await models.Categorias.create(category)
 }
@@ -33,5 +42,6 @@ module.exports = {
   findCategory,
   createCategory,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+  findCategoryByURL
 }

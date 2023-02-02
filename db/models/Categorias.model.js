@@ -33,6 +33,16 @@ const CategoriesSchema = {
       notNull: msg.notNull
     }
   },
+  url: {
+    type: DataTypes.STRING,
+    unique: true,
+    comment: 'url que se mostrara en la tienda',
+    allowNull: false,
+    validate: {
+      is: msg.isAlphanumeric,
+      notNull: msg.notNull
+    }
+  },
   estado: {
     type: DataTypes.INTEGER,
     comment: 'estado de la categoria',
