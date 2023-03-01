@@ -38,13 +38,24 @@ const findDefectiveProduct = async (req, res, next) => {
     next(error)
   }
 }
+const getAllDefectivesProductsBySale = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const products = await services.getAllDefectivesProductsBySale(id)
+
+    if (!products) return ERROR_RESPONSE.notFound(msg.notFound, res)
+    res.json(products)
+  } catch (error) {
+    next(error)
+  }
+}
 
 const createDefectiveProduct = async (req, res, next) => {
   try {
     const { data } = req.body
     const dateNow = getDateUTC4()
 
-    if (!data.idVenta) data.idVenta = null
+    if (!data?.idVenta) data.idVenta = null
 
     const dataWithDate = data.map((value) => ({
       ...value,
@@ -62,8 +73,6 @@ const createDefectiveProduct = async (req, res, next) => {
       return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
     }
 
-    // const products = productsBySubsidiary.
-
     const subsidiaries = productsBySubsidiary.map(
       ({ sucursales }) => sucursales[0].Sucursales_Productos
     )
@@ -76,7 +85,7 @@ const createDefectiveProduct = async (req, res, next) => {
 
     await services.createDefectiveProducts(dataWithDate)
     await updataSeveralSubsidiaryProduct(idSucProdArray, newStock)
-
+    console.log('first')
     res.json({ message: msg.addSuccess })
   } catch (error) {
     next(error)
@@ -100,5 +109,6 @@ module.exports = {
   getAllDefectivesProducts,
   findDefectiveProduct,
   createDefectiveProduct,
-  deleteDefectiveProduct
+  deleteDefectiveProduct,
+  getAllDefectivesProductsBySale
 }

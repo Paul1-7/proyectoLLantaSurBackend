@@ -1,16 +1,18 @@
 const express = require('express')
 const {
   createDefectiveProduct,
-  getAllDefectivesProducts
+  getAllDefectivesProducts,
+  getAllDefectivesProductsBySale
 } = require('../controllers/productosDefectuosos.controller.js')
 const { checkId } = require('../middlewares/validator.handle.js')
 
-const sellRoute = express.Router()
+const defectiveProducts = express.Router()
 
-sellRoute.get('/', getAllDefectivesProducts)
-// sellRoute.get('/report/', getSaleToReport)
-// sellRoute.get('/:id', checkId, findSell)
-sellRoute.post('/', createDefectiveProduct)
-// sellRoute.delete('/:id', checkId, deleteSell)
+defectiveProducts.get('/', getAllDefectivesProducts)
+// defectiveProducts.get('/report/', getSaleToReport)
+// defectiveProducts.get('/:id', checkId, findSell)
+defectiveProducts.get('/ventas/:id', checkId, getAllDefectivesProductsBySale)
+defectiveProducts.post('/', createDefectiveProduct)
+// defectiveProducts.delete('/:id', checkId, deleteSell)
 
-module.exports = sellRoute
+module.exports = defectiveProducts
