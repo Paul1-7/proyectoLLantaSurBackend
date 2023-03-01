@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
 const { PRODUCTS_TABLE } = require('./Productos.model.js')
+const { SUBSIDIARIES_TABLE } = require('./Sucursales.model.js')
 const { SELLS_TABLE } = require('./Ventas.model.js')
 
 const DEFECTIVE_PRODUCTS_TABLE = 'Productos_Defectuosos'
@@ -67,7 +68,7 @@ const DefectiveProductsSchema = {
     type: DataTypes.STRING,
     comment: 'identificador de la venta',
     field: 'id_venta',
-    allowNull: false,
+    allowNull: true,
     validate: {
       isUUID: 4
     },
@@ -77,12 +78,29 @@ const DefectiveProductsSchema = {
     },
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
+  },
+  idSuc: {
+    type: DataTypes.STRING,
+    comment: 'identificador de la sucursal',
+    field: 'id_suc',
+    allowNull: false,
+    validate: {
+      isUUID: 4
+    },
+    references: {
+      model: SUBSIDIARIES_TABLE,
+      key: 'id'
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'SET NULL'
   }
 }
 
 class DefectiveProducts extends Model {
   static associate(models) {
-    this.belongsTo(models.Productos, { foreignKey: 'idProd' })
+    this.belongsTo(models.Productos, { as: 'producto', foreignKey: 'idProd' })
+    this.belongsTo(models.Sucursales, { as: 'sucursal', foreignKey: 'idSuc' })
+    this.belongsTo(models.Ventas, { as: 'venta', foreignKey: 'idVenta' })
   }
 
   static config(sequelize) {

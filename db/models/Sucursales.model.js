@@ -76,6 +76,11 @@ class Subsidiaries extends Model {
       foreignKey: 'idSuc',
       as: 'ventas'
     })
+
+    this.hasMany(models.Productos_Defectuosos, {
+      foreignKey: 'idSuc',
+      as: 'productosDefectuosos'
+    })
   }
 
   static config(sequelize) {

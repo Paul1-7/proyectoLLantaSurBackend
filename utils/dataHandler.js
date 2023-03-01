@@ -112,6 +112,14 @@ function normalizeText(text) {
     .replace(/\s/g, '-')
 }
 
+function getDateUTC4 () {
+  const fecha = new Date()
+  const zonaHoraria = fecha.getTimezoneOffset()
+  fecha.setHours(fecha.getHours() - zonaHoraria / 60 + 4)
+
+  return fecha
+}
+
 const rolesName = {
   ADMINISTRADOR: 'Administrador',
   EMPLEADO_VENTAS: 'Empleado de Ventas',
@@ -126,5 +134,6 @@ module.exports = {
   verifySubsidiaries,
   getNewStock,
   getStockUpdated,
-  normalizeText
+  normalizeText,
+  getDateUTC4
 }
