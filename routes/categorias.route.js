@@ -6,12 +6,14 @@ const {
   findCategory,
   createCategory,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+  findCategoryByURL
 } = require('../controllers/categorias.controller.js')
 
 const categoryRoute = express.Router()
 
 categoryRoute.get('/', getAllCategories)
+categoryRoute.get('/url/:url', findCategoryByURL)
 categoryRoute.get('/:id', checkId, findCategory)
 categoryRoute.post('/', createCategory)
 categoryRoute.put('/:id', checkId, updateCategory)

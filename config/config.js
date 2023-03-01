@@ -1,8 +1,7 @@
 const config = {
   ISPROD: process.env.NODE_ENV === 'production',
   PORT: process.env.PORT || 3000,
-  DB_URL_PRODUCTION: process.env.DB_URL_PRODUCTION,
-  DB_URL_DEV: process.env.DB_URL_DEV,
+  DATABASE_URL: process.env.DATABASE_URL,
   CLOUDINARY_URL: process.env.CLOUDINARY_URL,
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,

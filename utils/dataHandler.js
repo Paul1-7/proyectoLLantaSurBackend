@@ -100,6 +100,26 @@ const getStockUpdated = (bodyProducts, oldSale) => {
   } else return bodyProducts
 }
 
+function normalizeText(text) {
+  return text
+    .toLowerCase()
+    .replace(/[áàäâå]/g, 'a')
+    .replace(/[éèëê]/g, 'e')
+    .replace(/[íìïî]/g, 'i')
+    .replace(/[óòöô]/g, 'o')
+    .replace(/[úùüû]/g, 'u')
+    .replace(/[.,]/g, '')
+    .replace(/\s/g, '-')
+}
+
+function getDateUTC4 () {
+  const fecha = new Date()
+  const zonaHoraria = fecha.getTimezoneOffset()
+  fecha.setHours(fecha.getHours() - zonaHoraria / 60 + 4)
+
+  return fecha
+}
+
 const rolesName = {
   ADMINISTRADOR: 'Administrador',
   EMPLEADO_VENTAS: 'Empleado de Ventas',
@@ -113,5 +133,7 @@ module.exports = {
   parseProduct,
   verifySubsidiaries,
   getNewStock,
-  getStockUpdated
+  getStockUpdated,
+  normalizeText,
+  getDateUTC4
 }
