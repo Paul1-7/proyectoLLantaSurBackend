@@ -46,25 +46,8 @@ async function getAllDefectivesProductsBySale(idVenta) {
   })
 }
 
-async function findDefectiveProduct(id) {
-  return await models.Productos_Defectuosos.findByPk(id, {
-    include: [
-      {
-        model: models.Productos,
-        as: 'producto',
-        attributes: ['nombre', 'imagen']
-      }
-    ]
-  })
-}
-
 async function createDefectiveProducts(data) {
   return await models.Productos_Defectuosos.bulkCreate(data)
-}
-
-async function updateDefectiveProducts(id, changes) {
-  const sell = await models.Productos_Defectuosos.findByPk(id)
-  return await sell?.update(changes)
 }
 
 async function deleteDefectiveProducts(id) {
@@ -74,9 +57,7 @@ async function deleteDefectiveProducts(id) {
 
 module.exports = {
   getAllDefectivesProducts,
-  findDefectiveProduct,
   createDefectiveProducts,
-  updateDefectiveProducts,
   deleteDefectiveProducts,
   getAllDefectivesProductsBySale
 }
