@@ -42,6 +42,15 @@ const ProductsSchema = {
       notNull: msg.notNull
     }
   },
+  descripcion: {
+    type: DataTypes.TEXT,
+    comment: 'descripcion del producto',
+    allowNull: false,
+    validate: {
+      is: msg.isAlphanumeric,
+      notNull: msg.notNull
+    }
+  },
   precioCompra: {
     type: DataTypes.FLOAT,
     field: 'precio_compra',
