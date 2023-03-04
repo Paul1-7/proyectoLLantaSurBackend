@@ -1,9 +1,19 @@
 const { Op } = require('sequelize')
 const { models } = require('../libs/sequelize.js')
-const msg = require('../utils/validationsMsg.js')
 
 async function getAllDiscounts() {
-  return await models.Descuentos.findAll()
+  return await models.Descuentos.findAll({
+    include: [
+      {
+        association: 'productos',
+        include: {
+          model: models.Productos,
+          as: 'producto',
+          attributes: ['nombre', 'precioVenta', 'imagen', 'descripcion']
+        }
+      }
+    ]
+  })
 }
 
 async function findDiscount(id) {
@@ -14,7 +24,7 @@ async function findDiscount(id) {
         include: {
           model: models.Productos,
           as: 'producto',
-          attributes: ['nombre']
+          attributes: ['nombre', 'precioVenta', 'imagen', 'descripcion']
         }
       }
     ]

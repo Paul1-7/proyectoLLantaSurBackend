@@ -11,7 +11,13 @@ async function getAllProducts() {
 
 async function getProductsBySubsidiaryId(subsidiaryId, productsId) {
   const products = await models.Productos.findAll({
-    include: ['categoria', 'marca', 'proveedor', 'sucursales'],
+    include: [
+      'categoria',
+      'marca',
+      'proveedor',
+      'sucursales',
+      'descuentosProductos'
+    ],
     where: {
       '$sucursales.id$': subsidiaryId,
       id: { [Op.in]: productsId }
@@ -23,7 +29,7 @@ async function getProductsBySubsidiaryId(subsidiaryId, productsId) {
 
 async function getProductsById(productsId) {
   const products = await models.Productos.findAll({
-    include: ['sucursales'],
+    include: ['sucursales', 'descuentosProductos'],
     where: {
       id: { [Op.in]: productsId }
     }
@@ -91,7 +97,16 @@ async function getAllProductsToReport(subsidiariesId, criteria) {
 
 async function findProduct(id) {
   return await models.Productos.findByPk(id, {
-    include: ['categoria', 'marca', 'proveedor', 'sucursales']
+    include: [
+      'categoria',
+      'marca',
+      'proveedor',
+      'sucursales',
+      {
+        association: 'descuentosProductos',
+        include: [{ association: 'descuento' }]
+      }
+    ]
   })
 }
 
