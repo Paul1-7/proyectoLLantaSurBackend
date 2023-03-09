@@ -42,16 +42,10 @@ async function updateSell(id, changes) {
   return await sell?.update(changes)
 }
 
-async function deleteSell(id) {
-  const sell = await models.Ventas.findByPk(id)
-  return await sell?.destroy()
-}
-
 module.exports = {
   getAllSells,
   findSell,
   createSell,
   updateSell,
-  deleteSell,
   getSalesToReport
 }

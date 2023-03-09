@@ -138,23 +138,9 @@ const createSell = async (req, res, next) => {
   }
 }
 
-const deleteSell = async (req, res, next) => {
-  try {
-    const { id } = req.params
-    const sell = await services.deleteSell(id)
-
-    if (!sell) return ERROR_RESPONSE.notFound(msg.notFound, res)
-
-    res.json({ message: msg.delete })
-  } catch (error) {
-    next(error)
-  }
-}
-
 module.exports = {
   getAllSells,
   findSell,
   createSell,
-  deleteSell,
   getSaleToReport
 }
