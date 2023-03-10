@@ -25,4 +25,26 @@ const INVENTORY_REPORT_CRITERIA = [
   }
 ]
 
-module.exports = { INVENTORY_REPORT_CRITERIA }
+const SALES_REPORT_ORDER_BY = [
+  {
+    id: '1',
+    criteria: ['tipoVenta', 'DESC']
+  },
+  {
+    id: '2',
+    criteria: ['fecha', 'DESC']
+  },
+  {
+    id: '3',
+    criteria: ['vendedor', 'apellido', 'DESC']
+  },
+  {
+    id: '4',
+    criteria: ['total', 'DESC']
+  }
+]
+
+module.exports = {
+  INVENTORY_REPORT_CRITERIA,
+  SALES_REPORT_ORDER_BY
+}

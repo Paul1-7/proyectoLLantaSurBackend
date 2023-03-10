@@ -121,7 +121,7 @@ module.exports = {
           metodo_pago: 0,
           fecha: '2021-12-09',
           id_vendedor: '08f07e13-d12e-45e7-86ca-9b17e3158aad',
-          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
+          id_suc: '678197a0-69a8-4c24-89a5-bf13873cc08b',
           id_cliente: '567c0552-c250-4d69-bc54-482296a95e4b'
         },
         {
@@ -132,7 +132,7 @@ module.exports = {
           metodo_pago: 0,
           fecha: '2022-07-02',
           id_vendedor: '08f07e13-d12e-45e7-86ca-9b17e3158aad',
-          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
+          id_suc: '678197a0-69a8-4c24-89a5-bf13873cc08b',
           id_cliente: 'e57e500b-5162-4159-bba7-732228c10ed8'
         },
         {
@@ -143,7 +143,7 @@ module.exports = {
           metodo_pago: 0,
           fecha: '2022-01-15',
           id_vendedor: '08f07e13-d12e-45e7-86ca-9b17e3158aad',
-          id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
+          id_suc: '678197a0-69a8-4c24-89a5-bf13873cc08b',
           id_cliente: 'e57e500b-5162-4159-bba7-732228c10ed8'
         },
         {

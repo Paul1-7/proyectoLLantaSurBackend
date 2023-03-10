@@ -1,3 +1,4 @@
+const { SALES_REPORT_ORDER_BY } = require('../constants/index.js')
 const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
 const { addSellDetail } = require('../services/detalleVentas.service.js')
 const {
@@ -55,8 +56,23 @@ const getAllSells = async (req, res, next) => {
 
 const getSaleToReport = async (req, res, next) => {
   try {
-    const { query } = req
-    const sales = await services.getSalesToReport(query)
+    const { dateStart, dateEnd, orderBy, subsidiary } = req.query || {}
+
+    if (!dateStart || !dateEnd || !orderBy || !subsidiary)
+      return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
+
+    const orderByOption = SALES_REPORT_ORDER_BY.find(({ id }) => id === orderBy)
+
+    const subsidiaryOption = subsidiary === 'all' ? null : subsidiary
+
+    const options = {
+      dateStart,
+      dateEnd,
+      orderBy: orderByOption.criteria,
+      subsidiary: subsidiaryOption
+    }
+
+    const sales = await services.getSalesToReport(options)
     res.json(sales)
   } catch (error) {
     next(error)

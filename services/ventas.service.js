@@ -7,15 +7,20 @@ async function getAllSells() {
   })
 }
 
-async function getSalesToReport({ start, final }) {
-  return await models.Ventas.findAll({
-    include: ['cliente', 'vendedor', 'detalle', 'pedido'],
+async function getSalesToReport({ dateStart, dateEnd, orderBy, subsidiary }) {
+  const options = {
+    include: ['cliente', 'vendedor', 'detalle', 'sucursal'],
     where: {
       fecha: {
-        [Op.between]: [start, final]
+        [Op.between]: [dateStart, dateEnd]
       }
-    }
-  })
+    },
+    order: [orderBy]
+  }
+
+  if (subsidiary) options.where = { ...options.where, idSuc: subsidiary }
+
+  return await models.Ventas.findAll(options)
 }
 
 async function findSell(id) {
