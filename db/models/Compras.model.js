@@ -19,10 +19,11 @@ const PurchaseSchema = {
   codCompra: {
     allowNull: false,
     comment: 'codigo de la compra',
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     field: 'cod_compra',
     validate: {
-      isNumeric: msg.isNumeric
+      is: msg.isAlphanumeric,
+      notNull: msg.notNull
     }
   },
   total: {
@@ -77,10 +78,14 @@ const PurchaseSchema = {
 
 class Purchase extends Model {
   static associate(models) {
-    this.belongsTo(models.Proveedores, { foreignKey: 'idProv' })
-    this.belongsTo(models.Usuarios, { foreignKey: 'idEmp' })
+    this.belongsTo(models.Proveedores, {
+      foreignKey: 'idProv',
+      as: 'proveedor'
+    })
+    this.belongsTo(models.Usuarios, { foreignKey: 'idEmp', as: 'usuario' })
     this.hasMany(models.Detalle_Compras, {
-      foreignKey: 'idCompra'
+      foreignKey: 'idCompra',
+      as: 'detalle'
     })
   }
 

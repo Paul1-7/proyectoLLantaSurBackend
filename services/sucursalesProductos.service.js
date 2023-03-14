@@ -58,11 +58,20 @@ async function getProductsBySubsidiariesId(id) {
     }
   })
 }
+async function getProductsSubsidiariesByIdProd(ids) {
+  return await models.Sucursales_Productos.findAll({
+    include: ['producto'],
+    where: {
+      idProd: { [Op.in]: ids }
+    }
+  }).then((values) => values.map((value) => value.toJSON()))
+}
 
 module.exports = {
   addSubsidiaryProduct,
   updateSubsidiaryProduct,
   getProductsBySubsidiariesId,
   removeSubsidiaryProduct,
-  updataSeveralSubsidiaryProduct
+  updataSeveralSubsidiaryProduct,
+  getProductsSubsidiariesByIdProd
 }

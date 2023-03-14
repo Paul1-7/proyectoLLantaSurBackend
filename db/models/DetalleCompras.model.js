@@ -87,7 +87,8 @@ class PurchaseDetail extends Model {
       foreignKey: 'idCompra'
     })
     this.belongsTo(models.Productos, {
-      foreignKey: 'idProd'
+      foreignKey: 'idProd',
+      as: 'producto'
     })
   }
 

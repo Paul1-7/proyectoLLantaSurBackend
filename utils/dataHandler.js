@@ -112,7 +112,7 @@ function normalizeText(text) {
     .replace(/\s/g, '-')
 }
 
-function getDateUTC4 () {
+function getDateUTC4() {
   const fecha = new Date()
   const zonaHoraria = fecha.getTimezoneOffset()
   fecha.setHours(fecha.getHours() - zonaHoraria / 60 + 4)

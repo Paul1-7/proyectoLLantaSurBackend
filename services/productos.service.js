@@ -29,7 +29,7 @@ async function getProductsBySubsidiaryId(subsidiaryId, productsId) {
 
 async function getProductsById(productsId) {
   const products = await models.Productos.findAll({
-    include: ['sucursales', 'descuentosProductos'],
+    include: ['sucursales', 'descuentosProductos', 'proveedor', 'sucursales'],
     where: {
       id: { [Op.in]: productsId }
     }

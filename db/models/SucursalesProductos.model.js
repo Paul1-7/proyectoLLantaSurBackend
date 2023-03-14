@@ -65,10 +65,12 @@ const SubsidiariesProductsSchema = {
 class SubsidiariesProducts extends Model {
   static associate(models) {
     this.belongsTo(models.Sucursales, {
-      foreignKey: 'id'
+      foreignKey: 'idSuc',
+      as: 'sucursal'
     })
     this.belongsTo(models.Productos, {
-      foreignKey: 'id'
+      foreignKey: 'idProd',
+      as: 'producto'
     })
   }
 
