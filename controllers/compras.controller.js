@@ -1,4 +1,4 @@
-const { SALES_REPORT_ORDER_BY } = require('../constants/index.js')
+const { PURCHASES_REPORT_ORDER_BY } = require('../constants/index.js')
 const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
 const { v4: uuidv4 } = require('uuid')
 const { addPurchaseDetail } = require('../services/detalleCompras.service.js')
@@ -10,6 +10,10 @@ const {
 
 const services = require('../services/compras.service.js')
 const { getDateUTC4 } = require('../utils/dataHandler.js')
+const {
+  updateMultipleProducts,
+  getProductsById
+} = require('../services/productos.service.js')
 
 const msg = {
   notFound: 'Compra no encontrada',
@@ -41,20 +45,15 @@ const getNewStock = (allProduct, bodyProducts, isIncrement = false) => {
   })
 }
 
-function getPurchaseDetail(clientDetail, productsBySubsidiary) {
+function getPurchaseDetail(clientDetail) {
   let totalPurchase = 0
   const purchaseDetail = clientDetail.map((rowDetail) => {
-    const {
-      producto: { precioVenta }
-    } = productsBySubsidiary.find(
-      ({ producto }) => producto.id === rowDetail.idProd
-    )
-    const subtotal = rowDetail.cantidad * precioVenta
+    const subtotal = rowDetail.cantidad * rowDetail.precioVenta
     totalPurchase += subtotal
 
     return {
       ...rowDetail,
-      precio: precioVenta,
+      precio: rowDetail.precioVenta,
       subtotal
     }
   })
@@ -73,24 +72,23 @@ const getAllPurchases = async (req, res, next) => {
 
 const getPurchaseToReport = async (req, res, next) => {
   try {
-    const { dateStart, dateEnd, orderBy, subsidiary } = req.query || {}
+    const { dateStart, dateEnd, orderBy } = req.query || {}
 
-    if (!dateStart || !dateEnd || !orderBy || !subsidiary)
+    if (!dateStart || !dateEnd || !orderBy)
       return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
 
-    const orderByOption = SALES_REPORT_ORDER_BY.find(({ id }) => id === orderBy)
-
-    const subsidiaryOption = subsidiary === 'all' ? null : subsidiary
+    const orderByOption = PURCHASES_REPORT_ORDER_BY.find(
+      ({ id }) => id === orderBy
+    )
 
     const options = {
       dateStart,
       dateEnd,
-      orderBy: orderByOption.criteria,
-      subsidiary: subsidiaryOption
+      orderBy: orderByOption.criteria
     }
 
-    const sales = await services.getPurchasesToReport(options)
-    res.json(sales)
+    const purchases = await services.getPurchaseToReport(options)
+    res.json(purchases)
   } catch (error) {
     next(error)
   }
@@ -119,10 +117,6 @@ const createPurchase = async (req, res, next) => {
     const subsidiariesProductsData = await getProductsSubsidiariesByIdProd(
       productsId
     )
-    console.log(
-      'TCL: createPurchase -> subsidiariesProductsData',
-      subsidiariesProductsData
-    )
 
     if (subsidiariesProductsData.length === 0) {
       return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
@@ -137,10 +131,7 @@ const createPurchase = async (req, res, next) => {
     if (!newStock.every(({ stock }) => stock >= 0))
       return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
 
-    let { totalPurchase, purchaseDetail } = getPurchaseDetail(
-      detalle,
-      subsidiariesProductsData
-    )
+    let { totalPurchase, purchaseDetail } = getPurchaseDetail(detalle)
 
     const { id: idCompra } = await services.createPurchase({
       ...compras,
@@ -156,6 +147,22 @@ const createPurchase = async (req, res, next) => {
 
     await addPurchaseDetail(sellDetail)
     await updataSeveralSubsidiaryProduct(idSucProdArray, newStock)
+
+    const productsToUpdate = await (
+      await getProductsById(productsId)
+    ).map((product) => {
+      const productFounded = detalle.find(({ idProd }) => idProd === product.id)
+
+      return {
+        ...product,
+        precioVenta: productFounded.precioVenta,
+        precioCompra: productFounded.precioCompra
+      }
+    })
+    await updateMultipleProducts(productsToUpdate, [
+      'precioCompra',
+      'precioVenta'
+    ])
 
     res.json({ message: msg.addSuccess })
   } catch (error) {

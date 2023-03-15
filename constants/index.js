@@ -44,7 +44,23 @@ const SALES_REPORT_ORDER_BY = [
   }
 ]
 
+const PURCHASES_REPORT_ORDER_BY = [
+  {
+    id: '2',
+    criteria: ['fecha', 'DESC']
+  },
+  {
+    id: '3',
+    criteria: ['proveedor', 'nombre', 'DESC']
+  },
+  {
+    id: '4',
+    criteria: ['total', 'DESC']
+  }
+]
+
 module.exports = {
   INVENTORY_REPORT_CRITERIA,
-  SALES_REPORT_ORDER_BY
+  SALES_REPORT_ORDER_BY,
+  PURCHASES_REPORT_ORDER_BY
 }

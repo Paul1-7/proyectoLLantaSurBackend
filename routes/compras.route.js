@@ -8,11 +8,11 @@ const {
   getPurchaseToReport
 } = require('../controllers/compras.controller.js')
 
-const sellRoute = express.Router()
+const purchaseRoute = express.Router()
 
-sellRoute.get('/', getAllPurchases)
-sellRoute.get('/report/', getPurchaseToReport)
-sellRoute.get('/:id', checkId, findPurchase)
-sellRoute.get('/:id', checkId, findPurchase)
-sellRoute.post('/', createPurchase)
-module.exports = sellRoute
+purchaseRoute.get('/', getAllPurchases)
+purchaseRoute.get('/report/', getPurchaseToReport)
+purchaseRoute.get('/:id', checkId, findPurchase)
+purchaseRoute.get('/:id', checkId, findPurchase)
+purchaseRoute.post('/', createPurchase)
+module.exports = purchaseRoute

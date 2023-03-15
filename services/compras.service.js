@@ -7,14 +7,9 @@ async function getAllPurchases() {
   })
 }
 
-async function getPurchaseToReport({
-  dateStart,
-  dateEnd,
-  orderBy,
-  subsidiary
-}) {
+async function getPurchaseToReport({ dateStart, dateEnd, orderBy }) {
   const options = {
-    include: ['cliente', 'vendedor', 'detalle', 'sucursal'],
+    include: ['proveedor', 'usuario', 'detalle'],
     where: {
       fecha: {
         [Op.between]: [dateStart, dateEnd]
@@ -22,8 +17,6 @@ async function getPurchaseToReport({
     },
     order: [orderBy]
   }
-
-  if (subsidiary) options.where = { ...options.where, idSuc: subsidiary }
 
   return await models.Compras.findAll(options)
 }

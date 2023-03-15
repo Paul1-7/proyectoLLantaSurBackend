@@ -122,6 +122,10 @@ async function createProduct(product) {
   return await models.Productos.create(product)
 }
 
+async function updateMultipleProducts(products, updateOnDuplicate) {
+  return await models.Productos.bulkCreate(products, { updateOnDuplicate })
+}
+
 async function updateProduct(id, changes) {
   const product = await models.Productos.findByPk(id)
   return await product?.update(changes)
@@ -165,5 +169,6 @@ module.exports = {
   getProductsById,
   findProductByName,
   getProductsBySubsidiaryId,
-  getAllProductsToReport
+  getAllProductsToReport,
+  updateMultipleProducts
 }
