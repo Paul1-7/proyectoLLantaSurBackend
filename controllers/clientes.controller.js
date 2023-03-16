@@ -1,8 +1,8 @@
+const { CLIENTE } = require('../config/roles.js')
 const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
 const { findRolByName } = require('../services/roles.service.js')
 const { addRolUser } = require('../services/rolesUsuarios.service.js')
 const services = require('../services/usuarios.service.js')
-const { rolesName } = require('../utils/dataHandler.js')
 
 const msg = {
   notFound: 'Cliente no encontrado',
@@ -10,8 +10,6 @@ const msg = {
   addSuccess: 'Se registró el cliente correctamente',
   modifySuccess: 'Se actualizó el registró del cliente correctamente'
 }
-
-const { CLIENTE } = rolesName
 
 const userDataIsEmpty = (user) => {
   const { email, usuario } = user
@@ -32,7 +30,7 @@ const fillUserDataByDefault = (user) => {
 const getAllCustomers = async (req, res, next) => {
   try {
     const isActive = false
-    const customer = await services.getAllUsersByRol(isActive, CLIENTE)
+    const customer = await services.getAllUsersByRol(isActive, CLIENTE.name)
     res.json(customer)
   } catch (error) {
     next(error)
@@ -42,7 +40,7 @@ const getAllCustomers = async (req, res, next) => {
 const getAllActivesCustomers = async (req, res, next) => {
   try {
     const isActive = true
-    const customer = await services.getAllUsersByRol(isActive, CLIENTE)
+    const customer = await services.getAllUsersByRol(isActive, CLIENTE.name)
     res.json(customer)
   } catch (error) {
     next(error)
@@ -73,7 +71,7 @@ const createCustomer = async (req, res, next) => {
       user = fillUserDataByDefault(user)
     }
     const newUser = await services.createUser(user)
-    const rolClient = await findRolByName(rolesName.CLIENTE)
+    const rolClient = await findRolByName(CLIENTE.name)
     const { idRol } = rolClient
 
     await addRolUser(newUser.dataValues.idUsuario, [{ idRol }])

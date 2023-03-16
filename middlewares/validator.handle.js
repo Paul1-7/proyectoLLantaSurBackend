@@ -1,4 +1,6 @@
 const { ERROR_RESPONSE } = require('./error.handle.js')
+const jwt = require('jsonwebtoken')
+const { KEY_JWT } = require('../config/config.js')
 
 const msg = {
   isIdNumberValid: 'el id no es valido',
@@ -6,7 +8,10 @@ const msg = {
   notFoundParam: (param) => `no se encontró el valor ${param} en la peticion`,
   isRolesValid: 'los roles no son validos',
   isImageTypeValid: 'la imagen no es valida',
-  isImageSizeValid: 'la imagen no debe superar los 1.5mb'
+  isImageSizeValid: 'la imagen no debe superar los 1.5mb',
+  unauthorized: 'No estas autenticado',
+  forbidden: 'No tienes permiso',
+  invalidToken: 'El token no es valido'
 }
 
 function checkId(req, res, next) {
@@ -18,6 +23,41 @@ function checkId(req, res, next) {
   if (!regex.test(id))
     return ERROR_RESPONSE.notAcceptable(msg.isIdNumberValid, res)
   next()
+}
+function checkId(req, res, next) {
+  const { id } = req.params
+  const regex =
+    /[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89aAbB][a-f0-9]{3}-[a-f0-9]{12}/
+
+  if (!id) return ERROR_RESPONSE.notFound(msg.notFoundId, res)
+  if (!regex.test(id))
+    return ERROR_RESPONSE.notAcceptable(msg.isIdNumberValid, res)
+  next()
+}
+function verifyToken(req, res, next) {
+  const { authorization } = req.headers
+
+  if (!authorization) return ERROR_RESPONSE.unauthorized(msg.unauthorized, res)
+
+  const token = authorization.split(' ')?.[1]
+
+  jwt.verify(token, KEY_JWT, (err, user) => {
+    if (err) return ERROR_RESPONSE.forbidden(msg.invalidToken, res)
+
+    req.user = user
+  })
+
+  next()
+}
+
+function checkRoles(...rolesAllowed) {
+  return (req, res, next) => {
+    const { roles = [] } = req.user || {}
+    if (!rolesAllowed.some((rolAllowed) => roles.includes(rolAllowed))) {
+      return ERROR_RESPONSE.unauthorized(msg.forbidden, res)
+    }
+    next()
+  }
 }
 
 function checkBodyParams(...params) {
@@ -52,4 +92,11 @@ function fileSizeCheck(req, res, next) {
   next()
 }
 
-module.exports = { checkId, checkBodyParams, fileTypeCheck, fileSizeCheck }
+module.exports = {
+  checkId,
+  checkBodyParams,
+  fileTypeCheck,
+  fileSizeCheck,
+  verifyToken,
+  checkRoles
+}

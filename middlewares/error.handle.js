@@ -9,6 +9,12 @@ const ERROR_RESPONSE = {
   },
   notAcceptable: (msg, res) => {
     return res.status(406).json({ message: msg })
+  },
+  unauthorized: (msg, res) => {
+    return res.status(401).json({ message: msg })
+  },
+  forbidden: (msg, res) => {
+    return res.status(403).json({ message: msg })
   }
 }
 
@@ -42,7 +48,7 @@ function errorHandler(err, req, res, next) {
     return res.status(500).json({ message: msg.msgDatabaseError })
   }
 
-  return res.status(500).json(err)
+  return res.status(500).json({ message: 'existe un problema en el servidor' })
 }
 
 module.exports = { errorHandler, ERROR_RESPONSE }

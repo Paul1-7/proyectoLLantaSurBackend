@@ -1,4 +1,8 @@
-const { rolesName } = require('../../utils/dataHandler')
+const {
+  CLIENTE,
+  ADMINISTRADOR,
+  EMPLEADO_VENTAS
+} = require('../../config/roles')
 
 module.exports = {
   async up(queryInterface) {
@@ -6,18 +10,18 @@ module.exports = {
       'Roles',
       [
         {
-          id_rol: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d',
-          nombre_rol: rolesName.ADMINISTRADOR,
+          id_rol: ADMINISTRADOR.id,
+          nombre_rol: ADMINISTRADOR.name,
           estado_rol: 1
         },
         {
-          id_rol: '678197a0-69a8-4c24-89a5-bf13873cc08b',
-          nombre_rol: rolesName.EMPLEADO_VENTAS,
+          id_rol: EMPLEADO_VENTAS.id,
+          nombre_rol: EMPLEADO_VENTAS.name,
           estado_rol: 1
         },
         {
-          id_rol: '95acac1e-28be-4ef4-9978-3979277d511b',
-          nombre_rol: rolesName.CLIENTE,
+          id_rol: CLIENTE.id,
+          nombre_rol: CLIENTE.name,
           estado_rol: 1
         }
       ],

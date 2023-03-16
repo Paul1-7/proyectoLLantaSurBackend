@@ -59,8 +59,12 @@ const PURCHASES_REPORT_ORDER_BY = [
   }
 ]
 
+const emailRegex =
+  /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+
 module.exports = {
   INVENTORY_REPORT_CRITERIA,
   SALES_REPORT_ORDER_BY,
-  PURCHASES_REPORT_ORDER_BY
+  PURCHASES_REPORT_ORDER_BY,
+  emailRegex
 }

@@ -1,5 +1,10 @@
 const express = require('express')
 const {
+  ADMINISTRADOR,
+  EMPLEADO_VENTAS,
+  CLIENTE
+} = require('../config/roles.js')
+const {
   getAllCustomers,
   findCustomer,
   updateCustomer,
@@ -8,15 +13,44 @@ const {
   getAllActivesCustomers
 } = require('../controllers/clientes.controller.js')
 
-const { checkId } = require('../middlewares/validator.handle.js')
+const {
+  checkId,
+  verifyToken,
+  checkRoles
+} = require('../middlewares/validator.handle.js')
 
 const customerRoute = express.Router()
 
-customerRoute.get('/', getAllCustomers)
-customerRoute.get('/actives', getAllActivesCustomers)
-customerRoute.get('/:id', checkId, findCustomer)
-customerRoute.post('/', createCustomer)
-customerRoute.put('/:id', checkId, updateCustomer)
-customerRoute.delete('/:id', checkId, deleteCustomer)
+customerRoute.get(
+  '/',
+  [verifyToken, checkRoles(ADMINISTRADOR.id, EMPLEADO_VENTAS.id)],
+  getAllCustomers
+)
+customerRoute.get(
+  '/actives',
+  verifyToken,
+  checkRoles(ADMINISTRADOR.id, EMPLEADO_VENTAS.id),
+  getAllActivesCustomers
+)
+customerRoute.get(
+  '/:id',
+  [checkId, verifyToken, checkRoles(ADMINISTRADOR.id, EMPLEADO_VENTAS.id)],
+  findCustomer
+)
+customerRoute.post(
+  '/',
+  [verifyToken, checkRoles(ADMINISTRADOR.id, EMPLEADO_VENTAS.id)],
+  createCustomer
+)
+customerRoute.put(
+  '/:id',
+  [checkId, verifyToken, checkRoles(ADMINISTRADOR.id, EMPLEADO_VENTAS.id)],
+  updateCustomer
+)
+customerRoute.delete(
+  '/:id',
+  [checkId, verifyToken, checkRoles(ADMINISTRADOR.id, EMPLEADO_VENTAS.id)],
+  deleteCustomer
+)
 
 module.exports = customerRoute

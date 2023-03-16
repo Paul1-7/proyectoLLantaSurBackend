@@ -9,7 +9,8 @@ const config = {
   DEFAULT_PRODUCT_IMG_URl: process.env.DEFAULT_PRODUCT_IMG_URl,
   PAYPAL_CLIENT: process.env.PAYPAL_CLIENT,
   PAYPAL_SECRET: process.env.PAYPAL_SECRET,
-  PAYPAL_API: process.env.PAYPAL_API
+  PAYPAL_API: process.env.PAYPAL_API,
+  KEY_JWT: process.env.KEY_JWT
 }
 
 module.exports = config

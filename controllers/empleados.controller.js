@@ -1,3 +1,8 @@
+const {
+  CLIENTE,
+  EMPLEADO_VENTAS,
+  ADMINISTRADOR
+} = require('../config/roles.js')
 const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
 const { getAllRols } = require('../services/roles.service.js')
 const {
@@ -5,13 +10,8 @@ const {
   updateRolUser
 } = require('../services/rolesUsuarios.service.js')
 const userServices = require('../services/usuarios.service.js')
-const {
-  rolesName,
-  areValidData,
-  existClientRol
-} = require('../utils/dataHandler.js')
+const { areValidData, existClientRol } = require('../utils/dataHandler.js')
 
-const { EMPLEADO_VENTAS, ADMINISTRADOR, CLIENTE } = rolesName
 const msg = {
   notFound: 'Empleado no encontrado',
   delete: 'Se elimino el empleado correctamente',
@@ -41,9 +41,9 @@ const getAllEmployees = async (req, res, next) => {
     const isActive = false
     const employe = await userServices.getAllUsersByRol(
       isActive,
-      EMPLEADO_VENTAS,
-      ADMINISTRADOR,
-      CLIENTE
+      EMPLEADO_VENTAS.name,
+      ADMINISTRADOR.name,
+      CLIENTE.name
     )
     res.json(employe)
   } catch (error) {
@@ -78,9 +78,7 @@ const createEmployee = async (req, res, next) => {
 
     roles = roles.map((rol) => ({ idRol: rol }))
     if (!existClientRol(allRoles, roles)) {
-      const clientRol = allRoles.find(
-        (rol) => rol.nombreRol === rolesName.CLIENTE
-      )
+      const clientRol = allRoles.find((rol) => rol.nombreRol === CLIENTE.name)
       roles = [...roles, { idRol: clientRol.idRol }]
     }
     if (userDataIsEmpty(dataUser)) {
@@ -110,9 +108,7 @@ const updateEmployee = async (req, res, next) => {
 
     roles = roles.map((rol) => ({ idRol: rol }))
     if (!existClientRol(allRoles, roles)) {
-      const clientRol = allRoles.find(
-        (rol) => rol.nombreRol === rolesName.CLIENTE
-      )
+      const clientRol = allRoles.find((rol) => rol.nombreRol === CLIENTE.name)
       roles = [...roles, { idRol: clientRol.idRol }]
     }
 

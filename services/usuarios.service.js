@@ -25,6 +25,22 @@ async function findUser(id) {
     include: ['roles']
   })
 }
+async function findUserByOptions(options = {}) {
+  return await models.Usuarios.findOne({
+    attributes: ['idUsuario', 'nombre', 'apellido'],
+    include: [
+      {
+        model: models.Roles,
+        as: 'roles',
+        attributes: ['idRol'],
+        through: {
+          attributes: []
+        }
+      }
+    ],
+    ...options
+  })
+}
 
 async function createUser(User) {
   return await models.Usuarios.create(User)
@@ -62,5 +78,6 @@ module.exports = {
   createUser,
   updateUser,
   getAllUsersByRol,
+  findUserByOptions,
   deleteUser
 }

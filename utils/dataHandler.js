@@ -1,3 +1,5 @@
+const { CLIENTE } = require('../config/roles')
+
 /**
  * It returns true if all the elements in the targets array are included in the allData array
  * @param allData - an array of all the data in the database
@@ -13,7 +15,7 @@ const areValidData = (allData, targets, idData) => {
 const existClientRol = (allRoles, rolesUser) => {
   const idRolesUser = rolesUser.map((rol) => rol.idRol)
 
-  const clientRol = allRoles.find((rol) => rol.nombreRol === rolesName.CLIENTE)
+  const clientRol = allRoles.find((rol) => rol.nombreRol === CLIENTE.name)
 
   return idRolesUser.includes(clientRol.idRol)
 }
@@ -120,15 +122,8 @@ function getDateUTC4() {
   return fecha
 }
 
-const rolesName = {
-  ADMINISTRADOR: 'Administrador',
-  EMPLEADO_VENTAS: 'Empleado de Ventas',
-  CLIENTE: 'Cliente'
-}
-
 module.exports = {
   areValidData,
-  rolesName,
   existClientRol,
   parseProduct,
   verifySubsidiaries,
