@@ -7,10 +7,8 @@ const config = {
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
   CLOUDINARY_NAME: process.env.CLOUDINARY_NAME,
   DEFAULT_PRODUCT_IMG_URl: process.env.DEFAULT_PRODUCT_IMG_URl,
-  PAYPAL_CLIENT: process.env.PAYPAL_CLIENT,
-  PAYPAL_SECRET: process.env.PAYPAL_SECRET,
-  PAYPAL_API: process.env.PAYPAL_API,
-  KEY_JWT: process.env.KEY_JWT
+  KEY_JWT: process.env.KEY_JWT,
+  KEY_JWT_REFRESH: process.env.KEY_JWT_REFRESH
 }
 
 module.exports = config
