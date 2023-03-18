@@ -36,6 +36,11 @@ async function findUserByOptions(options = {}) {
         through: {
           attributes: []
         }
+      },
+      {
+        model: models.Sucursales,
+        as: 'sucursal',
+        attributes: ['id', 'nombre']
       }
     ],
     ...options
