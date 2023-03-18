@@ -32,7 +32,7 @@ function checkId(req, res, next) {
   if (!id) return ERROR_RESPONSE.notFound(msg.notFoundId, res)
   if (!regex.test(id))
     return ERROR_RESPONSE.notAcceptable(msg.isIdNumberValid, res)
-  next()
+  return next()
 }
 function verifyToken(req, res, next) {
   const { authorization } = req.headers
@@ -47,7 +47,7 @@ function verifyToken(req, res, next) {
     req.user = user
   })
 
-  next()
+  return next()
 }
 
 function checkRoles(...rolesAllowed) {
@@ -56,7 +56,7 @@ function checkRoles(...rolesAllowed) {
     if (!rolesAllowed.some((rolAllowed) => roles.includes(rolAllowed))) {
       return ERROR_RESPONSE.unauthorized(msg.forbidden, res)
     }
-    next()
+    return next()
   }
 }
 
@@ -66,7 +66,7 @@ function checkBodyParams(...params) {
       if (!req.body[param])
         return ERROR_RESPONSE.notFound(msg.notFoundParam(param), res)
     })
-    next()
+    return next()
   }
 }
 
@@ -78,7 +78,7 @@ function fileTypeCheck(req, res, next) {
   const regex = /^image\/(jpeg|png)$/
   if (!regex.test(mimetype))
     return ERROR_RESPONSE.notAcceptable(msg.isImageTypeValid, res)
-  next()
+  return next()
 }
 
 function fileSizeCheck(req, res, next) {
@@ -89,7 +89,7 @@ function fileSizeCheck(req, res, next) {
 
   if (size > 1500000)
     return ERROR_RESPONSE.notAcceptable(msg.isImageSizeValid, res)
-  next()
+  return next()
 }
 
 module.exports = {

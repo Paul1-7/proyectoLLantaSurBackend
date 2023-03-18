@@ -1,5 +1,6 @@
 const express = require('express')
 const fileUpload = require('express-fileupload')
+const { ADMINISTRADOR } = require('../config/roles.js')
 const {
   getAllProducts,
   findProduct,
@@ -13,38 +14,58 @@ const {
   checkId,
   fileTypeCheck,
   fileSizeCheck,
-  checkBodyParams
+  checkBodyParams,
+  verifyToken,
+  checkRoles
 } = require('../middlewares/validator.handle.js')
 
 const productsRoute = express.Router()
 
 productsRoute.get('/', getAllProducts)
 productsRoute.get('/best-selling', getBestSellingProducts)
-productsRoute.get('/reportes/', getDataToReport)
+productsRoute.get(
+  '/reportes/',
+  [verifyToken, checkRoles(ADMINISTRADOR.id)],
+  getDataToReport
+)
 productsRoute.get('/:id', checkId, findProduct)
 productsRoute.post(
   '/',
-  fileUpload({
-    useTempFiles: true,
-    tempFileDir: './tmp/img'
-  }),
-  checkBodyParams('sucursales'),
-  fileTypeCheck,
-  fileSizeCheck,
+  [
+    verifyToken,
+    checkRoles(ADMINISTRADOR.id),
+    fileUpload({
+      useTempFiles: true,
+      tempFileDir: './tmp/img'
+    }),
+    checkBodyParams('sucursales'),
+    fileTypeCheck,
+    fileSizeCheck
+  ],
+
   createProduct
 )
 
-productsRoute.delete('/:id', checkId, deleteProduct)
+productsRoute.delete(
+  '/:id',
+  [checkId, verifyToken, checkRoles(ADMINISTRADOR.id)],
+  deleteProduct
+)
 
 productsRoute.put(
   '/:id',
-  checkId,
-  fileUpload({
-    useTempFiles: true,
-    tempFileDir: './tmp/img'
-  }),
-  fileTypeCheck,
-  fileSizeCheck,
+  [
+    checkId,
+    verifyToken,
+    checkRoles(ADMINISTRADOR.id),
+    fileUpload({
+      useTempFiles: true,
+      tempFileDir: './tmp/img'
+    }),
+    fileTypeCheck,
+    fileSizeCheck
+  ],
+
   updateProduct
 )
 

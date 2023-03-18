@@ -1,5 +1,9 @@
 const express = require('express')
-const { checkId } = require('../middlewares/validator.handle.js')
+const {
+  checkId,
+  verifyToken,
+  checkRoles
+} = require('../middlewares/validator.handle.js')
 
 const {
   getAllSells,
@@ -7,12 +11,29 @@ const {
   createSell,
   getSaleToReport
 } = require('../controllers/ventas.controller.js')
+const { ADMINISTRADOR, CLIENTE } = require('../config/roles.js')
 
 const sellRoute = express.Router()
 
-sellRoute.get('/', getAllSells)
-sellRoute.get('/report/', getSaleToReport)
-sellRoute.get('/:id', checkId, findSell)
-sellRoute.get('/:id', checkId, findSell)
-sellRoute.post('/', createSell)
+sellRoute.get(
+  '/',
+  [verifyToken, checkRoles(ADMINISTRADOR.id, CLIENTE.id)],
+  getAllSells
+)
+sellRoute.get(
+  '/report/',
+  [verifyToken, checkRoles(ADMINISTRADOR.id)],
+  getSaleToReport
+)
+sellRoute.get(
+  '/:id',
+  [checkId, verifyToken, checkRoles(ADMINISTRADOR.id, CLIENTE.id)],
+  findSell
+)
+
+sellRoute.post(
+  '/',
+  [verifyToken, checkRoles(ADMINISTRADOR.id, CLIENTE.id)],
+  createSell
+)
 module.exports = sellRoute

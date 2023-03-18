@@ -14,7 +14,7 @@ const msg = {
 
 function generateAccessToken(user) {
   const expiresIn =
-    user.roles.length === 1 && user.roles.includes(CLIENTE.id) ? '30s' : '20s'
+    user.roles.length === 1 && user.roles.includes(CLIENTE.id) ? '15m' : '15m'
 
   return jwt.sign(
     {

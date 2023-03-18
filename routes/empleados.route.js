@@ -1,4 +1,5 @@
 const express = require('express')
+const { ADMINISTRADOR } = require('../config/roles.js')
 const {
   getAllEmployees,
   findEmployee,
@@ -9,19 +10,46 @@ const {
 
 const {
   checkId,
-  checkBodyParams
+  checkBodyParams,
+  verifyToken,
+  checkRoles
 } = require('../middlewares/validator.handle.js')
 
 const employeeRoute = express.Router()
 
-employeeRoute.get('/', getAllEmployees)
+employeeRoute.get(
+  '/',
+  [verifyToken, checkRoles(ADMINISTRADOR.id)],
+  getAllEmployees
+)
 
-employeeRoute.get('/:id', checkId, findEmployee)
+employeeRoute.get(
+  '/:id',
+  [checkId, verifyToken, checkRoles(ADMINISTRADOR.id)],
+  findEmployee
+)
 
-employeeRoute.post('/', checkBodyParams('roles'), createEmployee)
+employeeRoute.post(
+  '/',
+  [checkBodyParams('roles'), verifyToken, checkRoles(ADMINISTRADOR.id)],
+  createEmployee
+)
 
-employeeRoute.put('/:id', checkId, checkBodyParams('roles'), updateEmployee)
+employeeRoute.put(
+  '/:id',
+  [
+    checkId,
+    checkBodyParams('roles'),
+    verifyToken,
+    checkRoles(ADMINISTRADOR.id)
+  ],
+  updateEmployee
+)
 
-employeeRoute.delete('/:id', checkId, deleteEmployee)
+employeeRoute.delete(
+  '/:id',
+  [checkId, verifyToken, checkRoles(ADMINISTRADOR.id)],
+  deleteEmployee
+)
 
 module.exports = employeeRoute

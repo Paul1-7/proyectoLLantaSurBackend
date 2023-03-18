@@ -34,7 +34,11 @@ customerRoute.get(
 )
 customerRoute.get(
   '/:id',
-  [checkId, verifyToken, checkRoles(ADMINISTRADOR.id, EMPLEADO_VENTAS.id)],
+  [
+    checkId,
+    verifyToken,
+    checkRoles(ADMINISTRADOR.id, EMPLEADO_VENTAS.id, CLIENTE.id)
+  ],
   findCustomer
 )
 customerRoute.post(
@@ -44,7 +48,11 @@ customerRoute.post(
 )
 customerRoute.put(
   '/:id',
-  [checkId, verifyToken, checkRoles(ADMINISTRADOR.id, EMPLEADO_VENTAS.id)],
+  [
+    checkId,
+    verifyToken,
+    checkRoles(ADMINISTRADOR.id, EMPLEADO_VENTAS.id, CLIENTE.id)
+  ],
   updateCustomer
 )
 customerRoute.delete(

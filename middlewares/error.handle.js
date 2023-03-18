@@ -48,7 +48,7 @@ function errorHandler(err, req, res, next) {
     return res.status(500).json({ message: msg.msgDatabaseError })
   }
 
-  return res.status(500).json({ message: 'existe un problema en el servidor' })
+  // return res.status(500).json({ message: 'existe un problema en el servidor' })
 }
 
 module.exports = { errorHandler, ERROR_RESPONSE }
