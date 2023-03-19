@@ -1,3 +1,4 @@
+const { hash } = require('bcrypt')
 const {
   CLIENTE,
   EMPLEADO_VENTAS,
@@ -85,7 +86,11 @@ const createEmployee = async (req, res, next) => {
       dataUser = fillUserDataByDefault(dataUser)
     }
 
-    const user = await userServices.createUser(dataUser)
+    const passwordHashed = await hash(dataUser.password.toString(), 10)
+    const user = await userServices.createUser({
+      ...dataUser,
+      password: passwordHashed
+    })
 
     await addRolUser(user.dataValues.idUsuario, roles)
 
@@ -110,6 +115,11 @@ const updateEmployee = async (req, res, next) => {
     if (!existClientRol(allRoles, roles)) {
       const clientRol = allRoles.find((rol) => rol.nombreRol === CLIENTE.name)
       roles = [...roles, { idRol: clientRol.idRol }]
+    }
+
+    if (dataEmployee.password !== '') {
+      const passwordHashed = await hash(dataEmployee.password.toString(), 10)
+      dataEmployee = { ...dataEmployee, password: passwordHashed }
     }
 
     const employe = await userServices.updateUser(id, dataEmployee)

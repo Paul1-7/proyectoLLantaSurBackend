@@ -1,3 +1,4 @@
+const { hash } = require('bcrypt')
 const { CLIENTE } = require('../config/roles.js')
 const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
 const { findRolByName } = require('../services/roles.service.js')
@@ -70,7 +71,13 @@ const createCustomer = async (req, res, next) => {
     if (userDataIsEmpty(user)) {
       user = fillUserDataByDefault(user)
     }
-    const newUser = await services.createUser(user)
+
+    const passwordHashed = await hash(user.password.toString(), 10)
+    const newUser = await services.createUser({
+      ...user,
+      password: passwordHashed
+    })
+
     const rolClient = await findRolByName(CLIENTE.name)
     const { idRol } = rolClient
 
@@ -88,14 +95,14 @@ const updateCustomer = async (req, res, next) => {
     const { id } = req.params
     let user = req.body
 
-    if (userDataIsEmpty(user)) {
-      user = fillUserDataByDefault(user)
+    if (user.password !== '') {
+      const passwordHashed = await hash(user.password.toString(), 10)
+      user = { ...user, password: passwordHashed }
     }
+
     const customer = await services.updateUser(id, user)
 
     if (!customer) return ERROR_RESPONSE.notFound(msg.notFound, res)
-
-    delete customer.dataValues.password
 
     res.json({ message: msg.modifySuccess })
   } catch (error) {

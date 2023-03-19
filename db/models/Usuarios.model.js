@@ -77,13 +77,12 @@ const UserSchema = {
     defaultValue: 1
   },
   password: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     comment: 'password para ingresar al sistema',
 
     allowNull: false,
     validate: {
-      notNull: msg.notNull,
-      is: msg.isAlphanumeric
+      notNull: msg.notNull
     }
   },
   email: {

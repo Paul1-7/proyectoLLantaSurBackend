@@ -4,9 +4,11 @@ const jwt = require('jsonwebtoken')
 const { emailRegex } = require('../constants/index.js')
 const { KEY_JWT, KEY_JWT_REFRESH } = require('../config/config.js')
 const { CLIENTE } = require('../config/roles.js')
+const { compare } = require('bcrypt')
 
 const msg = {
-  notFound: 'No se envío el token',
+  notFound: 'No se encuentra la información solicitada',
+  notSentData: 'No se envío la información',
   invalidCredentials: 'El usuario y/o contraseñas no son validos',
   invalidRefreshToken: 'El token para el refresco es inválido',
   logoutSuccess: 'Cerraste la sesión correctamente'
@@ -45,7 +47,7 @@ let refreshTokens = []
 const refreshToken = async (req, res, next) => {
   const { token } = req.body ?? {}
 
-  if (!token) return ERROR_RESPONSE.notFound(msg.notFound, res)
+  if (!token) return ERROR_RESPONSE.notFound(msg.notSentData, res)
 
   if (!refreshTokens.includes(token))
     return ERROR_RESPONSE.forbidden(msg.invalidRefreshToken, res)
@@ -70,11 +72,7 @@ const loginUser = async (req, res, next) => {
   try {
     const { usuario, password } = req.body
     const isValidEmail = emailRegex.test(usuario)
-    const options = {
-      where: {
-        password
-      }
-    }
+    const options = { where: { estado: 1 } }
 
     if (isValidEmail) {
       options.where.email = usuario
@@ -82,11 +80,16 @@ const loginUser = async (req, res, next) => {
       options.where.usuario = usuario
     }
     const user = await userServices.findUserByOptions(options)
-
     if (!user) return ERROR_RESPONSE.unauthorized(msg.invalidCredentials, res)
+
+    const isValidPassword = await compare(password, user.password.toString())
+
+    if (!isValidPassword)
+      return ERROR_RESPONSE.unauthorized(msg.invalidCredentials, res)
 
     const roles = user.roles.map(({ idRol }) => idRol)
 
+    delete user.dataValues.password
     const newUser = {
       ...user.toJSON(),
       roles
@@ -102,10 +105,22 @@ const loginUser = async (req, res, next) => {
   }
 }
 
+const verifyPhoneNumber = async (req, res, next) => {
+  const { celular } = req.body
+  const options = { where: { estado: 1, celular } }
+
+  if (!celular) return ERROR_RESPONSE.notFound(msg.notSentData, res)
+
+  const user = await userServices.findUserByOptions(options)
+  if (!user) return ERROR_RESPONSE.notFound(msg.notFound, res)
+
+  res.json({ celular: user.celular })
+}
+
 const logoutUser = async (req, res, next) => {
   const { token } = req.body
 
-  if (!token) return ERROR_RESPONSE.notFound(msg.notFound, res)
+  if (!token) return ERROR_RESPONSE.notFound(msg.notSentData, res)
 
   refreshTokens = refreshTokens.filter((tokenRefresh) => tokenRefresh !== token)
 
@@ -115,5 +130,6 @@ const logoutUser = async (req, res, next) => {
 module.exports = {
   loginUser,
   refreshToken,
-  logoutUser
+  logoutUser,
+  verifyPhoneNumber
 }

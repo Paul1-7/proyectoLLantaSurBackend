@@ -7,7 +7,8 @@ const {
 const {
   loginUser,
   refreshToken,
-  logoutUser
+  logoutUser,
+  verifyPhoneNumber
 } = require('../controllers/usuarios.controller.js')
 const {
   verifyToken,
@@ -17,6 +18,7 @@ const {
 const userRoute = express.Router()
 
 userRoute.post('/login', loginUser)
+userRoute.post('/verificar-telefono', verifyPhoneNumber)
 userRoute.post(
   '/refresh',
   [verifyToken, checkRoles(ADMINISTRADOR.id, EMPLEADO_VENTAS.id, CLIENTE.id)],

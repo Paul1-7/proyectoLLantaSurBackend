@@ -41,11 +41,7 @@ customerRoute.get(
   ],
   findCustomer
 )
-customerRoute.post(
-  '/',
-  [verifyToken, checkRoles(ADMINISTRADOR.id, EMPLEADO_VENTAS.id)],
-  createCustomer
-)
+customerRoute.post('/', createCustomer)
 customerRoute.put(
   '/:id',
   [
