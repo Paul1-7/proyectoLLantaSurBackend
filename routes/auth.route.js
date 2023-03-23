@@ -9,7 +9,7 @@ const {
   refreshToken,
   logoutUser,
   verifyPhoneNumber
-} = require('../controllers/usuarios.controller.js')
+} = require('../controllers/auth.controller.js')
 const {
   verifyToken,
   checkRoles
