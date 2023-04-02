@@ -176,6 +176,12 @@ class Products extends Model {
       foreignKey: 'idProd',
       as: 'descuentosProductos'
     })
+    this.belongsToMany(models.Descuentos, {
+      through: models.Descuentos_Productos,
+      as: 'descuentos',
+      foreignKey: 'idProd',
+      otherKey: 'idDesc'
+    })
     this.hasMany(models.Ofertas_Productos, {
       foreignKey: 'idProd',
       as: 'ofertasPorductos'

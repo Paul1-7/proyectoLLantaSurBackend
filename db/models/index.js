@@ -40,6 +40,10 @@ const {
   OffersProducts,
   OffersProductsSchema
 } = require('./OfertasProductos.model.js')
+const {
+  SlidersImages,
+  SlidersImagesSchema
+} = require('./SlidersImages.model.js')
 
 function setUpModels(sequelize) {
   Subsidiaries.init(SubsidiariesSchema, Subsidiaries.config(sequelize))
@@ -74,6 +78,7 @@ function setUpModels(sequelize) {
   )
   Offers.init(OffersSchema, Offers.config(sequelize))
   OffersProducts.init(OffersProductsSchema, OffersProducts.config(sequelize))
+  SlidersImages.init(SlidersImagesSchema, SlidersImages.config(sequelize))
 
   Subsidiaries.associate(sequelize.models)
   User.associate(sequelize.models)
@@ -96,6 +101,7 @@ function setUpModels(sequelize) {
   SubsidiariesProducts.associate(sequelize.models)
   Offers.associate(sequelize.models)
   OffersProducts.associate(sequelize.models)
+  SlidersImages.associate(sequelize.models)
 }
 
 module.exports = setUpModels

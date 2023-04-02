@@ -53,8 +53,8 @@ const FavoritesSchema = {
 
 class Favorites extends Model {
   static associate(models) {
-    this.belongsTo(models.Usuarios, { foreignKey: 'idCliente' })
-    this.belongsTo(models.Productos, { foreignKey: 'idProd' })
+    this.belongsTo(models.Usuarios, { foreignKey: 'idCliente', as: 'usuario' })
+    this.belongsTo(models.Productos, { foreignKey: 'idProd', as: 'producto' })
   }
 
   static config(sequelize) {

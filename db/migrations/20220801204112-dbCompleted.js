@@ -31,6 +31,7 @@ const { RolUsersSchema } = require('../models/RolesUsuarios.model.js')
 const { UserSchema } = require('../models/Usuarios.model.js')
 const { OffersSchema } = require('../models/Ofertas.model.js')
 const { OffersProductsSchema } = require('../models/OfertasProductos.model.js')
+const { SlidersImagesSchema } = require('../models/SlidersImages.model.js')
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
@@ -69,9 +70,11 @@ module.exports = {
     )
     await queryInterface.createTable('Ofertas', OffersSchema)
     await queryInterface.createTable('Ofertas_Productos', OffersProductsSchema)
+    await queryInterface.createTable('Sliders_Images', SlidersImagesSchema)
   },
 
   async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('Sliders_Images')
     await queryInterface.dropTable('Ofertas_Productos')
     await queryInterface.dropTable('Ofertas')
     await queryInterface.dropTable('Sucursales_Productos')

@@ -27,7 +27,7 @@ async function findUser(id) {
 }
 async function findUserByOptions(options = {}) {
   return await models.Usuarios.findOne({
-    attributes: ['idUsuario', 'nombre', 'apellido', 'password'],
+    attributes: ['idUsuario', 'nombre', 'apellido', 'password', 'celular'],
     include: [
       {
         model: models.Roles,

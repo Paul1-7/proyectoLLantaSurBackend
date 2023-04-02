@@ -1,12 +1,37 @@
-const sequelize = require('sequelize')
 const { Op } = require('sequelize')
 const { models } = require('../libs/sequelize.js')
 const msg = require('../utils/validationsMsg.js')
 
-async function getAllProducts() {
-  return await models.Productos.findAll({
-    include: ['categoria', 'marca', 'proveedor', 'sucursales']
-  })
+async function getAllProducts(idCliente) {
+  let options = {
+    include: [
+      'categoria',
+      'marca',
+      'proveedor',
+      'sucursales',
+      {
+        model: models.Descuentos,
+        as: 'descuentos',
+        attributes: ['id', 'fechaFin'],
+        through: {
+          attributes: ['idProd']
+        }
+      }
+    ]
+  }
+
+  if (idCliente) {
+    options = {
+      include: [
+        ...options.include,
+        {
+          model: models.Favoritos,
+          as: 'favoritos'
+        }
+      ]
+    }
+  }
+  return await models.Productos.findAll(options)
 }
 
 async function getProductsBySubsidiaryId(subsidiaryId, productsId) {
@@ -102,6 +127,7 @@ async function findProduct(id) {
       'marca',
       'proveedor',
       'sucursales',
+      'favoritos',
       {
         association: 'descuentosProductos',
         include: [{ association: 'descuento' }]

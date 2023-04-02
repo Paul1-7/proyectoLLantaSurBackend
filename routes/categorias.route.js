@@ -22,11 +22,7 @@ const {
 const categoryRoute = express.Router()
 
 categoryRoute.get('/', getAllCategories)
-categoryRoute.get(
-  '/url/:url',
-  [verifyToken, checkRoles(ADMINISTRADOR.id, EMPLEADO_VENTAS.id, CLIENTE.id)],
-  findCategoryByURL
-)
+categoryRoute.get('/url/:url', findCategoryByURL)
 categoryRoute.get(
   '/:id',
   [checkId, verifyToken, checkRoles(ADMINISTRADOR.id)],

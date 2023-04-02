@@ -1,4 +1,6 @@
 const config = require('../config/config.js')
+const jwt = require('jsonwebtoken')
+
 const { INVENTORY_REPORT_CRITERIA } = require('../constants/index.js')
 const { removeImgCloudinary } = require('../libs/cloudinary.js')
 const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
@@ -17,6 +19,7 @@ const {
 } = require('../services/sucursalesProductos.service.js')
 const { parseProduct, verifySubsidiaries } = require('../utils/dataHandler.js')
 const { uploadImage } = require('../utils/imgHandler.js')
+const { KEY_JWT } = require('../config/config.js')
 
 const msg = {
   notValidSubsidiaries: 'No se enviaron todas las sucursales',
@@ -31,7 +34,18 @@ const { DEFAULT_PRODUCT_IMG_URl } = config
 
 const getAllProducts = async (req, res, next) => {
   try {
-    const products = await services.getAllProducts()
+    const { authorization } = req.headers || {}
+    let idClient = null
+    if (authorization) {
+      const token = authorization.split(' ')?.at(1)
+      jwt.verify(token, KEY_JWT, (err, user) => {
+        if (!err) {
+          idClient = user.idUsuario
+        }
+      })
+    }
+
+    const products = await services.getAllProducts(idClient)
     res.json(products)
   } catch (error) {
     next(error)

@@ -99,7 +99,7 @@ const loginUser = async (req, res, next) => {
     const refreshToken = generateRefreshToken(newUser)
     refreshTokens.push(refreshToken)
 
-    res.json({ user: newUser, accessToken, refreshToken })
+    return res.json({ user: newUser, accessToken, refreshToken })
   } catch (error) {
     next(error)
   }
@@ -107,14 +107,16 @@ const loginUser = async (req, res, next) => {
 
 const verifyPhoneNumber = async (req, res, next) => {
   const { celular } = req.body
-  const options = { where: { estado: 1, celular } }
+  const options = { where: { celular } }
 
   if (!celular) return ERROR_RESPONSE.notFound(msg.notSentData, res)
 
   const user = await userServices.findUserByOptions(options)
-  if (!user) return ERROR_RESPONSE.notFound(msg.notFound, res)
+  if (!user) {
+    return res.json({ message: msg.notFound })
+  }
 
-  res.json({ celular: user.celular })
+  return res.json({ id: user.celular })
 }
 
 const logoutUser = async (req, res, next) => {
@@ -124,7 +126,7 @@ const logoutUser = async (req, res, next) => {
 
   refreshTokens = refreshTokens.filter((tokenRefresh) => tokenRefresh !== token)
 
-  res.status(200).json({ message: msg.logoutSuccess })
+  return res.status(200).json({ message: msg.logoutSuccess })
 }
 
 module.exports = {

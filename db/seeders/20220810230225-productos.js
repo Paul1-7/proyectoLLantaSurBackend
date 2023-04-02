@@ -5,7 +5,7 @@ module.exports = {
       [
         {
           id: 'e9933c06-cd03-4990-bf8e-b8e9056b33df',
-          nombre: 'Small Wooden Cheese',
+          nombre: 'Correa alternador de auto TM + P2',
           descripcion:
             'Si quieres renovar el aspecto y el rendimiento de tu vehículo, no te pierdas esta increíble oferta de llantas aro 17. Estas llantas son ideales para camionetas, SUV y autos deportivos, ya que brindan una mayor estabilidad, agarre y resistencia en todo tipo de terrenos. Además, tienen un diseño moderno y elegante que le dará un toque de personalidad a tu vehículo. Contamos con diferentes marcas y modelos de llantas aro 17 para que elijas la que más se adapte a tus necesidades y preferencias. Aprovecha esta oportunidad y compra tus llantas aro 17 con envío gratis y en cuotas sin interés',
           precio_compra: 34.7,
@@ -20,7 +20,7 @@ module.exports = {
         },
         {
           id: '14f23bde-837c-4f51-bb6a-2ddce96f4728',
-          nombre: 'Unbranded Granite Soap',
+          nombre: 'Luz led trasera de 12v para moto',
           descripcion:
             'Si quieres renovar el aspecto y el rendimiento de tu vehículo, no te pierdas esta increíble oferta de llantas aro 17. Estas llantas son ideales para camionetas, SUV y autos deportivos, ya que brindan una mayor estabilidad, agarre y resistencia en todo tipo de terrenos. Además, tienen un diseño moderno y elegante que le dará un toque de personalidad a tu vehículo. Contamos con diferentes marcas y modelos de llantas aro 17 para que elijas la que más se adapte a tus necesidades y preferencias. Aprovecha esta oportunidad y compra tus llantas aro 17 con envío gratis y en cuotas sin interés',
           precio_compra: 57,
@@ -35,7 +35,7 @@ module.exports = {
         },
         {
           id: 'fa4eebc4-b6fc-4028-a027-0e7a5477372e',
-          nombre: 'Tasty Cotton Pizza',
+          nombre: 'Aro honda 16"',
           descripcion:
             'Si quieres renovar el aspecto y el rendimiento de tu vehículo, no te pierdas esta increíble oferta de llantas aro 17. Estas llantas son ideales para camionetas, SUV y autos deportivos, ya que brindan una mayor estabilidad, agarre y resistencia en todo tipo de terrenos. Además, tienen un diseño moderno y elegante que le dará un toque de personalidad a tu vehículo. Contamos con diferentes marcas y modelos de llantas aro 17 para que elijas la que más se adapte a tus necesidades y preferencias. Aprovecha esta oportunidad y compra tus llantas aro 17 con envío gratis y en cuotas sin interés',
           precio_compra: 33.4,
@@ -50,7 +50,7 @@ module.exports = {
         },
         {
           id: 'ea6f9e29-3715-434a-93bd-76d9e578c156',
-          nombre: 'Practical Steel Chair',
+          nombre: 'Luz de alta luminocidad para motos 12v',
           descripcion:
             'Si quieres renovar el aspecto y el rendimiento de tu vehículo, no te pierdas esta increíble oferta de llantas aro 17. Estas llantas son ideales para camionetas, SUV y autos deportivos, ya que brindan una mayor estabilidad, agarre y resistencia en todo tipo de terrenos. Además, tienen un diseño moderno y elegante que le dará un toque de personalidad a tu vehículo. Contamos con diferentes marcas y modelos de llantas aro 17 para que elijas la que más se adapte a tus necesidades y preferencias. Aprovecha esta oportunidad y compra tus llantas aro 17 con envío gratis y en cuotas sin interés',
           precio_compra: 149.7,
@@ -65,7 +65,7 @@ module.exports = {
         },
         {
           id: 'bd029433-2a9e-4e14-991a-96e031344c42',
-          nombre: 'Unbranded Steel Tuna',
+          nombre: 'Aceite super diesel 5w-30',
           descripcion:
             'Si quieres renovar el aspecto y el rendimiento de tu vehículo, no te pierdas esta increíble oferta de llantas aro 17. Estas llantas son ideales para camionetas, SUV y autos deportivos, ya que brindan una mayor estabilidad, agarre y resistencia en todo tipo de terrenos. Además, tienen un diseño moderno y elegante que le dará un toque de personalidad a tu vehículo. Contamos con diferentes marcas y modelos de llantas aro 17 para que elijas la que más se adapte a tus necesidades y preferencias. Aprovecha esta oportunidad y compra tus llantas aro 17 con envío gratis y en cuotas sin interés',
           precio_compra: 57.9,
