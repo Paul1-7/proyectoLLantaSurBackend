@@ -8,11 +8,11 @@ module.exports = {
           ci_nit: '5423452334',
           password:
             '$2a$10$GwJNYAOPJQP8hAIcF0KMquCEUYP8YhVUBqm.pdoTGLKmhtGMUSxZ2',
-          email: 'juans@gmail.com',
-          celular: 71832648,
-          usuario: 'juans',
-          nombre: 'Mateo Juans',
-          apellido: 'Martinez Gonzales',
+          email: 'moicotarifa@gmail.com',
+          celular: 78700385,
+          usuario: 'Paul17',
+          nombre: 'Moises Paul',
+          apellido: 'Tarifa Jaramillo',
           estado: 1,
           direccion: 'Calle falsa 123',
           id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d'
