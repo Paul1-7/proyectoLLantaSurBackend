@@ -8,7 +8,10 @@ const config = {
   CLOUDINARY_NAME: process.env.CLOUDINARY_NAME,
   DEFAULT_PRODUCT_IMG_URl: process.env.DEFAULT_PRODUCT_IMG_URl,
   KEY_JWT: process.env.KEY_JWT,
-  KEY_JWT_REFRESH: process.env.KEY_JWT_REFRESH
+  KEY_JWT_REFRESH: process.env.KEY_JWT_REFRESH,
+  NODEMAILER_USER: process.env.NODEMAILER_USER,
+  NODEMAILER_PASSWORD: process.env.NODEMAILER_PASSWORD,
+  URL_BASE_FRONTEND: process.env.URL_BASE_FRONTEND
 }
 
 module.exports = config

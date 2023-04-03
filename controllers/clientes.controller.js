@@ -4,6 +4,7 @@ const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
 const { findRolByName } = require('../services/roles.service.js')
 const { addRolUser } = require('../services/rolesUsuarios.service.js')
 const services = require('../services/usuarios.service.js')
+const { getAllSubsidiaries } = require('../services/sucursales.service.js')
 
 const msg = {
   notFound: 'Cliente no encontrado',
@@ -70,6 +71,10 @@ const createCustomer = async (req, res, next) => {
 
     if (userDataIsEmpty(user)) {
       user = fillUserDataByDefault(user)
+    }
+
+    if (!user?.idSuc) {
+      user.idSuc = (await getAllSubsidiaries()).at(0).dataValues.id
     }
 
     const passwordHashed = await hash(user.password.toString(), 10)

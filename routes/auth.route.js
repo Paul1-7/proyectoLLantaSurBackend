@@ -8,7 +8,9 @@ const {
   loginUser,
   refreshToken,
   logoutUser,
-  verifyPhoneNumber
+  verifyPhoneNumber,
+  passwordReset,
+  passwordResetValidateRequest
 } = require('../controllers/auth.controller.js')
 const {
   verifyToken,
@@ -29,5 +31,7 @@ userRoute.post(
   [verifyToken, checkRoles(ADMINISTRADOR.id, EMPLEADO_VENTAS.id, CLIENTE.id)],
   logoutUser
 )
+userRoute.post('/password-reset', passwordReset)
+userRoute.post('/password-reset/:userId/:token', passwordResetValidateRequest)
 
 module.exports = userRoute

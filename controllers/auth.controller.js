@@ -2,16 +2,26 @@ const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
 const userServices = require('../services/usuarios.service.js')
 const jwt = require('jsonwebtoken')
 const { emailRegex } = require('../constants/index.js')
-const { KEY_JWT, KEY_JWT_REFRESH } = require('../config/config.js')
+const {
+  KEY_JWT,
+  KEY_JWT_REFRESH,
+  VONAGE_KEY,
+  VONAGE_SECRET,
+  URL_BASE_FRONTEND
+} = require('../config/config.js')
 const { CLIENTE } = require('../config/roles.js')
-const { compare } = require('bcrypt')
+const { compare, hash } = require('bcrypt')
+const sendEmail = require('../libs/sendEmail.js')
 
 const msg = {
   notFound: 'No se encuentra la información solicitada',
   notSentData: 'No se envío la información',
   invalidCredentials: 'El usuario y/o contraseñas no son validos',
   invalidRefreshToken: 'El token para el refresco es inválido',
-  logoutSuccess: 'Cerraste la sesión correctamente'
+  logoutSuccess: 'Cerraste la sesión correctamente',
+  emailSent: 'Se envio el correo de recuperación, revisa tu bandeja',
+  resetPasswordSuccess: 'Se reestablecio correctamente tu contraseña',
+  invalidToken: 'El token no es valido'
 }
 
 function generateAccessToken(user) {
@@ -106,32 +116,90 @@ const loginUser = async (req, res, next) => {
 }
 
 const verifyPhoneNumber = async (req, res, next) => {
-  const { celular } = req.body
-  const options = { where: { celular } }
+  try {
+    const { celular } = req.body
+    const options = { where: { celular } }
 
-  if (!celular) return ERROR_RESPONSE.notFound(msg.notSentData, res)
+    if (!celular) return ERROR_RESPONSE.notFound(msg.notSentData, res)
 
-  const user = await userServices.findUserByOptions(options)
-  if (!user) {
-    return res.json({ message: msg.notFound })
+    const user = await userServices.findUserByOptions(options)
+    if (!user) {
+      return res.json({ message: msg.notFound })
+    }
+
+    return res.json({ id: user.celular })
+  } catch (error) {
+    next(error)
   }
-
-  return res.json({ id: user.celular })
 }
 
 const logoutUser = async (req, res, next) => {
-  const { token } = req.body
+  try {
+    const { token } = req.body
 
-  if (!token) return ERROR_RESPONSE.notFound(msg.notSentData, res)
+    if (!token) return ERROR_RESPONSE.notFound(msg.notSentData, res)
 
-  refreshTokens = refreshTokens.filter((tokenRefresh) => tokenRefresh !== token)
+    refreshTokens = refreshTokens.filter(
+      (tokenRefresh) => tokenRefresh !== token
+    )
 
-  return res.status(200).json({ message: msg.logoutSuccess })
+    return res.status(200).json({ message: msg.logoutSuccess })
+  } catch (error) {
+    next(error)
+  }
+}
+
+const passwordReset = async (req, res, next) => {
+  try {
+    const { email } = req.body
+    const options = { where: { email } }
+
+    const user = await userServices.findUserByOptions(options)
+    if (!user) {
+      return res.json({ message: msg.notFound })
+    }
+
+    const token = jwt.sign(
+      {
+        celular: user.dataValues.celular
+      },
+      KEY_JWT,
+      { expiresIn: '5m' }
+    )
+
+    const link = `${URL_BASE_FRONTEND}/password-reset/${user.dataValues.idUsuario}/${token}`
+    await sendEmail(user.dataValues.email, 'Reestablecer contraseña', link)
+    return res.json({ message: msg.emailSent })
+  } catch (error) {
+    next(error)
+  }
+}
+
+const passwordResetValidateRequest = async (req, res, next) => {
+  try {
+    const { userId, token } = req.params
+    const newPassword = req.body.password
+
+    jwt.verify(token, KEY_JWT, (err, user) => {
+      if (err) return ERROR_RESPONSE.forbidden(msg.invalidToken, res)
+    })
+    const user = await userServices.findUser(userId)
+    if (!user) return ERROR_RESPONSE.notFound(msg.notFound, res)
+
+    const passwordHashed = await hash(newPassword, 10)
+    await user.update({ ...user.dataValues, password: passwordHashed })
+
+    return res.json({ message: msg.resetPasswordSuccess })
+  } catch (error) {
+    next(error)
+  }
 }
 
 module.exports = {
   loginUser,
   refreshToken,
   logoutUser,
-  verifyPhoneNumber
+  verifyPhoneNumber,
+  passwordReset,
+  passwordResetValidateRequest
 }
