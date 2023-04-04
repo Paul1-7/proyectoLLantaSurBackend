@@ -7,6 +7,17 @@ async function getAllSells() {
   })
 }
 
+async function countSellsCode() {
+  const pattern = 'V-20230403%'
+  return await models.Ventas.count({
+    where: {
+      codReferencia: {
+        [Op.like]: pattern
+      }
+    }
+  })
+}
+
 async function getSalesToReport({ dateStart, dateEnd, orderBy, subsidiary }) {
   const options = {
     include: ['cliente', 'vendedor', 'detalle', 'sucursal'],
@@ -52,5 +63,6 @@ module.exports = {
   findSell,
   createSell,
   updateSell,
-  getSalesToReport
+  getSalesToReport,
+  countSellsCode
 }

@@ -37,7 +37,7 @@ async function getAllDefectivesProductsBySale(idVenta) {
       {
         model: models.Ventas,
         as: 'venta',
-        attributes: ['codVenta', 'fecha', 'tipoVenta']
+        attributes: ['codVenta', 'fecha']
       }
     ],
     where: {
@@ -51,7 +51,7 @@ async function createDefectiveProducts(data) {
 }
 
 async function deleteDefectiveProducts(id) {
-  const sell = await models.Productos_Defectuosos.findByPk(id)
+  const sell = await modes.Productos_Defectuosos.findByPk(id)
   return await sell?.destroy()
 }
 

@@ -1,3 +1,4 @@
+const { format } = require('date-fns')
 const { CLIENTE } = require('../config/roles')
 
 /**
@@ -122,6 +123,12 @@ function getDateUTC4() {
   return fecha
 }
 
+function generateCodeToDocuments(letter, secuencialNumber) {
+  const numberPad = (secuencialNumber + 1).toString().padStart(4, '0')
+  const today = format(new Date(), 'yyyyMMdd')
+  return `${letter}-${today}-${numberPad}`
+}
+
 module.exports = {
   areValidData,
   existClientRol,
@@ -130,5 +137,6 @@ module.exports = {
   getNewStock,
   getStockUpdated,
   normalizeText,
-  getDateUTC4
+  getDateUTC4,
+  generateCodeToDocuments
 }

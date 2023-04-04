@@ -7,6 +7,17 @@ async function getAllPurchases() {
   })
 }
 
+async function countPurchaseCode() {
+  const pattern = 'C-20230403%'
+  return await models.Compras.count({
+    where: {
+      codReferencia: {
+        [Op.like]: pattern
+      }
+    }
+  })
+}
+
 async function getPurchaseToReport({ dateStart, dateEnd, orderBy }) {
   const options = {
     include: ['proveedor', 'usuario', 'detalle'],
@@ -49,5 +60,6 @@ module.exports = {
   findPurchase,
   createPurchase,
   updatePurchase,
-  getPurchaseToReport
+  getPurchaseToReport,
+  countPurchaseCode
 }

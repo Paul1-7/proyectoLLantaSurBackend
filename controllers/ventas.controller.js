@@ -12,7 +12,11 @@ const {
 } = require('../services/sucursalesProductos.service.js')
 
 const services = require('../services/ventas.service.js')
-const { getNewStock, getStockUpdated } = require('../utils/dataHandler.js')
+const {
+  getNewStock,
+  generateCodeToDocuments,
+  getDateUTC4
+} = require('../utils/dataHandler.js')
 
 const msg = {
   notFound: 'Venta no encontrada',
@@ -120,12 +124,13 @@ const createSell = async (req, res, next) => {
 
     const idSucProdArray = newStock.map(({ id }) => id)
     const codVenta = await incremetToInicialInvoiceNum()
+    const numberPurchaseCode = await services.countSellsCode()
 
     const sell = {
       codVenta: codVenta.numFactInicial,
-      tipoVenta: 0,
-      metodoPago: 0,
       idSuc: idSucursal,
+      fecha: getDateUTC4(),
+      codReferencia: generateCodeToDocuments('V', numberPurchaseCode),
       ...sellData
     }
 

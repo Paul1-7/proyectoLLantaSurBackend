@@ -27,10 +27,6 @@ const INVENTORY_REPORT_CRITERIA = [
 
 const SALES_REPORT_ORDER_BY = [
   {
-    id: '1',
-    criteria: ['tipoVenta', 'DESC']
-  },
-  {
     id: '2',
     criteria: ['fecha', 'DESC']
   },

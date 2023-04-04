@@ -27,6 +27,12 @@ const SellsSchema = {
       isNumeric: msg.isNumeric
     }
   },
+  codReferencia: {
+    allowNull: false,
+    comment: 'codigo de referencia de la venta',
+    type: DataTypes.STRING,
+    field: 'cod_referencia'
+  },
   fecha: {
     comment: 'fecha de la venta',
 
@@ -37,17 +43,6 @@ const SellsSchema = {
       notNull: msg.notNull
     }
   },
-  tipoVenta: {
-    comment: 'tipo de venta realizada',
-
-    type: DataTypes.INTEGER,
-    field: 'tipo_venta',
-    allowNull: false,
-    defaultValue: 0,
-    validate: {
-      is: msg.isState
-    }
-  },
   total: {
     comment: 'total de la venta realizada',
     type: DataTypes.FLOAT,
@@ -56,19 +51,8 @@ const SellsSchema = {
       isFloat: msg.isFloat
     }
   },
-  metodoPago: {
-    comment: 'metodo de pago de la venta',
-
-    type: DataTypes.INTEGER,
-    field: 'metodo_pago',
-    allowNull: false,
-    validate: {
-      is: msg.isState
-    }
-  },
   idCliente: {
     comment: 'identificador del cliente',
-
     type: DataTypes.STRING,
     field: 'id_cliente',
     allowNull: false,
