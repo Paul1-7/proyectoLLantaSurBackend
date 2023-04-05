@@ -9,7 +9,10 @@ const {
 } = require('../services/sucursalesProductos.service.js')
 
 const services = require('../services/compras.service.js')
-const { getDateUTC4 } = require('../utils/dataHandler.js')
+const {
+  getDateUTC4,
+  generateCodeToDocuments
+} = require('../utils/dataHandler.js')
 const {
   updateMultipleProducts,
   getProductsById
@@ -110,7 +113,9 @@ const createPurchase = async (req, res, next) => {
   try {
     const { body } = req
     const { detalle, sucursalesProductos, ...compras } = body
+    const numberPurchaseCode = await services.countPurchaseCode()
     compras.fecha = getDateUTC4()
+    compras.codReferencia = generateCodeToDocuments('C', numberPurchaseCode)
 
     const productsId = detalle.map((product) => product.idProd)
 

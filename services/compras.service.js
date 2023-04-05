@@ -1,5 +1,6 @@
 const { Op } = require('sequelize')
 const { models } = require('../libs/sequelize.js')
+const { format } = require('date-fns')
 
 async function getAllPurchases() {
   return await models.Compras.findAll({
@@ -8,7 +9,8 @@ async function getAllPurchases() {
 }
 
 async function countPurchaseCode() {
-  const pattern = 'C-20230403%'
+  const today = format(new Date(), 'yyyyMMdd')
+  const pattern = `C-${today}%`
   return await models.Compras.count({
     where: {
       codReferencia: {

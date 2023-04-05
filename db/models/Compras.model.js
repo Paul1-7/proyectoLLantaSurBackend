@@ -26,6 +26,12 @@ const PurchaseSchema = {
       notNull: msg.notNull
     }
   },
+  codReferencia: {
+    allowNull: false,
+    comment: 'codigo de referencia de la compra',
+    type: DataTypes.STRING,
+    field: 'cod_referencia'
+  },
   total: {
     type: DataTypes.FLOAT,
     comment: 'precio total de la compra',

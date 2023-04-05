@@ -33,7 +33,8 @@ function generateAccessToken(user) {
       idUsuario: user.idUsuario,
       nombre: user.nombre,
       apellido: user.apellido,
-      roles: user.roles
+      roles: user.roles,
+      sucursal: user.sucursal
     },
     KEY_JWT,
     { expiresIn }
@@ -46,7 +47,8 @@ function generateRefreshToken(user) {
       idUsuario: user.idUsuario,
       nombre: user.nombre,
       apellido: user.apellido,
-      roles: user.roles
+      roles: user.roles,
+      sucursal: user.sucursal
     },
     KEY_JWT_REFRESH
   )
@@ -66,7 +68,6 @@ const refreshToken = async (req, res, next) => {
     refreshTokens = refreshTokens.filter(
       (tokenRefresh) => tokenRefresh !== token
     )
-
     const newAccessToken = generateAccessToken(user)
     const newRefreshAccessToken = generateRefreshToken(user)
     refreshTokens.push(newRefreshAccessToken)
@@ -108,7 +109,6 @@ const loginUser = async (req, res, next) => {
     const accessToken = generateAccessToken(newUser)
     const refreshToken = generateRefreshToken(newUser)
     refreshTokens.push(refreshToken)
-
     return res.json({ user: newUser, accessToken, refreshToken })
   } catch (error) {
     next(error)

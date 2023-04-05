@@ -40,9 +40,7 @@ const sendEmail = async (email, subject, text) => {
       subject: subject,
       html: mailHtml.replace('{{url}}', text)
     })
-  } catch (error) {
-    console.log(error, 'email not sent')
-  }
+  } catch (error) {}
 }
 
 module.exports = sendEmail

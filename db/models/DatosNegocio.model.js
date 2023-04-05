@@ -64,17 +64,6 @@ const BusinessDataSchema = {
       notNull: msg.notNull
     }
   },
-  cantMinProd: {
-    allowNull: false,
-    type: DataTypes.INTEGER,
-    comment: 'cantidad minima de productos para el control del inventario',
-
-    field: 'cant_min_prod',
-    validate: {
-      isInt: true,
-      notNull: msg.notNull
-    }
-  },
   email: {
     type: DataTypes.STRING,
     comment: 'email del negocio',

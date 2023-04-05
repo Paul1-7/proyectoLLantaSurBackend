@@ -95,12 +95,18 @@ const ProductsSchema = {
   estado: {
     type: DataTypes.INTEGER,
     comment: 'estado del producto',
-
     allowNull: false,
     defaultValue: 1,
     validate: {
       is: msg.isState
     }
+  },
+  stockMin: {
+    type: DataTypes.INTEGER,
+    field: 'stock_min',
+    comment: 'cantidad minima del producto',
+    allowNull: false,
+    defaultValue: 1
   },
   idProv: {
     type: DataTypes.STRING,
@@ -175,6 +181,10 @@ class Products extends Model {
     this.hasMany(models.Descuentos_Productos, {
       foreignKey: 'idProd',
       as: 'descuentosProductos'
+    })
+    this.hasMany(models.Sliders_Images, {
+      foreignKey: 'idProd',
+      as: 'slider'
     })
     this.belongsToMany(models.Descuentos, {
       through: models.Descuentos_Productos,

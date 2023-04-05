@@ -124,13 +124,13 @@ const createSell = async (req, res, next) => {
 
     const idSucProdArray = newStock.map(({ id }) => id)
     const codVenta = await incremetToInicialInvoiceNum()
-    const numberPurchaseCode = await services.countSellsCode()
+    const numberSaleCode = await services.countSellsCode()
 
     const sell = {
       codVenta: codVenta.numFactInicial,
       idSuc: idSucursal,
       fecha: getDateUTC4(),
-      codReferencia: generateCodeToDocuments('V', numberPurchaseCode),
+      codReferencia: generateCodeToDocuments('V', numberSaleCode),
       ...sellData
     }
 

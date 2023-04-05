@@ -14,7 +14,6 @@ module.exports = {
             'Venta de partes, piezas y accesorios de vehículos automotores',
           leyenda:
             '"Esta factura contribuye al desarrollo del país, el uso ilicito será sancionado penalmente de acuerdo a ley"',
-          cant_min_prod: 5,
           email: 'llantas-sur@gmail.com',
           tel: '6789191',
           direccion: 'Barrio Senac calle Alejandro N°214',
