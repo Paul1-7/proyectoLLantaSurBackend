@@ -108,6 +108,12 @@ const ProductsSchema = {
     allowNull: false,
     defaultValue: 1
   },
+  codReferencia: {
+    type: DataTypes.STRING,
+    field: 'cod_referencia',
+    comment: 'código de referencia del producto',
+    allowNull: false
+  },
   idProv: {
     type: DataTypes.STRING,
     comment: 'identificador del proveedor',

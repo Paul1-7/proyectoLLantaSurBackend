@@ -1,6 +1,7 @@
 const { Op } = require('sequelize')
 const { models } = require('../libs/sequelize.js')
 const msg = require('../utils/validationsMsg.js')
+const { format } = require('date-fns')
 
 async function getAllProducts(idCliente) {
   let options = {
@@ -32,6 +33,18 @@ async function getAllProducts(idCliente) {
     }
   }
   return await models.Productos.findAll(options)
+}
+
+async function countProductCode() {
+  const today = format(new Date(), 'yyyyMMdd')
+  const pattern = `P-${today}%`
+  return await models.Productos.count({
+    where: {
+      codReferencia: {
+        [Op.like]: pattern
+      }
+    }
+  })
 }
 
 async function getProductsBySubsidiaryId(subsidiaryId, productsId) {
@@ -196,5 +209,6 @@ module.exports = {
   findProductByName,
   getProductsBySubsidiaryId,
   getAllProductsToReport,
-  updateMultipleProducts
+  updateMultipleProducts,
+  countProductCode
 }

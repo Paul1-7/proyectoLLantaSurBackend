@@ -17,7 +17,11 @@ const {
   updateSubsidiaryProduct,
   removeSubsidiaryProduct
 } = require('../services/sucursalesProductos.service.js')
-const { parseProduct, verifySubsidiaries } = require('../utils/dataHandler.js')
+const {
+  parseProduct,
+  verifySubsidiaries,
+  generateCodeToDocuments
+} = require('../utils/dataHandler.js')
 const { uploadImage } = require('../utils/imgHandler.js')
 const { KEY_JWT } = require('../config/config.js')
 
@@ -111,12 +115,13 @@ const createProduct = async (req, res, next) => {
     const { body, files } = req
 
     let imgCloudinary = null
+    const numberProductCode = await services.countProductCode()
     const productParsed = parseProduct(body)
-    const { sucursales } = productParsed
+    // const { sucursales } = productParsed
     const subsidiaries = await getAllSubsidiaries()
 
-    if (!verifySubsidiaries(subsidiaries, productParsed.sucursales))
-      return ERROR_RESPONSE.notAcceptable(msg.notValidSubsidiaries, res)
+    // if (!verifySubsidiaries(subsidiaries, productParsed.sucursales))
+    //   return ERROR_RESPONSE.notAcceptable(msg.notValidSubsidiaries, res)
 
     if (files?.imagen) {
       const { imagen } = files
@@ -129,9 +134,12 @@ const createProduct = async (req, res, next) => {
 
     productParsed.idImg = imgCloudinary ? imgCloudinary.public_id : ''
 
-    const product = await services.createProduct(productParsed)
+    const product = await services.createProduct({
+      ...productParsed,
+      codReferencia: generateCodeToDocuments('P', numberProductCode)
+    })
 
-    await addSubsidiaryProduct(product.dataValues.id, sucursales)
+    // await addSubsidiaryProduct(product.dataValues.id, sucursales)
 
     res.json({ message: msg.addSuccess })
   } catch (error) {
@@ -144,15 +152,15 @@ const updateProduct = async (req, res, next) => {
     const { id } = req.params
     const { body, files } = req
     const productParsed = parseProduct(body)
-    const { sucursales } = productParsed
+    // const { sucursales } = productParsed
     const subsidiaries = await getAllSubsidiaries()
     let imgCloudinary = null
 
     const existProduct = await services.findProduct(id)
     if (!existProduct) return ERROR_RESPONSE.notFound(msg.notFound, res)
 
-    if (!verifySubsidiaries(subsidiaries, productParsed.sucursales))
-      return ERROR_RESPONSE.notAcceptable(msg.notValidSubsidiaries, res)
+    // if (!verifySubsidiaries(subsidiaries, productParsed.sucursales))
+    //   return ERROR_RESPONSE.notAcceptable(msg.notValidSubsidiaries, res)
 
     if (files?.imagen) {
       const { imagen } = files
@@ -171,9 +179,10 @@ const updateProduct = async (req, res, next) => {
     productParsed.idImg = imgCloudinary
       ? imgCloudinary.public_id
       : existProduct.idImg
+    productParsed.codReferencia = existProduct.codReferencia
 
     await services.updateProduct(id, productParsed)
-    await updateSubsidiaryProduct(id, sucursales)
+    // await updateSubsidiaryProduct(id, sucursales)
 
     res.json({ message: msg.modifySuccess })
   } catch (error) {

@@ -32,8 +32,8 @@ const parseProduct = (product) => {
 
   product.precioCompra = parseFloat(precioCompra)
   product.precioVenta = parseFloat(precioVenta)
-  product.fecha = new Date(fecha)
-  product.sucursales = JSON.parse(sucursales)
+  product.fecha = getDateUTC4()
+  // product.sucursales = JSON.parse(sucursales)
   return product
 }
 
