@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
 
-const BUSINESS_DATA_TABLE = 'Datos_Negocio'
+const BUSINESS_DATA_TABLE = 'DatosNegocio'
 
 const BusinessDataSchema = {
   id: {

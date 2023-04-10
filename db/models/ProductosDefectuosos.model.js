@@ -4,7 +4,7 @@ const { PRODUCTS_TABLE } = require('./Productos.model.js')
 const { SUBSIDIARIES_TABLE } = require('./Sucursales.model.js')
 const { SELLS_TABLE } = require('./Ventas.model.js')
 
-const DEFECTIVE_PRODUCTS_TABLE = 'Productos_Defectuosos'
+const DEFECTIVE_PRODUCTS_TABLE = 'ProductosDefectuosos'
 
 const DefectiveProductsSchema = {
   id: {

@@ -66,7 +66,7 @@ const OffersSchema = {
 
 class Offers extends Model {
   static associate(models) {
-    this.hasMany(models.Ofertas_Productos, { foreignKey: 'idOferta' })
+    this.hasMany(models.OfertasProductos, { foreignKey: 'idOferta' })
   }
 
   static config(sequelize) {

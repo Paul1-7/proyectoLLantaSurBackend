@@ -27,7 +27,6 @@ const DiscountsSchema = {
   fechaInicio: {
     type: DataTypes.DATE,
     comment: 'fecha de inicio del descuento',
-
     field: 'fecha_inicio',
     allowNull: false,
     validate: {
@@ -60,7 +59,7 @@ const DiscountsSchema = {
 class Discounts extends Model {
   static associate(models) {
     this.hasMany(models.Descuentos_Productos, {
-      foreignKey: 'idDesc',
+      foreignKey: 'idDesDescuentosProductos
       as: 'productos'
     })
   }

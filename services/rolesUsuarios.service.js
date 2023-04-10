@@ -6,11 +6,11 @@ async function addRolUser(idUsuario, roles) {
     dataRolUser.push({ idUsuario, ...role })
   })
 
-  return await models.Roles_Usuarios.bulkCreate(dataRolUser)
+  return await models.RolesUsuarios.bulkCreate(dataRolUser)
 }
 
 async function removeRolUser(idUsuario) {
-  return await models.Roles_Usuarios.destroy({
+  return await models.RolesUsuarios.destroy({
     where: { idUsuario }
   })
 }

@@ -1,11 +1,11 @@
 const { models } = require('../libs/sequelize.js')
 
 async function addPurchaseDetail(data) {
-  return await models.Detalle_Compras.bulkCreate(data)
+  return await models.DetalleCompras.bulkCreate(data)
 }
 
 async function removePurchaseDetail(idSucProd) {
-  return await models.Detalle_Compras.destroy({
+  return await models.DetalleCompras.destroy({
     where: {
       idSucProd: { [Op.in]: idSucProd }
     }
@@ -15,7 +15,7 @@ async function removePurchaseDetail(idSucProd) {
 async function updatePurchaseDetail(idSucProd, data) {
   const removed = await removePurchaseDetail(idSucProd)
   const result =
-    removed > 0 ? await models.Detalle_Compras.bulkCreate(data) : null
+    removed > 0 ? await models.DetalleCompras.bulkCreate(data) : null
   return result
 }
 

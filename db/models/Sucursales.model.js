@@ -62,12 +62,12 @@ class Subsidiaries extends Model {
   static associate(models) {
     this.hasMany(models.Usuarios, { foreignKey: 'idSuc', as: 'usuarios' })
     this.belongsToMany(models.Productos, {
-      through: models.Sucursales_Productos,
+      through: models.SucursalesProductos,
       as: 'productos',
       foreignKey: 'idSuc',
       otherKey: 'idProd'
     })
-    this.hasMany(models.Sucursales_Productos, {
+    this.hasMany(models.SucursalesProductos, {
       as: 'sucursalesProductos',
       foreignKey: 'idSuc'
     })
@@ -77,7 +77,7 @@ class Subsidiaries extends Model {
       as: 'ventas'
     })
 
-    this.hasMany(models.Productos_Defectuosos, {
+    this.hasMany(models.ProductosDefectuosos, {
       foreignKey: 'idSuc',
       as: 'productosDefectuosos'
     })

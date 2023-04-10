@@ -2,7 +2,7 @@ const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
 const { PRODUCTS_TABLE } = require('./Productos.model.js')
 const { SELLS_TABLE } = require('./Ventas.model.js')
-const SELLS_DETAIL_TABLE = 'Detalle_Ventas'
+const SELLS_DETAIL_TABLE = 'DetalleVentas'
 
 const SellsDetailSchema = {
   id: {

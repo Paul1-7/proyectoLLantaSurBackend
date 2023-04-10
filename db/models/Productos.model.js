@@ -172,33 +172,33 @@ class Products extends Model {
       as: 'proveedor'
     })
     this.belongsTo(models.Marcas, { foreignKey: 'idMarca', as: 'marca' })
-    this.hasMany(models.Detalle_Compras, {
+    this.hasMany(models.DetalleCompras, {
       foreignKey: 'idProd',
       as: 'detalleCompras'
     })
-    this.hasMany(models.Detalle_Ventas, {
+    this.hasMany(models.DetalleVentas, {
       foreignKey: 'idProd',
       as: 'detalleVentas'
     })
-    this.hasMany(models.Productos_Defectuosos, {
+    this.hasMany(models.ProductosDefectuosos, {
       foreignKey: 'idProd',
       as: 'productosDefectuosos'
     })
-    this.hasMany(models.Descuentos_Productos, {
+    this.hasMany(models.DescuentosProductos, {
       foreignKey: 'idProd',
       as: 'descuentosProductos'
     })
-    this.hasMany(models.Sliders_Images, {
+    this.hasMany(models.SlidersImages, {
       foreignKey: 'idProd',
       as: 'slider'
     })
     this.belongsToMany(models.Descuentos, {
-      through: models.Descuentos_Productos,
+      through: models.DescuentosProductos,
       as: 'descuentos',
       foreignKey: 'idProd',
       otherKey: 'idDesc'
     })
-    this.hasMany(models.Ofertas_Productos, {
+    this.hasMany(models.OfertasProductos, {
       foreignKey: 'idProd',
       as: 'ofertasPorductos'
     })
@@ -211,12 +211,12 @@ class Products extends Model {
       as: 'reviews'
     })
     this.belongsToMany(models.Sucursales, {
-      through: models.Sucursales_Productos,
+      through: models.SucursalesProductos,
       as: 'sucursales',
       foreignKey: 'idProd',
       otherKey: 'idSuc'
     })
-    this.hasMany(models.Sucursales_Productos, {
+    this.hasMany(models.SucursalesProductos, {
       foreignKey: 'idProd',
       as: 'sucursalesProductos'
     })

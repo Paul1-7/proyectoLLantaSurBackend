@@ -2,7 +2,7 @@ const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
 const { PRODUCTS_TABLE } = require('./Productos.model.js')
 
-const SLIDERS_IMAGES_TABLE = 'Sliders_Images'
+const SLIDERS_IMAGES_TABLE = 'SlidersImages'
 
 const SlidersImagesSchema = {
   id: {

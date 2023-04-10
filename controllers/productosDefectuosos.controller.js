@@ -63,7 +63,7 @@ const createDefectiveProduct = async (req, res, next) => {
     }
 
     const subsidiaries = productsBySubsidiary.map(
-      ({ sucursales }) => sucursales[0].Sucursales_Productos
+      ({ sucursales }) => sucursales[0].SucursalesProductos
     )
     const newStock = getNewStock(subsidiaries, data)
 

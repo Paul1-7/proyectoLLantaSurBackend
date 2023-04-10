@@ -3,7 +3,7 @@ const msg = require('../../utils/validationsMsg.js')
 const { PRODUCTS_TABLE } = require('./Productos.model.js')
 const { SUBSIDIARIES_TABLE } = require('./Sucursales.model.js')
 
-const SUBSIDIARIES_PRODUCTS_TABLE = 'Sucursales_Productos'
+const SUBSIDIARIES_PRODUCTS_TABLE = 'SucursalesProductos'
 
 const SubsidiariesProductsSchema = {
   id: {

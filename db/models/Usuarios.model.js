@@ -142,7 +142,7 @@ const UserSchema = {
 class User extends Model {
   static associate(models) {
     this.belongsToMany(models.Roles, {
-      through: models.Roles_Usuarios,
+      through: models.RolesUsuarios,
       as: 'roles',
       foreignKey: 'idUsuario',
       otherKey: 'idRol'

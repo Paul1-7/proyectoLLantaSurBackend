@@ -1,7 +1,7 @@
 const { models } = require('../libs/sequelize.js')
 
 async function getAllSlidersImages() {
-  return await models.Sliders_Images.findAll({
+  return await models.SlidersImages.findAll({
     include: [
       {
         model: models.Productos,
@@ -13,7 +13,7 @@ async function getAllSlidersImages() {
 }
 
 async function updateSlidersImages(data) {
-  return await models.Sliders_Images.bulkCreate(data, {
+  return await models.SlidersImages.bulkCreate(data, {
     updateOnDuplicate: ['idProd', 'urlImg', 'estado']
   })
 }

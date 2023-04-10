@@ -32,6 +32,9 @@ const { UserSchema } = require('../models/Usuarios.model.js')
 const { OffersSchema } = require('../models/Ofertas.model.js')
 const { OffersProductsSchema } = require('../models/OfertasProductos.model.js')
 const { SlidersImagesSchema } = require('../models/SlidersImages.model.js')
+const {
+  InterBranchMovementsSchema
+} = require('../models/MovimientosSucursales.model.js')
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
@@ -41,54 +44,59 @@ module.exports = {
     await queryInterface.createTable('Sucursales', SubsidiariesSchema)
     await queryInterface.createTable('Usuarios', UserSchema)
     await queryInterface.createTable('Roles', RolSchema)
-    await queryInterface.createTable('Roles_Usuarios', RolUsersSchema)
+    await queryInterface.createTable('RolesUsuarios', RolUsersSchema)
     await queryInterface.createTable('Categorias', CategoriesSchema)
     await queryInterface.createTable('Marcas', BrandsSchema)
-    await queryInterface.createTable('Datos_Negocio', BusinessDataSchema)
+    await queryInterface.createTable('DatosNegocio', BusinessDataSchema)
     await queryInterface.createTable('Proveedores', ProviderSchema)
     await queryInterface.createTable('Compras', PurchaseSchema)
     await queryInterface.createTable('Productos', ProductsSchema)
     await queryInterface.createTable('Ventas', SellsSchema)
     await queryInterface.createTable('Pedidos', OrdersSchema)
-    await queryInterface.createTable('Detalle_Compras', PurchaseDetailSchema)
+    await queryInterface.createTable('DetalleCompras', PurchaseDetailSchema)
 
-    await queryInterface.createTable('Detalle_Ventas', SellsDetailSchema)
+    await queryInterface.createTable('DetalleVentas', SellsDetailSchema)
     await queryInterface.createTable(
-      'Productos_Defectuosos',
+      'ProductosDefectuosos',
       DefectiveProductsSchema
     )
     await queryInterface.createTable('Descuentos', DiscountsSchema)
     await queryInterface.createTable('Reviews', ReviewsSchema)
     await queryInterface.createTable(
-      'Descuentos_Productos',
+      'DescuentosProductos',
       DiscountsProductsSchema
     )
     await queryInterface.createTable('Favoritos', FavoritesSchema)
     await queryInterface.createTable(
-      'Sucursales_Productos',
+      'SucursalesProductos',
       SubsidiariesProductsSchema
     )
     await queryInterface.createTable('Ofertas', OffersSchema)
-    await queryInterface.createTable('Ofertas_Productos', OffersProductsSchema)
-    await queryInterface.createTable('Sliders_Images', SlidersImagesSchema)
+    await queryInterface.createTable('OfertasProductos', OffersProductsSchema)
+    await queryInterface.createTable('SlidersImages', SlidersImagesSchema)
+    await queryInterface.createTable(
+      'MovimientosSucursales',
+      InterBranchMovementsSchema
+    )
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Sliders_Images')
-    await queryInterface.dropTable('Ofertas_Productos')
+    await queryInterface.dropTable('MovimientosSucursales')
+    await queryInterface.dropTable('SlidersImages')
+    await queryInterface.dropTable('OfertasProductos')
     await queryInterface.dropTable('Ofertas')
-    await queryInterface.dropTable('Sucursales_Productos')
-    await queryInterface.dropTable('Detalle_Compras')
-    await queryInterface.dropTable('Detalle_Ventas')
+    await queryInterface.dropTable('SucursalesProductos')
+    await queryInterface.dropTable('DetalleCompras')
+    await queryInterface.dropTable('DetalleVentas')
     await queryInterface.dropTable('Favoritos')
-    await queryInterface.dropTable('Roles_Usuarios')
+    await queryInterface.dropTable('RolesUsuarios')
     await queryInterface.dropTable('Pedidos')
 
     await queryInterface.dropTable('Reviews')
-    await queryInterface.dropTable('Descuentos_Productos')
+    await queryInterface.dropTable('DescuentosProductos')
     await queryInterface.dropTable('Compras')
     await queryInterface.dropTable('Roles')
-    await queryInterface.dropTable('Productos_Defectuosos')
+    await queryInterface.dropTable('ProductosDefectuosos')
     await queryInterface.dropTable('Productos')
     await queryInterface.dropTable('Proveedores')
     await queryInterface.dropTable('Descuentos')
@@ -97,7 +105,7 @@ module.exports = {
     await queryInterface.dropTable('Ventas')
     await queryInterface.dropTable('Usuarios')
     await queryInterface.dropTable('Sucursales')
-    await queryInterface.dropTable('Datos_Negocio')
+    await queryInterface.dropTable('DatosNegocio')
     await queryInterface.dropTable('Dosificacion_Facturas')
   }
 }

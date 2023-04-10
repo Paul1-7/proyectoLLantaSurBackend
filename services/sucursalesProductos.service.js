@@ -3,7 +3,7 @@ const { models } = require('../libs/sequelize.js')
 
 /**
  * It takes an array of subsidiary ids and an array of stock values and creates a new row in the
- * Sucursales_Productos table for each subsidiary id with the corresponding stock value
+ * SucursalesProductos table for each subsidiary id with the corresponding stock value
  * @param idProd - The product id
  * @param subsidiaries - [1, 2, 3]
  * @param stockProd - [1, 2, 3]
@@ -24,11 +24,11 @@ const { models } = require('../libs/sequelize.js')
 async function addSubsidiaryProduct(idProd, subsidiaries) {
   const data = subsidiaries.map((subsidiary) => ({ ...subsidiary, idProd }))
 
-  return await models.Sucursales_Productos.bulkCreate(data)
+  return await models.SucursalesProductos.bulkCreate(data)
 }
 
 async function removeSubsidiaryProduct(id) {
-  return await models.Sucursales_Productos.destroy({
+  return await models.SucursalesProductos.destroy({
     where: {
       idProd: id
     }
@@ -36,13 +36,13 @@ async function removeSubsidiaryProduct(id) {
 }
 
 async function updataSeveralSubsidiaryProduct(ids, newData) {
-  const removed = await models.Sucursales_Productos.destroy({
+  const removed = await models.SucursalesProductos.destroy({
     where: {
       id: { [Op.in]: ids }
     }
   })
 
-  return removed > 0 ? models.Sucursales_Productos.bulkCreate(newData) : null
+  return removed > 0 ? models.SucursalesProductos.bulkCreate(newData) : null
 }
 
 async function updateSubsidiaryProduct(id, data) {
@@ -52,14 +52,14 @@ async function updateSubsidiaryProduct(id, data) {
 }
 
 async function getProductsBySubsidiariesId(id) {
-  return await models.Sucursales_Productos.findAll({
+  return await models.SucursalesProductos.findAll({
     where: {
       idSuc: id
     }
   })
 }
 async function getProductsSubsidiariesByIdProd(ids) {
-  return await models.Sucursales_Productos.findAll({
+  return await models.SucursalesProductos.findAll({
     include: ['producto'],
     where: {
       idProd: { [Op.in]: ids }

@@ -89,7 +89,7 @@ class Purchase extends Model {
       as: 'proveedor'
     })
     this.belongsTo(models.Usuarios, { foreignKey: 'idEmp', as: 'usuario' })
-    this.hasMany(models.Detalle_Compras, {
+    this.hasMany(models.DetalleCompras, {
       foreignKey: 'idCompra',
       as: 'detalle'
     })

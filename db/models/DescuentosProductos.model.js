@@ -3,7 +3,7 @@ const msg = require('../../utils/validationsMsg')
 const { DISCOUNTS_TABLE } = require('./Descuentos.model')
 const { PRODUCTS_TABLE } = require('./Productos.model')
 
-const DISCOUNTS_PRODUCTS_TABLE = 'Descuentos_Productos'
+const DISCOUNTS_PRODUCTS_TABLE = 'DescuentosProductos'
 
 const DiscountsProductsSchema = {
   id: {

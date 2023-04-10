@@ -102,11 +102,11 @@ const SellsSchema = {
 
 class Sells extends Model {
   static associate(models) {
-    this.hasMany(models.Detalle_Ventas, {
+    this.hasMany(models.DetalleVentas, {
       foreignKey: 'idVenta',
       as: 'detalle'
     })
-    this.hasMany(models.Productos_Defectuosos, {
+    this.hasMany(models.ProductosDefectuosos, {
       foreignKey: 'idVenta',
       as: 'productosDefectuosos'
     })

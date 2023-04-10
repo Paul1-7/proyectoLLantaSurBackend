@@ -2,7 +2,7 @@ const { Model, DataTypes } = require('sequelize')
 const { ROL_TABLE } = require('./Roles.model.js')
 const { USER_TABLE } = require('./Usuarios.model.js')
 
-const ROL_USERS_TABLE = 'Roles_Usuarios'
+const ROL_USERS_TABLE = 'RolesUsuarios'
 
 const RolUsersSchema = {
   idRolUsuario: {

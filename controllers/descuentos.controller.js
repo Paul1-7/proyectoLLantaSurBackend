@@ -18,7 +18,7 @@ const msg = {
 isValidMaxQuantityProduct = (productsData, products) => {
   const stocksProducts = products.map(({ sucursales }) => {
     return sucursales.map(
-      ({ Sucursales_Productos }) => Sucursales_Productos.stock
+      ({ SucursalesProductos }) => SucursalesProductos.stock
     )
   })
 

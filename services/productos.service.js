@@ -110,7 +110,7 @@ async function getAllProductsToReport(subsidiariesId, criteria) {
         attributes: ['nombre']
       },
       {
-        model: models.Sucursales_Productos,
+        model: models.SucursalesProductos,
         as: 'sucursalesProductos',
         attributes: ['stock', 'idSuc']
       },
