@@ -35,15 +35,15 @@ const {
   InvoiceBatchingSchema,
   InvoiceBatching
 } = require('./DosificacionFacturas.model.js')
-const { Offers, OffersSchema } = require('./Ofertas.model.js')
-const {
-  OffersProducts,
-  OffersProductsSchema
-} = require('./OfertasProductos.model.js')
+
 const {
   SlidersImages,
   SlidersImagesSchema
 } = require('./SlidersImages.model.js')
+const {
+  InterBranchMovements,
+  InterBranchMovementsSchema
+} = require('./MovimientosSucursales.model.js')
 
 function setUpModels(sequelize) {
   Subsidiaries.init(SubsidiariesSchema, Subsidiaries.config(sequelize))
@@ -76,9 +76,11 @@ function setUpModels(sequelize) {
     SubsidiariesProductsSchema,
     SubsidiariesProducts.config(sequelize)
   )
-  Offers.init(OffersSchema, Offers.config(sequelize))
-  OffersProducts.init(OffersProductsSchema, OffersProducts.config(sequelize))
   SlidersImages.init(SlidersImagesSchema, SlidersImages.config(sequelize))
+  InterBranchMovements.init(
+    InterBranchMovementsSchema,
+    InterBranchMovements.config(sequelize)
+  )
 
   Subsidiaries.associate(sequelize.models)
   User.associate(sequelize.models)
@@ -99,9 +101,8 @@ function setUpModels(sequelize) {
   PurchaseDetail.associate(sequelize.models)
   SellsDetail.associate(sequelize.models)
   SubsidiariesProducts.associate(sequelize.models)
-  Offers.associate(sequelize.models)
-  OffersProducts.associate(sequelize.models)
   SlidersImages.associate(sequelize.models)
+  InterBranchMovements.associate(sequelize.models)
 }
 
 module.exports = setUpModels

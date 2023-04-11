@@ -77,6 +77,15 @@ class Subsidiaries extends Model {
       as: 'ventas'
     })
 
+    this.hasMany(models.MovimientosSucursales, {
+      foreignKey: 'idSucOrigen',
+      sourceKey: 'id'
+    })
+    this.hasMany(models.MovimientosSucursales, {
+      foreignKey: 'idSucDestino',
+      sourceKey: 'id'
+    })
+
     this.hasMany(models.ProductosDefectuosos, {
       foreignKey: 'idSuc',
       as: 'productosDefectuosos'

@@ -1,4 +1,4 @@
-const { Op } = require('sequelize')
+const { Op, Sequelize } = require('sequelize')
 const { models } = require('../libs/sequelize.js')
 
 /**
@@ -35,6 +35,21 @@ async function removeSubsidiaryProduct(id) {
   })
 }
 
+async function updateSubsidiariesProducts(data) {
+  return await models.SucursalesProductos.bulkCreate(data, {
+    updateOnDuplicate: ['stock']
+  })
+}
+
+async function getProductSubsidiary(idProd, idSuc) {
+  return await models.SucursalesProductos.findOne({
+    where: {
+      idProd,
+      idSuc
+    }
+  })
+}
+
 async function updataSeveralSubsidiaryProduct(ids, newData) {
   const removed = await models.SucursalesProductos.destroy({
     where: {
@@ -58,7 +73,7 @@ async function getProductsBySubsidiariesId(id) {
     }
   })
 }
-async function getProductsSubsidiariesByIdProd(ids) {
+async function getProductSubsidiaryByIdProd(ids) {
   return await models.SucursalesProductos.findAll({
     include: ['producto'],
     where: {
@@ -73,5 +88,7 @@ module.exports = {
   getProductsBySubsidiariesId,
   removeSubsidiaryProduct,
   updataSeveralSubsidiaryProduct,
-  getProductsSubsidiariesByIdProd
+  getProductSubsidiaryByIdProd,
+  updateSubsidiariesProducts,
+  getProductSubsidiary
 }

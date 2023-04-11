@@ -161,6 +161,9 @@ class User extends Model {
       foreignKey: 'idEmp',
       as: 'compras'
     })
+    this.hasMany(models.MovimientosSucursales, {
+      foreignKey: 'idUsuario'
+    })
     this.hasMany(models.Reviews, {
       foreignKey: 'idCliente',
       as: 'reviews'

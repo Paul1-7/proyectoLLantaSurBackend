@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
 
-const INVOICE_BATCHING_TABLE = 'Dosificacion_Facturas'
+const INVOICE_BATCHING_TABLE = 'DosificacionFacturas'
 
 const InvoiceBatchingSchema = {
   id: {

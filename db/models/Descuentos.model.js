@@ -58,8 +58,8 @@ const DiscountsSchema = {
 
 class Discounts extends Model {
   static associate(models) {
-    this.hasMany(models.Descuentos_Productos, {
-      foreignKey: 'idDesDescuentosProductos
+    this.hasMany(models.DescuentosProductos, {
+      foreignKey: 'idDesc',
       as: 'productos'
     })
   }

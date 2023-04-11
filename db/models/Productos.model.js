@@ -180,6 +180,9 @@ class Products extends Model {
       foreignKey: 'idProd',
       as: 'detalleVentas'
     })
+    this.hasMany(models.MovimientosSucursales, {
+      foreignKey: 'idProd'
+    })
     this.hasMany(models.ProductosDefectuosos, {
       foreignKey: 'idProd',
       as: 'productosDefectuosos'
@@ -198,10 +201,7 @@ class Products extends Model {
       foreignKey: 'idProd',
       otherKey: 'idDesc'
     })
-    this.hasMany(models.OfertasProductos, {
-      foreignKey: 'idProd',
-      as: 'ofertasPorductos'
-    })
+
     this.hasMany(models.Favoritos, {
       foreignKey: 'idProd',
       as: 'favoritos'

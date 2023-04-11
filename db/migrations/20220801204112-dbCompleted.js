@@ -29,8 +29,6 @@ const {
 } = require('../models/DosificacionFacturas.model.js')
 const { RolUsersSchema } = require('../models/RolesUsuarios.model.js')
 const { UserSchema } = require('../models/Usuarios.model.js')
-const { OffersSchema } = require('../models/Ofertas.model.js')
-const { OffersProductsSchema } = require('../models/OfertasProductos.model.js')
 const { SlidersImagesSchema } = require('../models/SlidersImages.model.js')
 const {
   InterBranchMovementsSchema
@@ -38,7 +36,7 @@ const {
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
-      'Dosificacion_Facturas',
+      'DosificacionFacturas',
       InvoiceBatchingSchema
     )
     await queryInterface.createTable('Sucursales', SubsidiariesSchema)
@@ -71,8 +69,6 @@ module.exports = {
       'SucursalesProductos',
       SubsidiariesProductsSchema
     )
-    await queryInterface.createTable('Ofertas', OffersSchema)
-    await queryInterface.createTable('OfertasProductos', OffersProductsSchema)
     await queryInterface.createTable('SlidersImages', SlidersImagesSchema)
     await queryInterface.createTable(
       'MovimientosSucursales',
@@ -83,8 +79,6 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('MovimientosSucursales')
     await queryInterface.dropTable('SlidersImages')
-    await queryInterface.dropTable('OfertasProductos')
-    await queryInterface.dropTable('Ofertas')
     await queryInterface.dropTable('SucursalesProductos')
     await queryInterface.dropTable('DetalleCompras')
     await queryInterface.dropTable('DetalleVentas')
@@ -106,6 +100,6 @@ module.exports = {
     await queryInterface.dropTable('Usuarios')
     await queryInterface.dropTable('Sucursales')
     await queryInterface.dropTable('DatosNegocio')
-    await queryInterface.dropTable('Dosificacion_Facturas')
+    await queryInterface.dropTable('DosificacionFacturas')
   }
 }
