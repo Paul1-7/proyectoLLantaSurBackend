@@ -151,7 +151,7 @@ const createSell = async (req, res, next) => {
     }))
 
     await addSellDetail(sellDetail)
-    await updataSeveralSubsidiaryProduct(idSucProdArray, newStock)
+    await updataSeveralSubsidiaryProduct(newStock)
 
     res.json({ message: msg.addSuccess })
   } catch (error) {

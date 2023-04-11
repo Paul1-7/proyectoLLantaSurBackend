@@ -73,7 +73,7 @@ const createDefectiveProduct = async (req, res, next) => {
     const idSucProdArray = newStock.map(({ id }) => id)
 
     await services.createDefectiveProducts(dataWithDate)
-    await updataSeveralSubsidiaryProduct(idSucProdArray, newStock)
+    await updataSeveralSubsidiaryProduct(newStock)
     res.json({ message: msg.addSuccess })
   } catch (error) {
     next(error)

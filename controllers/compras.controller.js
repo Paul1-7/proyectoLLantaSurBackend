@@ -1,11 +1,16 @@
 const { PURCHASES_REPORT_ORDER_BY } = require('../constants/index.js')
 const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
 const { v4: uuidv4 } = require('uuid')
-const { addPurchaseDetail } = require('../services/detalleCompras.service.js')
+const {
+  addPurchaseDetail,
+  removePurchaseDetail
+} = require('../services/detalleCompras.service.js')
 
 const {
-  updataSeveralSubsidiaryProduct,
-  getProductsSubsidiariesByIdProd
+  getProductSubsidiaryByIdProd,
+  updateSubsidiariesProducts,
+  getProductsSubsidiariesByIds,
+  updataSeveralSubsidiaryProduct
 } = require('../services/sucursalesProductos.service.js')
 
 const services = require('../services/compras.service.js')
@@ -17,6 +22,11 @@ const {
   updateMultipleProducts,
   getProductsById
 } = require('../services/productos.service.js')
+const {
+  addSubProdPurchases,
+  getSubProdPurchasesByIds,
+  removeSubProdPurchaseByIdPurchase
+} = require('../services/sucursalesProductosCompras.service.js')
 
 const msg = {
   notFound: 'Compra no encontrada',
@@ -119,7 +129,7 @@ const createPurchase = async (req, res, next) => {
 
     const productsId = detalle.map((product) => product.idProd)
 
-    const subsidiariesProductsData = await getProductsSubsidiariesByIdProd(
+    const subsidiariesProductsData = await getProductSubsidiaryByIdProd(
       productsId
     )
 
@@ -143,15 +153,20 @@ const createPurchase = async (req, res, next) => {
       total: totalPurchase
     })
 
-    sellDetail = purchaseDetail.map((detail) => ({
+    const newPurchaseDetail = purchaseDetail.map((detail) => ({
       ...detail,
       idCompra
     }))
 
-    const idSucProdArray = newStock.map(({ id }) => id)
+    const dataStockPurchases = newStock.map(({ id }, index) => ({
+      stock: sucursalesProductos?.[index].stock,
+      idSucProd: id,
+      idCompra
+    }))
 
-    await addPurchaseDetail(sellDetail)
-    await updataSeveralSubsidiaryProduct(idSucProdArray, newStock)
+    await addPurchaseDetail(newPurchaseDetail)
+    await addSubProdPurchases(dataStockPurchases)
+    await updateSubsidiariesProducts(newStock)
 
     const productsToUpdate = await (
       await getProductsById(productsId)
@@ -175,9 +190,43 @@ const createPurchase = async (req, res, next) => {
   }
 }
 
+const deletePurchase = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const subProdPurchase = await getSubProdPurchasesByIds(id)
+    const idsSubProd = subProdPurchase.map(({ idSucProd }) => idSucProd)
+    const subProd = await getProductsSubsidiariesByIds(idsSubProd)
+
+    const newStock = subProd.map((item) => {
+      const value = subProdPurchase.find(
+        ({ idSucProd }) => idSucProd === item.id
+      )
+      return {
+        ...item,
+        stock: item.stock - value.stock
+      }
+    })
+
+    if (!newStock.every(({ stock }) => stock >= 0))
+      return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
+
+    await updataSeveralSubsidiaryProduct(newStock)
+    await removeSubProdPurchaseByIdPurchase(id)
+    await removePurchaseDetail(id)
+    const purchase = await services.removePurchase(id)
+
+    if (!purchase) return ERROR_RESPONSE.notFound(msg.notFound, res)
+
+    res.json({ message: msg.delete, id })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   getAllPurchases,
   findPurchase,
   createPurchase,
-  getPurchaseToReport
+  getPurchaseToReport,
+  deletePurchase
 }

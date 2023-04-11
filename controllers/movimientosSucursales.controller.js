@@ -40,10 +40,7 @@ const createSubsidiaryMovement = async (req, res, next) => {
       return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
     }
 
-    await updataSeveralSubsidiaryProduct(
-      [newStock.at(0).id, newStock.at(1).id],
-      newStock
-    )
+    await updataSeveralSubsidiaryProduct(newStock)
     await services.createSubsidiaryMovement({
       ...req.body,
       fecha: getDateUTC4()

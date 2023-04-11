@@ -10,7 +10,6 @@ const ProductsSchema = {
   id: {
     type: DataTypes.STRING,
     comment: 'identificador del registro',
-
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
     allowNull: false,

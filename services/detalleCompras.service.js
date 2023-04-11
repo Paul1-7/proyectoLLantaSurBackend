@@ -4,10 +4,10 @@ async function addPurchaseDetail(data) {
   return await models.DetalleCompras.bulkCreate(data)
 }
 
-async function removePurchaseDetail(idSucProd) {
+async function removePurchaseDetail(idCompra) {
   return await models.DetalleCompras.destroy({
     where: {
-      idSucProd: { [Op.in]: idSucProd }
+      idCompra
     }
   })
 }

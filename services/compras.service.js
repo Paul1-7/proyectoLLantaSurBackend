@@ -58,11 +58,20 @@ async function updatePurchase(id, changes) {
   return await sell?.update(changes)
 }
 
+async function removePurchase(idCompra) {
+  return await models.Compras.destroy({
+    where: {
+      id: idCompra
+    }
+  })
+}
+
 module.exports = {
   getAllPurchases,
   findPurchase,
   createPurchase,
   updatePurchase,
   getPurchaseToReport,
-  countPurchaseCode
+  countPurchaseCode,
+  removePurchase
 }

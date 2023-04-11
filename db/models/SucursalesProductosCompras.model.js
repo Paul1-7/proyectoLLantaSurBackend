@@ -33,7 +33,6 @@ const SubsidiariesProductsPurchasesSchema = {
     allowNull: false,
     type: DataTypes.STRING,
     comment: 'identificador de sucursalesProductos',
-
     field: 'id_suc_prod',
     references: {
       model: SUBSIDIARIES_PRODUCTS_TABLE,

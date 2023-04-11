@@ -24,8 +24,7 @@ const SubsidiariesProductsSchema = {
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
-      notNull: msg.notNull,
-      min: msg.minValue
+      notNull: msg.notNull
     }
   },
   idSuc: {

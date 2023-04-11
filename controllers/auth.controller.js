@@ -5,8 +5,6 @@ const { emailRegex } = require('../constants/index.js')
 const {
   KEY_JWT,
   KEY_JWT_REFRESH,
-  VONAGE_KEY,
-  VONAGE_SECRET,
   URL_BASE_FRONTEND
 } = require('../config/config.js')
 const { CLIENTE } = require('../config/roles.js')
@@ -26,7 +24,7 @@ const msg = {
 
 function generateAccessToken(user) {
   const expiresIn =
-    user.roles.length === 1 && user.roles.includes(CLIENTE.id) ? '15m' : '15m'
+    user.roles.length === 1 && user.roles.includes(CLIENTE.id) ? '2h' : '2h'
 
   return jwt.sign(
     {

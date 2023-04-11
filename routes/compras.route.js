@@ -9,7 +9,8 @@ const {
   getAllPurchases,
   findPurchase,
   createPurchase,
-  getPurchaseToReport
+  getPurchaseToReport,
+  deletePurchase
 } = require('../controllers/compras.controller.js')
 const { ADMINISTRADOR } = require('../config/roles.js')
 
@@ -35,5 +36,10 @@ purchaseRoute.post(
   '/',
   [verifyToken, checkRoles(ADMINISTRADOR.id)],
   createPurchase
+)
+purchaseRoute.delete(
+  '/:id',
+  [verifyToken, checkRoles(ADMINISTRADOR.id)],
+  deletePurchase
 )
 module.exports = purchaseRoute
