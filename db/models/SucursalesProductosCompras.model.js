@@ -1,11 +1,13 @@
 const { Model, DataTypes } = require('sequelize')
 const msg = require('../../utils/validationsMsg.js')
-const { PRODUCTS_TABLE } = require('./Productos.model.js')
-const { SUBSIDIARIES_TABLE } = require('./Sucursales.model.js')
+const {
+  SUBSIDIARIES_PRODUCTS_TABLE
+} = require('./SucursalesProductos.model.js')
+const { PURCHASE_TABLE } = require('./Compras.model.js')
 
-const SUBSIDIARIES_PRODUCTS_TABLE = 'SucursalesProductos'
+const SUBSIDIARIES_PRODUCTS_PURCHASESTABLE = 'SucursalesProductosCompras'
 
-const SubsidiariesProductsSchema = {
+const SubsidiariesProductsPurchasesSchema = {
   id: {
     allowNull: false,
     primaryKey: true,
@@ -19,8 +21,7 @@ const SubsidiariesProductsSchema = {
   },
   stock: {
     type: DataTypes.INTEGER,
-    comment: 'stock de la sucursal',
-
+    comment: 'stock de la sucursal por parte de la compra',
     allowNull: false,
     validate: {
       isNumeric: msg.isNumeric,
@@ -28,14 +29,14 @@ const SubsidiariesProductsSchema = {
       min: msg.minValue
     }
   },
-  idSuc: {
+  idSucProd: {
     allowNull: false,
     type: DataTypes.STRING,
-    comment: 'identificador de la sucursal',
+    comment: 'identificador de sucursalesProductos',
 
-    field: 'id_suc',
+    field: 'id_suc_prod',
     references: {
-      model: SUBSIDIARIES_TABLE,
+      model: SUBSIDIARIES_PRODUCTS_TABLE,
       key: 'id'
     },
     validate: {
@@ -44,14 +45,13 @@ const SubsidiariesProductsSchema = {
     onUpdate: 'CASCADE',
     onDelete: 'SET NULL'
   },
-  idProd: {
+  idCompra: {
     allowNull: false,
     type: DataTypes.STRING,
-    comment: 'identificador del producto',
-
-    field: 'id_prod',
+    comment: 'identificador de la compra',
+    field: 'id_compra',
     references: {
-      model: PRODUCTS_TABLE,
+      model: PURCHASE_TABLE,
       key: 'id'
     },
     validate: {
@@ -62,33 +62,28 @@ const SubsidiariesProductsSchema = {
   }
 }
 
-class SubsidiariesProducts extends Model {
+class SubsidiariesProductsPurchases extends Model {
   static associate(models) {
-    this.belongsTo(models.Sucursales, {
-      foreignKey: 'idSuc',
-      as: 'sucursal'
-    })
-    this.belongsTo(models.Productos, {
-      foreignKey: 'idProd',
-      as: 'producto'
-    })
-    this.hasMany(models.SucursalesProductosCompras, {
+    this.belongsTo(models.SucursalesProductos, {
       foreignKey: 'idSucProd'
+    })
+    this.belongsTo(models.Compras, {
+      foreignKey: 'idCompra'
     })
   }
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: SUBSIDIARIES_PRODUCTS_TABLE,
-      modelName: SUBSIDIARIES_PRODUCTS_TABLE,
+      tableName: SUBSIDIARIES_PRODUCTS_PURCHASESTABLE,
+      modelName: SUBSIDIARIES_PRODUCTS_PURCHASESTABLE,
       timestamps: false
     }
   }
 }
 
 module.exports = {
-  SubsidiariesProducts,
-  SubsidiariesProductsSchema,
-  SUBSIDIARIES_PRODUCTS_TABLE
+  SubsidiariesProductsPurchases,
+  SubsidiariesProductsPurchasesSchema,
+  SUBSIDIARIES_PRODUCTS_PURCHASESTABLE
 }

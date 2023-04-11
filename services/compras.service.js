@@ -40,6 +40,7 @@ async function findPurchase(id) {
       'usuario',
       'detalle',
       'proveedor',
+      'sucursalesProductos',
       {
         association: 'detalle',
         include: [{ association: 'producto', include: 'sucursales' }]

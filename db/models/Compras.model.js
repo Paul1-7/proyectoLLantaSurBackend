@@ -93,6 +93,10 @@ class Purchase extends Model {
       foreignKey: 'idCompra',
       as: 'detalle'
     })
+    this.hasMany(models.SucursalesProductosCompras, {
+      foreignKey: 'idCompra',
+      as: 'sucursalesProductos'
+    })
   }
 
   static config(sequelize) {

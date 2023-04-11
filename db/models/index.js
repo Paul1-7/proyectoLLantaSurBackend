@@ -44,6 +44,10 @@ const {
   InterBranchMovements,
   InterBranchMovementsSchema
 } = require('./MovimientosSucursales.model.js')
+const {
+  SubsidiariesProductsPurchases,
+  SubsidiariesProductsPurchasesSchema
+} = require('./SucursalesProductosCompras.model.js')
 
 function setUpModels(sequelize) {
   Subsidiaries.init(SubsidiariesSchema, Subsidiaries.config(sequelize))
@@ -81,6 +85,10 @@ function setUpModels(sequelize) {
     InterBranchMovementsSchema,
     InterBranchMovements.config(sequelize)
   )
+  SubsidiariesProductsPurchases.init(
+    SubsidiariesProductsPurchasesSchema,
+    SubsidiariesProductsPurchases.config(sequelize)
+  )
 
   Subsidiaries.associate(sequelize.models)
   User.associate(sequelize.models)
@@ -103,6 +111,7 @@ function setUpModels(sequelize) {
   SubsidiariesProducts.associate(sequelize.models)
   SlidersImages.associate(sequelize.models)
   InterBranchMovements.associate(sequelize.models)
+  SubsidiariesProductsPurchases.associate(sequelize.models)
 }
 
 module.exports = setUpModels

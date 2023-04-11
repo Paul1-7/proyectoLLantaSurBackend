@@ -33,6 +33,9 @@ const { SlidersImagesSchema } = require('../models/SlidersImages.model.js')
 const {
   InterBranchMovementsSchema
 } = require('../models/MovimientosSucursales.model.js')
+const {
+  SubsidiariesProductsPurchasesSchema
+} = require('../models/SucursalesProductosCompras.model.js')
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
@@ -74,9 +77,14 @@ module.exports = {
       'MovimientosSucursales',
       InterBranchMovementsSchema
     )
+    await queryInterface.createTable(
+      'SucursalesProductosCompras',
+      SubsidiariesProductsPurchasesSchema
+    )
   },
 
   async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('SucursalesProductosCompras')
     await queryInterface.dropTable('MovimientosSucursales')
     await queryInterface.dropTable('SlidersImages')
     await queryInterface.dropTable('SucursalesProductos')
