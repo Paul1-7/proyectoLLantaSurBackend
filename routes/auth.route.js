@@ -31,7 +31,10 @@ userRoute.post(
   [verifyToken, checkRoles(ADMINISTRADOR.id, EMPLEADO_VENTAS.id, CLIENTE.id)],
   logoutUser
 )
-userRoute.post('/password-reset', passwordReset)
-userRoute.post('/password-reset/:userId/:token', passwordResetValidateRequest)
+userRoute.post('/recuperar-password', passwordReset)
+userRoute.post(
+  '/recuperar-password/:userId/:token',
+  passwordResetValidateRequest
+)
 
 module.exports = userRoute

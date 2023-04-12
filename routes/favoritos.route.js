@@ -10,20 +10,32 @@ const {
   createFavorite,
   deleteFavorite
 } = require('../controllers/favoritos.controller.js')
-const { CLIENTE } = require('../config/roles.js')
+const {
+  CLIENTE,
+  EMPLEADO_VENTAS,
+  ADMINISTRADOR
+} = require('../config/roles.js')
 
 const favoriteRoute = express.Router()
 
 favoriteRoute.get(
   '/:id',
-  [verifyToken, checkRoles(CLIENTE.id)],
+  [verifyToken, checkRoles(CLIENTE.id, EMPLEADO_VENTAS.id, ADMINISTRADOR.id)],
   getAllFavoritesByIdClient
 )
 
-favoriteRoute.post('/', [verifyToken, checkRoles(CLIENTE.id)], createFavorite)
+favoriteRoute.post(
+  '/',
+  [verifyToken, checkRoles(CLIENTE.id, EMPLEADO_VENTAS.id, ADMINISTRADOR.id)],
+  createFavorite
+)
 favoriteRoute.delete(
   '/:id',
-  [checkId, verifyToken, checkRoles(CLIENTE.id)],
+  [
+    checkId,
+    verifyToken,
+    checkRoles(CLIENTE.id, EMPLEADO_VENTAS.id, ADMINISTRADOR.id)
+  ],
   deleteFavorite
 )
 

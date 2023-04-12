@@ -1,4 +1,5 @@
 'use strict'
+const { CLIENTE } = require('../../config/roles')
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -9,6 +10,11 @@ module.exports = {
           id_rol_usuario: '8ec7c85e-5029-4c53-9986-74ad4fb40923',
           id_usuario: 'a5f92b6e-77c0-4522-89d5-53ec8c141e76',
           id_rol: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d'
+        },
+        {
+          id_rol_usuario: '1bffa19e-f5ef-4b11-8638-ab090c9637d2',
+          id_usuario: 'a5f92b6e-77c0-4522-89d5-53ec8c141e76',
+          id_rol: CLIENTE.id
         },
         {
           id_rol_usuario: 'c6b608e2-d6b0-4c9d-9fd7-2df1aace1cfd',

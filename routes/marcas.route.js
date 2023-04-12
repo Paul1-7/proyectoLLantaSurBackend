@@ -16,7 +16,7 @@ const {
 
 const brandRoute = express.Router()
 
-brandRoute.get('/', [verifyToken, checkRoles(ADMINISTRADOR.id)], getAllBrands)
+brandRoute.get('/', getAllBrands)
 brandRoute.get(
   '/:id',
   [checkId, verifyToken, checkRoles(ADMINISTRADOR.id)],

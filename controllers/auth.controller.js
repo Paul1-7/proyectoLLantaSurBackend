@@ -165,7 +165,10 @@ const passwordReset = async (req, res, next) => {
       { expiresIn: '5m' }
     )
 
-    const link = `${URL_BASE_FRONTEND}/password-reset/${user.dataValues.idUsuario}/${token}`
+    const tokenParsed = token.replace('.', '|')
+    console.log('TCL: passwordReset -> tokenParsed', tokenParsed)
+
+    const link = `${URL_BASE_FRONTEND}/recuperar-contraseña/${user.dataValues.idUsuario}/${tokenParsed}`
     await sendEmail(user.dataValues.email, 'Reestablecer contraseña', link)
     return res.json({ message: msg.emailSent })
   } catch (error) {
@@ -178,7 +181,9 @@ const passwordResetValidateRequest = async (req, res, next) => {
     const { userId, token } = req.params
     const newPassword = req.body.password
 
-    jwt.verify(token, KEY_JWT, (err, user) => {
+    const tokenParsed = token.replace('|', '.')
+
+    jwt.verify(tokenParsed, KEY_JWT, (err, user) => {
       if (err) return ERROR_RESPONSE.forbidden(msg.invalidToken, res)
     })
     const user = await userServices.findUser(userId)
