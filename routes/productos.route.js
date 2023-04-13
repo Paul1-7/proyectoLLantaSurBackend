@@ -32,8 +32,6 @@ productsRoute.get('/:id', checkId, findProduct)
 productsRoute.post(
   '/',
   [
-    verifyToken,
-    checkRoles(ADMINISTRADOR.id),
     fileUpload({
       useTempFiles: true,
       tempFileDir: './tmp/img'
@@ -56,8 +54,6 @@ productsRoute.put(
   '/:id',
   [
     checkId,
-    verifyToken,
-    checkRoles(ADMINISTRADOR.id),
     fileUpload({
       useTempFiles: true,
       tempFileDir: './tmp/img'

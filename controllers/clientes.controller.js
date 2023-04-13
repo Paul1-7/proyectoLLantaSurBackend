@@ -8,7 +8,7 @@ const { getAllSubsidiaries } = require('../services/sucursales.service.js')
 
 const msg = {
   notFound: 'Cliente no encontrado',
-  delete: 'Se elimino el empleado correctamente',
+  delete: 'Se elimino el cliente correctamente',
   addSuccess: 'Se registró el cliente correctamente',
   modifySuccess: 'Se actualizó el registró del cliente correctamente'
 }

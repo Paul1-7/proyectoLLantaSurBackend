@@ -28,6 +28,11 @@ categoryRoute.get(
   [checkId, verifyToken, checkRoles(ADMINISTRADOR.id)],
   findCategory
 )
+categoryRoute.put(
+  '/:id',
+  [checkId, verifyToken, checkRoles(ADMINISTRADOR.id)],
+  updateCategory
+)
 categoryRoute.post(
   '/',
   [verifyToken, checkRoles(ADMINISTRADOR.id)],

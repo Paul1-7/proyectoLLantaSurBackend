@@ -71,8 +71,8 @@ function checkBodyParams(...params) {
 }
 
 function fileTypeCheck(req, res, next) {
-  if (!req.files?.imagenProd) return next()
-  const { mimetype } = req.files.imagenProd
+  if (!req.files?.imagen) return next()
+  const { mimetype } = req.files.imagen
   if (!mimetype) return next()
 
   const regex = /^image\/(jpeg|png)$/
@@ -82,9 +82,9 @@ function fileTypeCheck(req, res, next) {
 }
 
 function fileSizeCheck(req, res, next) {
-  if (!req.files?.imagenProd) return next()
+  if (!req.files?.imagen) return next()
 
-  const { size } = req.files.imagenProd
+  const { size } = req.files.imagen
   if (!size) return next()
 
   if (size > 1500000)

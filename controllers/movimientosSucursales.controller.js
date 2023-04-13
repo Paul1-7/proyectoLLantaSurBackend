@@ -35,7 +35,6 @@ const createSubsidiaryMovement = async (req, res, next) => {
       isDecrement = !isDecrement
       return { ...row, stock }
     })
-    console.log(newStock)
     if (!newStock.every(({ stock }) => stock >= 0)) {
       return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
     }
