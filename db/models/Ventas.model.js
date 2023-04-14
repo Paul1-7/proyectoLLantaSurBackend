@@ -39,7 +39,6 @@ const SellsSchema = {
     type: DataTypes.DATE,
     allowNull: false,
     validate: {
-      isDate: msg.isDate,
       notNull: msg.notNull
     }
   },

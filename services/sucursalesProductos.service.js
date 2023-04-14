@@ -27,6 +27,11 @@ async function addSubsidiaryProduct(idProd, subsidiaries) {
 
   return await models.SucursalesProductos.bulkCreate(data)
 }
+async function addSubsidiariesProducts(data) {
+  return (await models.SucursalesProductos.bulkCreate(data)).map(
+    (item) => item.dataValues
+  )
+}
 
 async function removeSubsidiaryProduct(id) {
   return await models.SucursalesProductos.destroy({
@@ -105,5 +110,6 @@ module.exports = {
   getProductSubsidiaryByIdProd,
   updateSubsidiariesProducts,
   getProductSubsidiary,
-  getProductsSubsidiariesByIds
+  getProductsSubsidiariesByIds,
+  addSubsidiariesProducts
 }

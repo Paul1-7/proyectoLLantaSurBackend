@@ -16,7 +16,7 @@ async function getAllDefectivesProducts() {
       {
         model: models.Ventas,
         as: 'venta',
-        attributes: ['codVenta', 'fecha', 'tipoVenta']
+        attributes: ['codVenta', 'fecha']
       }
     ]
   })
@@ -51,13 +51,18 @@ async function createDefectiveProducts(data) {
 }
 
 async function deleteDefectiveProducts(id) {
-  const sell = await modes.ProductosDefectuosos.findByPk(id)
+  const sell = await models.ProductosDefectuosos.findByPk(id)
   return await sell?.destroy()
+}
+
+async function findDefectiveProducts(id) {
+  return await models.ProductosDefectuosos.findByPk(id)
 }
 
 module.exports = {
   getAllDefectivesProducts,
   createDefectiveProducts,
   deleteDefectiveProducts,
-  getAllDefectivesProductsBySale
+  getAllDefectivesProductsBySale,
+  findDefectiveProducts
 }

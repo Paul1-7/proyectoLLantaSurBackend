@@ -122,16 +122,15 @@ const createSell = async (req, res, next) => {
     if (!newStock.every(({ stock }) => stock >= 0))
       return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
 
-    const idSucProdArray = newStock.map(({ id }) => id)
     const codVenta = await incremetToInicialInvoiceNum()
     const numberSaleCode = await services.countSellsCode()
 
     const sell = {
+      ...sellData,
       codVenta: codVenta.numFactInicial,
       idSuc: idSucursal,
       fecha: getDateUTC4(),
-      codReferencia: generateCodeToDocuments('V', numberSaleCode),
-      ...sellData
+      codReferencia: generateCodeToDocuments('V', numberSaleCode)
     }
 
     let { totalSales, sellDetail } = getSaleDetail(

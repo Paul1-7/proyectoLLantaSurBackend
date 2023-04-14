@@ -174,7 +174,7 @@ async function deleteProduct(id) {
   const product = await models.Productos.findByPk(id, {
     include: [
       'productosDefectuosos',
-      'descuentosPorductos',
+      'descuentosProductos',
       'favoritos',
       'sucursales',
       'detalleCompras',
@@ -185,7 +185,7 @@ async function deleteProduct(id) {
 
   if (
     product.productosDefectuosos.length > 0 ||
-    product.descuentosPorductos.length > 0 ||
+    product.descuentosProductos.length > 0 ||
     product.favoritos.length > 0 ||
     product.sucursales.length > 0 ||
     product.detalleCompras.length > 0 ||

@@ -21,9 +21,32 @@ async function updateSubsidiary(id, changes) {
 
 async function deleteSubsidiary(id) {
   const subsidiary = await models.Sucursales.findByPk(id, {
-    include: ['productos', 'usuarios']
+    include: [
+      'productos',
+      'usuarios',
+      'ventas',
+      'movSucursalesOrigen',
+      'movSucursalesDestino',
+      'productosDefectuosos'
+    ]
   })
-  if (subsidiary.productos.length > 0 || subsidiary.usuarios.length > 0)
+  const {
+    productos,
+    usuarios,
+    ventas,
+    movSucursalesOrigen,
+    movSucursalesDestino,
+    productosDefectuosos
+  } = subsidiary
+
+  if (
+    !!productos.length ||
+    !!usuarios.length ||
+    !!ventas.length ||
+    !!movSucursalesOrigen.length ||
+    !!movSucursalesDestino.length ||
+    !!productosDefectuosos.length
+  )
     return new Error(msg.msgErrorForeignKey)
   return await subsidiary?.destroy()
 }

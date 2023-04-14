@@ -4,7 +4,9 @@ const {
   getProductsBySubsidiaryId
 } = require('../services/productos.service.js')
 const {
-  updataSeveralSubsidiaryProduct
+  updataSeveralSubsidiaryProduct,
+  getProductSubsidiary,
+  updateSubsidiariesProducts
 } = require('../services/sucursalesProductos.service.js')
 
 const services = require('../services/productosDefectuosos.service.js')
@@ -83,6 +85,25 @@ const createDefectiveProduct = async (req, res, next) => {
 const deleteDefectiveProduct = async (req, res, next) => {
   try {
     const { id } = req.params
+
+    const defectiveProduct = await services.findDefectiveProducts(id)
+    console.log(
+      'TCL: deleteDefectiveProduct -> defectiveProduct',
+      defectiveProduct.dataValues
+    )
+
+    const { idProd, idSuc, cantidad } = defectiveProduct
+
+    const subProd = await getProductSubsidiary(idProd, idSuc)
+    console.log('TCL: deleteDefectiveProduct -> subProd', subProd.dataValues)
+
+    await updateSubsidiariesProducts([
+      {
+        ...subProd.dataValues,
+        stock: subProd.dataValues.stock + cantidad
+      }
+    ])
+
     const products = await services.deleteDefectiveProducts(id)
 
     if (!products) return ERROR_RESPONSE.notFound(msg.notFound, res)

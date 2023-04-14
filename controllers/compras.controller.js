@@ -10,7 +10,9 @@ const {
   getProductSubsidiaryByIdProd,
   updateSubsidiariesProducts,
   getProductsSubsidiariesByIds,
-  updataSeveralSubsidiaryProduct
+  updataSeveralSubsidiaryProduct,
+  addSubsidiaryProduct,
+  addSubsidiariesProducts
 } = require('../services/sucursalesProductos.service.js')
 
 const services = require('../services/compras.service.js')
@@ -38,7 +40,13 @@ const msg = {
 }
 
 const getNewStock = (allProduct, bodyProducts, isIncrement = false) => {
-  return bodyProducts.map((product) => {
+  const idProdFromAllProducts = allProduct.map(({ idProd }) => idProd)
+
+  const aux = bodyProducts.filter(({ idProd }) =>
+    idProdFromAllProducts.includes(idProd)
+  )
+
+  return aux.map((product) => {
     const productFounded = allProduct.find(
       (dataValues) =>
         dataValues.idProd === product.idProd &&
@@ -123,17 +131,30 @@ const createPurchase = async (req, res, next) => {
   try {
     const { body } = req
     const { detalle, sucursalesProductos, ...compras } = body
+    let newDataToSubProd = []
     const numberPurchaseCode = await services.countPurchaseCode()
     compras.fecha = getDateUTC4()
     compras.codReferencia = generateCodeToDocuments('C', numberPurchaseCode)
 
     const productsId = detalle.map((product) => product.idProd)
-
     const subsidiariesProductsData = await getProductSubsidiaryByIdProd(
       productsId
     )
 
-    if (subsidiariesProductsData.length === 0) {
+    // verify if exist registers in the database
+    if (sucursalesProductos.length !== subsidiariesProductsData.length) {
+      const idProdFromSubProdData = subsidiariesProductsData.map(
+        (data) => data.idProd
+      )
+
+      const newSubProd = sucursalesProductos.filter(
+        ({ idProd }) => !idProdFromSubProdData.includes(idProd)
+      )
+
+      newDataToSubProd = await addSubsidiariesProducts(newSubProd)
+    }
+
+    if (!subsidiariesProductsData.length && !newDataToSubProd.length) {
       return ERROR_RESPONSE.notAcceptable(msg.notValid, res)
     }
 
@@ -158,11 +179,23 @@ const createPurchase = async (req, res, next) => {
       idCompra
     }))
 
-    const dataStockPurchases = newStock.map(({ id }, index) => ({
+    let dataStockPurchases = newStock.map(({ id }, index) => ({
       stock: sucursalesProductos?.[index].stock,
       idSucProd: id,
       idCompra
     }))
+
+    if (newDataToSubProd.length) {
+      const newDataStockPurchase = newDataToSubProd.map(({ id, stock }) => {
+        return {
+          stock,
+          idSucProd: id,
+          idCompra
+        }
+      })
+
+      dataStockPurchases = [...dataStockPurchases, ...newDataStockPurchase]
+    }
 
     await addPurchaseDetail(newPurchaseDetail)
     await addSubProdPurchases(dataStockPurchases)
