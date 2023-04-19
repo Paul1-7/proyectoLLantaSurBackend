@@ -2,7 +2,6 @@ const { ERROR_RESPONSE } = require('../middlewares/error.handle.js')
 const services = require('../services/movimientosSucursales.service.js')
 const {
   getProductSubsidiary,
-  updateSubsidiariesProducts,
   updataSeveralSubsidiaryProduct
 } = require('../services/sucursalesProductos.service.js')
 const { getDateUTC4 } = require('../utils/dataHandler.js')

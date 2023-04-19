@@ -3,7 +3,6 @@ const { BusinessDataSchema } = require('../models/DatosNegocio.model.js')
 const { ProviderSchema } = require('../models/Proveedores.model.js')
 const { RolSchema } = require('../models/Roles.model.js')
 const { SellsSchema } = require('../models/Ventas.model.js')
-const { OrdersSchema } = require('../models/Pedidos.model.js')
 const { CategoriesSchema } = require('../models/Categorias.model.js')
 const { BrandsSchema } = require('../models/Marcas.model.js')
 const { ProductsSchema } = require('../models/Productos.model.js')
@@ -14,7 +13,6 @@ const {
   DefectiveProductsSchema
 } = require('../models/ProductosDefectuosos.model.js')
 const { DiscountsSchema } = require('../models/Descuentos.model.js')
-const { ReviewsSchema } = require('../models/Reviews.model.js')
 
 const {
   DiscountsProductsSchema
@@ -53,7 +51,6 @@ module.exports = {
     await queryInterface.createTable('Compras', PurchaseSchema)
     await queryInterface.createTable('Productos', ProductsSchema)
     await queryInterface.createTable('Ventas', SellsSchema)
-    await queryInterface.createTable('Pedidos', OrdersSchema)
     await queryInterface.createTable('DetalleCompras', PurchaseDetailSchema)
 
     await queryInterface.createTable('DetalleVentas', SellsDetailSchema)
@@ -62,7 +59,6 @@ module.exports = {
       DefectiveProductsSchema
     )
     await queryInterface.createTable('Descuentos', DiscountsSchema)
-    await queryInterface.createTable('Reviews', ReviewsSchema)
     await queryInterface.createTable(
       'DescuentosProductos',
       DiscountsProductsSchema
@@ -92,9 +88,6 @@ module.exports = {
     await queryInterface.dropTable('DetalleVentas')
     await queryInterface.dropTable('Favoritos')
     await queryInterface.dropTable('RolesUsuarios')
-    await queryInterface.dropTable('Pedidos')
-
-    await queryInterface.dropTable('Reviews')
     await queryInterface.dropTable('DescuentosProductos')
     await queryInterface.dropTable('Compras')
     await queryInterface.dropTable('Roles')

@@ -1,6 +1,5 @@
 const express = require('express')
 const {
-  checkId,
   verifyToken,
   checkRoles
 } = require('../middlewares/validator.handle.js')

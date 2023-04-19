@@ -125,7 +125,7 @@ const verifyPhoneNumber = async (req, res, next) => {
       return res.json({ message: msg.notFound })
     }
 
-    return res.json({ id: user.celular })
+    return res.json({ celular: user.celular })
   } catch (error) {
     next(error)
   }
@@ -165,7 +165,7 @@ const passwordReset = async (req, res, next) => {
       { expiresIn: '5m' }
     )
 
-    const tokenParsed = token.replace('.', '|')
+    const tokenParsed = token.replace('.', 'á')
     console.log('TCL: passwordReset -> tokenParsed', tokenParsed)
 
     const link = `${URL_BASE_FRONTEND}/recuperar-contraseña/${user.dataValues.idUsuario}/${tokenParsed}`
@@ -181,7 +181,7 @@ const passwordResetValidateRequest = async (req, res, next) => {
     const { userId, token } = req.params
     const newPassword = req.body.password
 
-    const tokenParsed = token.replace('|', '.')
+    const tokenParsed = token.replace('á', '.')
 
     jwt.verify(tokenParsed, KEY_JWT, (err, user) => {
       if (err) return ERROR_RESPONSE.forbidden(msg.invalidToken, res)
