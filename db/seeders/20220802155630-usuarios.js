@@ -7,12 +7,12 @@ module.exports = {
           id_usuario: 'a5f92b6e-77c0-4522-89d5-53ec8c141e76',
           ci_nit: '5423452334',
           password:
-            '$2a$10$GwJNYAOPJQP8hAIcF0KMquCEUYP8YhVUBqm.pdoTGLKmhtGMUSxZ2',
-          email: 'moicotarifa@gmail.com',
-          celular: 78700385,
-          usuario: 'Paul17',
-          nombre: 'Moises Paul',
-          apellido: 'Tarifa Jaramillo',
+            '$2a$10$z57unuipOMKJXwryVtwOouX.YGS6iIH835WXoInk2dZHD2P7GrBwC',
+          email: 'user@gmail.com',
+          celular: 719816518,
+          usuario: 'admin',
+          nombre: 'Moises',
+          apellido: 'Ramos',
           estado: 1,
           direccion: 'Calle falsa 123',
           id_suc: 'ad8cd9f1-1028-4c5f-ae20-3ed58113013d'
@@ -35,7 +35,7 @@ module.exports = {
           id_usuario: 'd71ac730-e43b-4c9c-a480-164f9c630e07',
           ci_nit: '73455334',
           password:
-            '$2a$10$2JxP.mxOpESliW8m816H6uKpY7iHRtVKKN7dng5kYiwXyG1GLZcBC',
+            '$2a$10$z57unuipOMKJXwryVtwOouX.YGS6iIH835WXoInk2dZHD2P7GrBwC',
           email: 'ricardo@gmail.com',
           celular: 64846131,
           usuario: 'ricardo',

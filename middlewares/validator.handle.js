@@ -75,7 +75,7 @@ function fileTypeCheck(req, res, next) {
   const { mimetype } = req.files.imagen
   if (!mimetype) return next()
 
-  const regex = /^image\/(jpeg|png)$/
+  const regex = /^image\/(jpeg|png|webp)$/
   if (!regex.test(mimetype))
     return ERROR_RESPONSE.notAcceptable(msg.isImageTypeValid, res)
   return next()

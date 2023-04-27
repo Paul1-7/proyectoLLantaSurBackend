@@ -42,7 +42,6 @@ async function findSell(id) {
       'cliente',
       'vendedor',
       'detalle',
-      'pedido',
       {
         association: 'detalle',
         include: [{ association: 'producto', include: 'sucursales' }]
