@@ -166,7 +166,6 @@ const passwordReset = async (req, res, next) => {
     )
 
     const tokenParsed = token.replace('.', 'á')
-    console.log('TCL: passwordReset -> tokenParsed', tokenParsed)
 
     const link = `${URL_BASE_FRONTEND}/recuperar-contraseña/${user.dataValues.idUsuario}/${tokenParsed}`
     await sendEmail(user.dataValues.email, 'Reestablecer contraseña', link)
